@@ -1,0 +1,22 @@
+{
+    "parser": "babel-eslint",
+    "plugins": [
+        "prettier",
+        "react"
+    ],
+    "rules": {
+        "function-paren-newline": "off",
+        "import/prefer-default-export": "off",
+        "react/require-default-props": "off",
+        "prettier/prettier": [
+            "error",
+            {
+                "singleQuote": true
+            }
+        ],
+        "react/jsx-key": "error",
+        "react/no-array-index-key": "off",
+        "react/no-unescaped-entities": "off",
+        "react/no-did-update-set-state": "off"
+    }
+}

@@ -1,0 +1,8 @@
+# Dependency directories
+node_modules/
+
+# build
+/build
+
+# css files
+*.css

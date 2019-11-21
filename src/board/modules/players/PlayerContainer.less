@@ -1,0 +1,100 @@
+.player-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 16rem;
+  height: fit-content;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+
+  .player {
+    height: 5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-size: contain;
+    background-position-y: center;
+    filter: drop-shadow(0 0 1rem rgba(0, 0, 0, 0.5));
+    cursor: pointer;
+
+    &[data-bg='0'] {
+      background-image: url(../../../assets/images/parchment/banner_1.png);
+    }
+
+    &[data-bg='1'] {
+      background-image: url(../../../assets/images/parchment/banner_2.png);
+    }
+
+    &[data-bg='2'] {
+      background-image: url(../../../assets/images/parchment/banner_3.png);
+    }
+
+    &[data-bg='3'] {
+      background-image: url(../../../assets/images/parchment/banner_4.png);
+    }
+
+    .avatar {
+      width: 2.5rem;
+      height: 2.5rem;
+      margin: 0 1rem;
+      background-size: contain;
+      background-position-y: center;
+      filter: drop-shadow(0 0 0.75rem grey);
+
+      &[data-avatar='0'] {
+        background-image: url(../../../assets/images/avatars/avatar_1.png);
+      }
+
+      &[data-avatar='1'] {
+        background-image: url(../../../assets/images/avatars/avatar_2.png);
+      }
+
+      &[data-avatar='2'] {
+        background-image: url(../../../assets/images/avatars/avatar_3.png);
+      }
+
+      &[data-avatar='3'] {
+        background-image: url(../../../assets/images/avatars/avatar_4.png);
+      }
+    }
+
+    .nickname {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .score {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 2rem;
+    }
+  }
+
+  .score {
+    margin: 0 0 1rem 1rem;
+    font-size: 1.5rem;
+
+    span {
+      margin-left: 0.5rem;
+
+      img {
+        width: 29px;
+        height: 29px;
+      }
+    }
+  }
+
+  button.new-player {
+    margin-top: 1rem;
+    border: none;
+    background: none;
+    color: white;
+    font-size: 1.5rem;
+    filter: drop-shadow(0 0 1rem black);
+    cursor: pointer;
+  }
+}
