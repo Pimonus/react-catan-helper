@@ -52,9 +52,11 @@ export type CatanState = {
   +_createdAt: Date,
   +_resumedAt: Date | null,
   +_endedAt: Date | null,
+  +availableGame: boolean,
   +barbarians: BarbariansState,
   +dices: DicesState,
   +game: GameState,
+  +listenToShortcuts: boolean,
   +players: $ReadOnlyArray<Player>,
   +selectedPlayerUuid?: string,
 };
@@ -63,8 +65,13 @@ type ReduxAction = { type: '@@INIT' };
 
 export type CatanAction =
   | ReduxAction
+  | { type: 'GAME::CHECK' }
+  | { type: 'GAME::FOUND' }
+  | { type: 'GAME::NOT_FOUND' }
   | { type: 'GAME::LOAD', state: ?CatanState }
   | { type: 'GAME::LOAD!!ERROR', error: SyntaxError }
+  | { type: 'GAME::NEW' }
+  | { type: 'GAME::CREATED' }
   | { type: 'GAME::PAUSE' }
   | { type: 'GAME::RESUME' }
   | { type: 'GAME::THIEF::ENABLE' }

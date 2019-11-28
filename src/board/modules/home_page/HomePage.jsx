@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 
-import { resumeGame } from '../../../redux/actions/game';
+import { newGame, resumeGame } from '../../../redux/actions/game';
 import type { CatanState, Dispatch, GameState } from '../../../flow';
 
 import catanLogo from '../../../assets/images/catan_logo.png';
@@ -12,29 +12,36 @@ import catanLogo from '../../../assets/images/catan_logo.png';
 import './HomePage.css';
 
 type StateProps = {
+  +availableGame: boolean,
   +game: GameState,
 };
 
 type DispatchProps = {
-  +resume: () => any,
+  +newGame: () => any,
+  +resumeGame: () => any,
 };
 
 const mapStateToProps = (state: CatanState): StateProps => ({
+  availableGame: state.availableGame,
   game: state.game,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  resume: () => dispatch(resumeGame()),
+  newGame: () => dispatch(newGame()),
+  resumeGame: () => dispatch(resumeGame()),
 });
 
 type Props = StateProps & DispatchProps;
 
 const HomePage = (props: Props) => {
-  const { game } = props;
+  const { availableGame, game } = props;
   return (
     <div className={cn('homepage', { visible: game.paused })}>
       <img src={catanLogo} alt="Catan" />
-      <h1 onClick={props.resume}>Reprendre la dernière partie</h1>
+      {availableGame ? (
+        <h1 onClick={props.resumeGame}>Reprendre la dernière partie</h1>
+      ) : null}
+      <h1 onClick={props.newGame}>Nouvelle partie</h1>
     </div>
   );
 };

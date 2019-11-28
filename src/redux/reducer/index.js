@@ -11,14 +11,36 @@ import {
 } from '../../core';
 import type { CatanAction, CatanState, Player } from '../../flow';
 
+const softActions = [
+  '@@INIT',
+  'GAME::CHECK',
+  'GAME::FOUND',
+  'GAME::NOT_FOUND',
+  'GAME::RESUME',
+];
+
+const enablingShortcutsActions = [
+  'DICES::REVEAL',
+  'GAME::LOAD',
+  'GAME::CREATED',
+  'GAME::THIEF::ENABLE',
+  'PLAYER::DESELECT',
+];
+
 export const reducer = (
   state: CatanState = initialState,
   action: CatanAction
 ) => {
   let newState: CatanState;
   switch (action.type) {
+    case 'GAME::FOUND': {
+      newState = { ...state, availableGame: true };
+      break;
+    }
+
     case 'GAME::LOAD': {
       newState =
+        // FIXME action.state === null is not possible
         action.state === null || action.state === undefined
           ? initialState
           : {
@@ -32,6 +54,20 @@ export const reducer = (
             };
       break;
     }
+
+    case 'GAME::NEW':
+      newState = {
+        ...initialState,
+        game: { ...state.game, loading: true, paused: false },
+      };
+      break;
+
+    case 'GAME::CREATED':
+      newState = {
+        ...initialState,
+        game: { ...state.game, loading: false, paused: false },
+      };
+      break;
 
     case 'GAME::PAUSE':
       newState = {
@@ -171,9 +207,13 @@ export const reducer = (
     }
 
     default:
-      console.warn(
-        'Ooops, the reducer is about to return the current state without changes!'
-      );
+      if (
+        !action.type.startsWith('@@redux') &&
+        !softActions.find(type => type === action.type)
+      )
+        console.warn(
+          'Ooops, the reducer is about to return the current state without changes!'
+        );
       newState = state;
       break;
   }
@@ -181,12 +221,13 @@ export const reducer = (
   if (
     newState &&
     !action.type.startsWith('@@redux') &&
-    action.type !== '@@INIT' &&
-    action.type !== 'GAME::RESUME'
+    !softActions.includes(action.type)
   ) {
-    console.log(`storing after ${action.type} : `, newState);
     localStorage.setItem('currentGame', JSON.stringify(newState));
   }
 
-  return newState;
+  return {
+    ...newState,
+    listenToShortcuts: enablingShortcutsActions.includes(action.type),
+  };
 };

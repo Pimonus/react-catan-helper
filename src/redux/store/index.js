@@ -7,6 +7,7 @@ export const initialState: CatanState = {
   _createdAt: new Date(),
   _resumedAt: null,
   _endedAt: null,
+  availableGame: false,
   barbarians: {
     position: 0,
   },
@@ -28,5 +29,6 @@ export const initialState: CatanState = {
     loading: false,
     paused: true,
   },
+  listenToShortcuts: false,
   players: [],
 };
