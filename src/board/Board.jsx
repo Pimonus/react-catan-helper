@@ -3,6 +3,7 @@
 import React, { PureComponent } from 'react';
 import { Route /*, Link */ } from 'react-router-dom';
 import { connect } from 'react-redux';
+import cn from 'classnames';
 
 import { rollDices } from '../redux/actions/dices';
 import { getExistingGame } from '../redux/actions/game';
@@ -53,25 +54,25 @@ class Board extends PureComponent<Props> {
 
     return (
       <div
-        className="catan-board"
+        className="catan-game"
         onKeyUp={e => {
           if (listenToShortcuts && e.keyCode === 32) this.props.rollDices();
         }}
         tabIndex={0}
       >
-        {/* <header>
-        <Link to="/">Home</Link>
-        <Link to="/about-us">About</Link>
-      </header> */}
         <main>
           <Route exact path="/about-us" component={About} />
         </main>
         <HomePage />
         {loading ? <Loader /> : null}
-        {/* <GameMenu pausedGame={paused || loading} /> */}
         <PlayerContainer pausedGame={paused || loading} />
-        <DicesContainer pausedGame={paused || loading} />
-        {/* <BarbariansContainer pausedGame={paused || loading} /> */}
+        <div
+          className={cn('board', {
+            hidden: paused || loading,
+          })}
+        >
+          <DicesContainer pausedGame={paused || loading} />
+        </div>
       </div>
     );
   }

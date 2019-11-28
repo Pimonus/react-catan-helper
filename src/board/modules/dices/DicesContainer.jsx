@@ -21,10 +21,6 @@ type StateProps = {
   +spinning: boolean,
 };
 
-type DispatchProps = {
-  +rollDices: () => any,
-};
-
 const mapStateToProps = (state: CatanState): StateProps => ({
   dicesValues: state.dices.values,
   flipped: state.dices.flipped,
@@ -32,11 +28,7 @@ const mapStateToProps = (state: CatanState): StateProps => ({
   spinning: state.dices.spinning,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  rollDices: () => dispatch(rollDices()),
-});
-
-type Props = OwnProps & StateProps & DispatchProps;
+type Props = OwnProps & StateProps;
 
 const DicesContainer = (props: Props) => {
   const { flipped, rolling, spinning } = props;
@@ -48,20 +40,15 @@ const DicesContainer = (props: Props) => {
         hidden: props.pausedGame,
       })}
     >
-      <button
-        onClick={() => {
-          if (!rolling) props.rollDices();
-        }}
-      >
-        Lancer !
-      </button>
-      <div className="dices">
+      <div className="top-dices">
         <Dice
           flipped={flipped}
           spinning={spinning}
           value={specialValue}
           special
         />
+      </div>
+      <div className="bottom-dices">
         <Dice flipped={flipped} spinning={spinning} value={redValue} red />
         <Dice flipped={flipped} spinning={spinning} value={whiteValue} />
       </div>
@@ -71,5 +58,5 @@ const DicesContainer = (props: Props) => {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(DicesContainer);
