@@ -5,11 +5,11 @@ import {
   attackAdvance,
   computePlayersScores,
   computePlayersState,
+  getDicesScore,
   newPlayer,
   BARBARIANS,
-  SIX,
 } from '../../core';
-import type { CatanAction, CatanState, Player } from '../../flow';
+import type { CatanAction, CatanState } from '../../flow';
 
 const softActions = [
   '@@INIT',
@@ -17,6 +17,8 @@ const softActions = [
   'GAME::FOUND',
   'GAME::NOT_FOUND',
   'GAME::RESUME',
+  'SWAL::FIRE',
+  'SWAL::DISMISS',
 ];
 
 const enablingShortcutsActions = [
@@ -25,6 +27,7 @@ const enablingShortcutsActions = [
   'GAME::CREATED',
   'GAME::THIEF::ENABLE',
   'PLAYER::DESELECT',
+  'SWAL::DISMISS',
 ];
 
 export const reducer = (
@@ -86,7 +89,7 @@ export const reducer = (
     case 'GAME::THIEF::ENABLE':
       newState = {
         ...state,
-        enabledThief: true,
+        game: { ...state.game, enabledThief: true },
       };
       break;
 
@@ -123,7 +126,8 @@ export const reducer = (
       };
       break;
 
-    case 'DICES::REVEAL':
+    case 'DICES::REVEAL': {
+      const dicesScore = getDicesScore(state.dices.values);
       newState = {
         ...state,
         dices: {
@@ -131,8 +135,13 @@ export const reducer = (
           flipped: false,
           rolling: false,
         },
+        game: {
+          ...state.game,
+          enabledThief: state.game.enabledThief || dicesScore === 7,
+        },
       };
       break;
+    }
 
     case 'DICES::SPIN':
       newState = {

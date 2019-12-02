@@ -14,6 +14,7 @@ import DicesContainer from './modules/dices/DicesContainer.jsx';
 import GameMenu from './modules/menu/GameMenu.jsx';
 import HomePage from './modules/home_page/HomePage.jsx';
 import PlayerContainer from './modules/players/PlayerContainer.jsx';
+import SwalManager from './modules/swals/SwalManager';
 
 import type { CatanState, Dispatch, GameState, Player } from '../flow';
 
@@ -65,6 +66,7 @@ class Board extends PureComponent<Props> {
         </main>
         <HomePage />
         {loading ? <Loader /> : null}
+        <SwalManager />
         <PlayerContainer pausedGame={paused || loading} />
         <div
           className={cn('board', {

@@ -17,6 +17,9 @@
         "react/jsx-key": "error",
         "react/no-array-index-key": "off",
         "react/no-unescaped-entities": "off",
-        "react/no-did-update-set-state": "off"
+        "react/no-did-update-set-state": "off",
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "no-unused-vars": "error"
     }
 }

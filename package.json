@@ -35,6 +35,8 @@
     "sanitize.css": "7.0.3",
     "serve": "10.1.2",
     "sweetalert": "^2.1.2",
+    "sweetalert2": "^9.4.0",
+    "sweetalert2-react-content": "^2.0.2",
     "uuid": "^3.3.3"
   },
   "browserslist": [

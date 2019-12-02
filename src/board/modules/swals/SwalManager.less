@@ -1,0 +1,22 @@
+body.swal2-height-auto {
+  height: inherit !important;
+
+  .swal2-container {
+    padding: 0;
+
+    &.swal2-backdrop-show {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    .swal2-modal {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+
+      .swal2-content {
+        display: flex;
+        color: white;
+      }
+    }
+  }
+}
