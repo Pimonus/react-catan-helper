@@ -39,7 +39,8 @@ export const diceValueMatching = {
   six: 6,
 };
 
-export const attackAdvance = 7;
+export const THIEF_SCORE = 7;
+export const ATTACK_POSITION = 7;
 
 export const newPlayer = (nickname: string): Player => ({
   nickname,
@@ -128,4 +129,4 @@ export const getDicesScore = (values: DicesValues): number =>
   diceValueMatching[values.redValue] + diceValueMatching[values.whiteValue];
 
 export const didBarbariansReachCoast = (advance: number) =>
-  advance === attackAdvance;
+  advance === ATTACK_POSITION;

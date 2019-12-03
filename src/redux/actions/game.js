@@ -1,6 +1,12 @@
 /* @flow */
 
-import type { Dispatch, ThunkAction, Player } from '../../flow';
+import type { Dispatch, ThunkAction } from '../../flow';
+
+export const disableShortcuts = (): ThunkAction => {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: 'SHORTCUTS::DISABLE' });
+  };
+};
 
 export const getExistingGame = (): ThunkAction => {
   return (dispatch: Dispatch) => {

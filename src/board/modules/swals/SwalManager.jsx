@@ -5,31 +5,48 @@ import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-import ThiefSwal from './ThiefSwal';
+// actions
+import { disableShortcuts, enableThief } from '../../../redux/actions/game';
 import { dismissSwal, fireSwal } from '../../../redux/actions/swal';
-import type { CatanState, Dispatch } from '../../../flow';
+// components
+import ThiefSwal from './ThiefSwal';
+// helpers
+import { getDicesScore, THIEF_SCORE } from '../../../core';
+// types
+import type { CatanState, DicesState, Dispatch } from '../../../flow';
 
 import './SwalManager.css';
 
 const swal = withReactContent(Swal);
+const swalDelay = 2000;
+const swalTimmer = 5000;
+
+const dicesHaveBeenRevealed = (flipped: boolean, stillFlipped: boolean) =>
+  flipped && !stillFlipped;
 
 type StateProps = {
   +_createdAt: Date,
+  +dices: DicesState,
   +enabledThief: boolean,
 };
 
 type DispatchProps = {
+  +disableShortcuts: () => any,
   +dismissSwal: () => any,
+  +enableThief: () => any,
   +fireSwal: () => any,
 };
 
 const mapStateToProps = (state: CatanState): StateProps => ({
   _createdAt: state._createdAt,
+  dices: state.dices,
   enabledThief: state.game.enabledThief,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+  disableShortcuts: () => dispatch(disableShortcuts()),
   dismissSwal: () => dispatch(dismissSwal()),
+  enableThief: () => dispatch(enableThief()),
   fireSwal: () => dispatch(fireSwal()),
 });
 
@@ -37,20 +54,30 @@ type Props = StateProps & DispatchProps;
 
 class SwalManager extends PureComponent<Props> {
   componentDidUpdate(prevProps: Props) {
-    if (prevProps._createdAt === this.props._createdAt) {
-      if (!prevProps.enabledThief && this.props.enabledThief)
-        this.fire({
-          timer: 3000,
-          showConfirmButton: false,
-          html: <ThiefSwal />,
-        });
+    const { dices: prevDices, enabledThief } = prevProps;
+    const thiefWasNotEnabled = !enabledThief;
+    const { dices } = this.props;
+    if (
+      prevProps._createdAt === this.props._createdAt &&
+      dicesHaveBeenRevealed(prevDices.flipped, dices.flipped)
+    ) {
+      if (thiefWasNotEnabled && getDicesScore(dices.values) === THIEF_SCORE)
+        this.fire(
+          {
+            timer: swalTimmer,
+            showConfirmButton: false,
+            html: <ThiefSwal />,
+          },
+          () => this.props.enableThief()
+        );
     }
   }
 
-  fire(params: { [key: string]: any }) {
-    this.props.fireSwal();
-    swal.fire(params);
-    this.props.dismissSwal();
+  fire(swalParams: { [key: string]: any }, callback: () => any) {
+    this.props.disableShortcuts();
+    setTimeout(() => this.props.fireSwal(), swalDelay);
+    setTimeout(() => swal.fire(swalParams), swalDelay);
+    setTimeout(() => callback(), swalDelay + swalTimmer);
   }
 
   render = () => null;

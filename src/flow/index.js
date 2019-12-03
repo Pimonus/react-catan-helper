@@ -86,6 +86,7 @@ export type CatanAction =
   | { type: 'PLAYER::ADD::POINT', playerUuid: string }
   | { type: 'PLAYER::ATTRIBUTE::ROAD', playerUuid: string }
   | { type: 'PLAYER::ATTRIBUTE::ARMY', playerUuid: string }
+  | { type: 'SHORTCUTS::DISABLE' }
   | { type: 'SWAL::FIRE' }
   | { type: 'SWAL::DISMISS' };
 

@@ -2,11 +2,10 @@
 
 import { initialState } from '../store';
 import {
-  attackAdvance,
   computePlayersScores,
   computePlayersState,
-  getDicesScore,
   newPlayer,
+  ATTACK_POSITION,
   BARBARIANS,
 } from '../../core';
 import type { CatanAction, CatanState } from '../../flow';
@@ -26,6 +25,7 @@ const enablingShortcutsActions = [
   'GAME::LOAD',
   'GAME::CREATED',
   'GAME::THIEF::ENABLE',
+  'PLAYER::ADD',
   'PLAYER::DESELECT',
   'SWAL::DISMISS',
 ];
@@ -102,9 +102,9 @@ export const reducer = (
         barbarians: {
           ...state.barbarians,
           position:
-            barbariansPosition === attackAdvance
+            barbariansPosition === ATTACK_POSITION
               ? barbariansPosition
-              : barbariansPosition % attackAdvance,
+              : barbariansPosition % ATTACK_POSITION,
         },
         dices: {
           ...state.dices,
@@ -127,17 +127,12 @@ export const reducer = (
       break;
 
     case 'DICES::REVEAL': {
-      const dicesScore = getDicesScore(state.dices.values);
       newState = {
         ...state,
         dices: {
           ...state.dices,
           flipped: false,
           rolling: false,
-        },
-        game: {
-          ...state.game,
-          enabledThief: state.game.enabledThief || dicesScore === 7,
         },
       };
       break;
