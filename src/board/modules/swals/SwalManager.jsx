@@ -13,7 +13,12 @@ import ThiefSwal from './ThiefSwal';
 // helpers
 import { getDicesScore, THIEF_SCORE } from '../../../core';
 // types
-import type { CatanState, DicesState, Dispatch } from '../../../flow';
+import type {
+  CatanState,
+  DicesState,
+  Dispatch,
+  GameState,
+} from '../../../flow';
 
 import './SwalManager.css';
 
@@ -27,7 +32,7 @@ const dicesHaveBeenRevealed = (flipped: boolean, stillFlipped: boolean) =>
 type StateProps = {
   +_createdAt: Date,
   +dices: DicesState,
-  +enabledThief: boolean,
+  +game: GameState,
 };
 
 type DispatchProps = {
@@ -40,7 +45,7 @@ type DispatchProps = {
 const mapStateToProps = (state: CatanState): StateProps => ({
   _createdAt: state._createdAt,
   dices: state.dices,
-  enabledThief: state.game.enabledThief,
+  game: state.game,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
@@ -54,8 +59,8 @@ type Props = StateProps & DispatchProps;
 
 class SwalManager extends PureComponent<Props> {
   componentDidUpdate(prevProps: Props) {
-    const { dices: prevDices, enabledThief } = prevProps;
-    const thiefWasNotEnabled = !enabledThief;
+    const { dices: prevDices, game } = prevProps;
+    const thiefWasNotEnabled = !game.enabledThief;
     const { dices } = this.props;
     if (
       prevProps._createdAt === this.props._createdAt &&
