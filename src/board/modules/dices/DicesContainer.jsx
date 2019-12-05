@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import cn from 'classnames';
 
 import Dice from './Dice';
-import { rollDices } from '../../../redux/actions/dices';
-import type { CatanState, DicesValues, Dispatch } from '../../../flow';
+import type { CatanState, DicesValues } from '../../../flow';
 
 import './DicesContainer.css';
 
@@ -31,7 +30,7 @@ const mapStateToProps = (state: CatanState): StateProps => ({
 type Props = OwnProps & StateProps;
 
 const DicesContainer = (props: Props) => {
-  const { flipped, rolling, spinning } = props;
+  const { flipped, spinning } = props;
   const { whiteValue, redValue, specialValue } = props.dicesValues;
 
   return (

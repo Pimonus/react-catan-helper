@@ -5,7 +5,7 @@ export type BarbariansState = {
 };
 
 export type GameState = {
-  +current: { +enabledThief: boolean },
+  +enabledThief: boolean,
   +loading: boolean,
   +paused: boolean,
 };
@@ -85,7 +85,10 @@ export type CatanAction =
   | { type: 'PLAYER::DESELECT' }
   | { type: 'PLAYER::ADD::POINT', playerUuid: string }
   | { type: 'PLAYER::ATTRIBUTE::ROAD', playerUuid: string }
-  | { type: 'PLAYER::ATTRIBUTE::ARMY', playerUuid: string };
+  | { type: 'PLAYER::ATTRIBUTE::ARMY', playerUuid: string }
+  | { type: 'SHORTCUTS::DISABLE' }
+  | { type: 'SWAL::FIRE' }
+  | { type: 'SWAL::DISMISS' };
 
 export type Dispatch = (action: CatanAction | ThunkAction) => any;
 export type GetState = () => CatanState;

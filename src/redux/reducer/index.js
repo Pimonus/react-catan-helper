@@ -2,14 +2,13 @@
 
 import { initialState } from '../store';
 import {
-  attackAdvance,
   computePlayersScores,
   computePlayersState,
   newPlayer,
+  ATTACK_POSITION,
   BARBARIANS,
-  SIX,
 } from '../../core';
-import type { CatanAction, CatanState, Player } from '../../flow';
+import type { CatanAction, CatanState } from '../../flow';
 
 const softActions = [
   '@@INIT',
@@ -17,6 +16,8 @@ const softActions = [
   'GAME::FOUND',
   'GAME::NOT_FOUND',
   'GAME::RESUME',
+  'SWAL::FIRE',
+  'SWAL::DISMISS',
 ];
 
 const enablingShortcutsActions = [
@@ -24,7 +25,9 @@ const enablingShortcutsActions = [
   'GAME::LOAD',
   'GAME::CREATED',
   'GAME::THIEF::ENABLE',
+  'PLAYER::ADD',
   'PLAYER::DESELECT',
+  'SWAL::DISMISS',
 ];
 
 export const reducer = (
@@ -86,7 +89,7 @@ export const reducer = (
     case 'GAME::THIEF::ENABLE':
       newState = {
         ...state,
-        enabledThief: true,
+        game: { ...state.game, enabledThief: true },
       };
       break;
 
@@ -99,9 +102,9 @@ export const reducer = (
         barbarians: {
           ...state.barbarians,
           position:
-            barbariansPosition === attackAdvance
+            barbariansPosition === ATTACK_POSITION
               ? barbariansPosition
-              : barbariansPosition % attackAdvance,
+              : barbariansPosition % ATTACK_POSITION,
         },
         dices: {
           ...state.dices,
@@ -123,7 +126,7 @@ export const reducer = (
       };
       break;
 
-    case 'DICES::REVEAL':
+    case 'DICES::REVEAL': {
       newState = {
         ...state,
         dices: {
@@ -133,6 +136,7 @@ export const reducer = (
         },
       };
       break;
+    }
 
     case 'DICES::SPIN':
       newState = {

@@ -2,7 +2,12 @@
 
 import uuidv1 from 'uuid/v1';
 
-import type { ClassicDiceValue, Player, SpecialDiceValue } from '../flow';
+import type {
+  ClassicDiceValue,
+  DicesValues,
+  Player,
+  SpecialDiceValue,
+} from '../flow';
 
 export const ONE = 'one';
 export const TWO = 'two';
@@ -25,7 +30,17 @@ const specialDiceValues = [
   BLUE,
 ];
 
-export const attackAdvance = 7;
+export const diceValueMatching = {
+  one: 1,
+  two: 2,
+  three: 3,
+  four: 4,
+  five: 5,
+  six: 6,
+};
+
+export const THIEF_SCORE = 7;
+export const ATTACK_POSITION = 7;
 
 export const newPlayer = (nickname: string): Player => ({
   nickname,
@@ -110,5 +125,8 @@ export const getSpecialDiceValue = (): SpecialDiceValue => {
   return specialDiceValues[i];
 };
 
+export const getDicesScore = (values: DicesValues): number =>
+  diceValueMatching[values.redValue] + diceValueMatching[values.whiteValue];
+
 export const didBarbariansReachCoast = (advance: number) =>
-  advance === attackAdvance;
+  advance === ATTACK_POSITION;

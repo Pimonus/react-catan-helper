@@ -9,11 +9,11 @@ import { rollDices } from '../redux/actions/dices';
 import { getExistingGame } from '../redux/actions/game';
 import About from './About.jsx';
 import Loader from './Loader.jsx';
-import BarbariansContainer from './modules/barbarians/BarbariansContainer.jsx';
 import DicesContainer from './modules/dices/DicesContainer.jsx';
 import GameMenu from './modules/menu/GameMenu.jsx';
 import HomePage from './modules/home_page/HomePage.jsx';
 import PlayerContainer from './modules/players/PlayerContainer.jsx';
+import SwalManager from './modules/swals/SwalManager';
 
 import type { CatanState, Dispatch, GameState, Player } from '../flow';
 
@@ -63,9 +63,11 @@ class Board extends PureComponent<Props> {
         <main>
           <Route exact path="/about-us" component={About} />
         </main>
+        <GameMenu pausedGame={paused || loading} />
         <HomePage />
         {loading ? <Loader /> : null}
         <PlayerContainer pausedGame={paused || loading} />
+        <SwalManager />
         <div
           className={cn('board', {
             hidden: paused || loading,
