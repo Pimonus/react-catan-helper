@@ -75,6 +75,7 @@ export type CatanAction =
   | { type: 'GAME::PAUSE' }
   | { type: 'GAME::RESUME' }
   | { type: 'GAME::THIEF::ENABLE' }
+  | { type: 'BARBARIANS::ATTACK' }
   | { type: 'BARBARIANS::PROGRESS' }
   | { type: 'DICES::DEFINE::VALUES', values: DicesValues }
   | { type: 'DICES::FLIP' }

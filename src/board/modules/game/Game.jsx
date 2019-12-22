@@ -39,6 +39,7 @@ const GameMenu = (props: Props) => {
             className="thief-icon"
             src={thiefIcon}
             data-tip="React-tooltip"
+            alt="Bad thief!"
           />
           <Tooltip className="tooltip" place="left" type="dark" effect="solid">
             Le Voleur est activé (héhé)

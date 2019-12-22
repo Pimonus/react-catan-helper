@@ -7,7 +7,7 @@ import barbarians from '../../../assets/images/barbarians.png';
 import './BarbariansSwal.css';
 
 type Props = {
-  +progress: boolean,
+  +progress?: boolean,
 };
 
 const BarbariansSwal = (props: Props) => {

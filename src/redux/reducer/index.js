@@ -14,11 +14,14 @@ const softActions = [
   'GAME::FOUND',
   'GAME::NOT_FOUND',
   'GAME::RESUME',
+  'SHORTCUTS::DISABLE',
   'SWAL::FIRE',
   'SWAL::DISMISS',
 ];
 
 const enablingShortcutsActions = [
+  'BARBARIANS::ATTACK',
+  'BARBARIANS::PROGRESS',
   'DICES::REVEAL',
   'GAME::LOAD',
   'GAME::CREATED',
@@ -88,6 +91,15 @@ export const reducer = (
       newState = {
         ...state,
         game: { ...state.game, enabledThief: true },
+      };
+      break;
+
+    case 'BARBARIANS::ATTACK':
+      newState = {
+        ...state,
+        barbarians: {
+          position: 0,
+        },
       };
       break;
 
@@ -213,7 +225,7 @@ export const reducer = (
         !softActions.find(type => type === action.type)
       )
         console.warn(
-          'Ooops, the reducer is about to return the current state without changes!'
+          `Ooops, the reducer is about to return the current state without changes! The action is ${action.type}`
         );
       newState = state;
       break;

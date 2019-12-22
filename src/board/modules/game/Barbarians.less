@@ -1,5 +1,29 @@
 .barbarians-container {
   width: fit-content;
+  height: 100%;
+  margin-right: 1rem;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  .step {
+    height: 6rem;
+    width: 6rem;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 100%;
+    background-size: cover;
+
+    &.current {
+      background-image: url(../../../assets/images/dices/barbarians.png);
+    }
+
+    &.overtaken {
+      background-image: url(../../../assets/images/dices/barbarians.png);
+      opacity: 0.5;
+    }
+
+    &.attack {
+      background-image: url(../../../assets/images/fight.png);
+    }
+  }
 }

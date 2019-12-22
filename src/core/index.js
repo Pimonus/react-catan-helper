@@ -88,7 +88,9 @@ export const computePlayersState = (
   }
 ): $ReadOnlyArray<Player> => {
   if (Object.keys(data).length !== 1)
-    throw 'Payload on players state change should only contain one value (newArmyHolder | newRoadHolder | newVictoryPoint)';
+    throw new Error(
+      'Payload on players state change should only contain one value (newArmyHolder | newRoadHolder | newVictoryPoint)'
+    );
 
   let newState: $ReadOnlyArray<Player> = state;
   if (data.newArmyHolder) {
@@ -132,4 +134,4 @@ export const didBarbariansProgress = (values: DicesValues) =>
   values.specialValue === BARBARIANS;
 
 export const didBarbariansReachCoast = (advance: number) =>
-  advance === ATTACK_POSITION;
+  advance === ATTACK_POSITION - 1;
