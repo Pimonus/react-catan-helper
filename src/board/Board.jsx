@@ -10,7 +10,7 @@ import { getExistingGame } from '../redux/actions/game';
 import About from './About.jsx';
 import Loader from './Loader.jsx';
 import DicesContainer from './modules/dices/DicesContainer.jsx';
-import GameMenu from './modules/menu/GameMenu.jsx';
+import Game from './modules/game/Game.jsx';
 import HomePage from './modules/home_page/HomePage.jsx';
 import PlayerContainer from './modules/players/PlayerContainer.jsx';
 import SwalManager from './modules/swals/SwalManager';
@@ -63,7 +63,7 @@ class Board extends PureComponent<Props> {
         <main>
           <Route exact path="/about-us" component={About} />
         </main>
-        <GameMenu pausedGame={paused || loading} />
+        <Game pausedGame={paused || loading} />
         <HomePage />
         {loading ? <Loader /> : null}
         <PlayerContainer pausedGame={paused || loading} />

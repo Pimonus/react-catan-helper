@@ -6,12 +6,18 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 // actions
+import { moveBarbariansForward } from '../../../redux/actions/barbarians';
 import { disableShortcuts, enableThief } from '../../../redux/actions/game';
 import { dismissSwal, fireSwal } from '../../../redux/actions/swal';
 // components
+import BarbariansSwal from './BarbariansSwal';
 import ThiefSwal from './ThiefSwal';
 // helpers
-import { getDicesScore, THIEF_SCORE } from '../../../core';
+import {
+  didBarbariansProgress,
+  getDicesScore,
+  THIEF_SCORE,
+} from '../../../core';
 // types
 import type {
   CatanState,
@@ -25,6 +31,15 @@ import './SwalManager.css';
 const swal = withReactContent(Swal);
 const swalDelay = 2000;
 const swalTimmer = 5000;
+
+type SwalWithCallback = {
+  +swal: {
+    timer: number,
+    showConfirmButton: boolean,
+    html: any,
+  },
+  +callback: () => any,
+};
 
 const dicesHaveBeenRevealed = (flipped: boolean, stillFlipped: boolean) =>
   flipped && !stillFlipped;
@@ -40,6 +55,7 @@ type DispatchProps = {
   +dismissSwal: () => any,
   +enableThief: () => any,
   +fireSwal: () => any,
+  +moveBarbariansForward: () => any,
 };
 
 const mapStateToProps = (state: CatanState): StateProps => ({
@@ -53,12 +69,13 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   dismissSwal: () => dispatch(dismissSwal()),
   enableThief: () => dispatch(enableThief()),
   fireSwal: () => dispatch(fireSwal()),
+  moveBarbariansForward: () => dispatch(moveBarbariansForward()),
 });
 
 type Props = StateProps & DispatchProps;
 
 class SwalManager extends PureComponent<Props> {
-  componentDidUpdate(prevProps: Props) {
+  async componentDidUpdate(prevProps: Props) {
     const { dices: prevDices, game } = prevProps;
     const thiefWasNotEnabled = !game.enabledThief;
     const { dices } = this.props;
@@ -66,23 +83,44 @@ class SwalManager extends PureComponent<Props> {
       prevProps._createdAt === this.props._createdAt &&
       dicesHaveBeenRevealed(prevDices.flipped, dices.flipped)
     ) {
-      if (thiefWasNotEnabled && getDicesScore(dices.values) === THIEF_SCORE)
-        this.fire(
-          {
+      const dicesScore = getDicesScore(dices.values);
+      const swalQueue: SwalWithCallback[] = [];
+
+      // Enabled thief swal
+      if (thiefWasNotEnabled && dicesScore === THIEF_SCORE)
+        swalQueue.push({
+          swal: {
             timer: swalTimmer,
             showConfirmButton: false,
             html: <ThiefSwal />,
           },
-          () => this.props.enableThief()
-        );
+          callback: () => this.props.enableThief(),
+        });
+
+      // Barbarians progress swal
+      if (didBarbariansProgress(dices.values))
+        swalQueue.push({
+          swal: {
+            timer: swalTimmer,
+            showConfirmButton: false,
+            html: <BarbariansSwal progress />,
+          },
+          callback: () => this.props.moveBarbariansForward(),
+        });
+
+      if (swalQueue.length > 0) this.processSwalQueue(swalQueue);
     }
   }
 
-  fire(swalParams: { [key: string]: any }, callback: () => any) {
+  async processSwalQueue(swalQueue: SwalWithCallback[]) {
     this.props.disableShortcuts();
-    setTimeout(() => this.props.fireSwal(), swalDelay);
-    setTimeout(() => swal.fire(swalParams), swalDelay);
-    setTimeout(() => callback(), swalDelay + swalTimmer);
+    await new Promise(r => setTimeout(r, swalDelay));
+    this.props.fireSwal();
+    await swalQueue.reduce(async (previous, item) => {
+      await previous;
+      await swal.fire(item.swal);
+      item.callback();
+    }, Promise.resolve());
   }
 
   render = () => null;

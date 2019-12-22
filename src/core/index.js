@@ -128,5 +128,8 @@ export const getSpecialDiceValue = (): SpecialDiceValue => {
 export const getDicesScore = (values: DicesValues): number =>
   diceValueMatching[values.redValue] + diceValueMatching[values.whiteValue];
 
+export const didBarbariansProgress = (values: DicesValues) =>
+  values.specialValue === BARBARIANS;
+
 export const didBarbariansReachCoast = (advance: number) =>
   advance === ATTACK_POSITION;
