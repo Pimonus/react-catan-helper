@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import Tooltip from 'react-tooltip';
 import cn from 'classnames';
 
+import Barbarians from './Barbarians';
 import type { CatanState } from '../../../flow';
 import thiefIcon from '../../../assets/images/brigand.png';
-import './GameMenu.css';
+import './Game.css';
 
 type OwnProps = {
   +pausedGame: boolean,
@@ -28,7 +29,7 @@ const GameMenu = (props: Props) => {
 
   return (
     <div
-      className={cn('menu-container', {
+      className={cn('game-container', {
         hidden: props.pausedGame,
       })}
     >
@@ -38,12 +39,14 @@ const GameMenu = (props: Props) => {
             className="thief-icon"
             src={thiefIcon}
             data-tip="React-tooltip"
+            alt="Bad thief!"
           />
           <Tooltip className="tooltip" place="left" type="dark" effect="solid">
             Le Voleur est activé (héhé)
           </Tooltip>
         </>
       ) : null}
+      <Barbarians />
     </div>
   );
 };

@@ -5,8 +5,6 @@ import {
   computePlayersScores,
   computePlayersState,
   newPlayer,
-  ATTACK_POSITION,
-  BARBARIANS,
 } from '../../core';
 import type { CatanAction, CatanState } from '../../flow';
 
@@ -16,11 +14,14 @@ const softActions = [
   'GAME::FOUND',
   'GAME::NOT_FOUND',
   'GAME::RESUME',
+  'SHORTCUTS::DISABLE',
   'SWAL::FIRE',
   'SWAL::DISMISS',
 ];
 
 const enablingShortcutsActions = [
+  'BARBARIANS::ATTACK',
+  'BARBARIANS::PROGRESS',
   'DICES::REVEAL',
   'GAME::LOAD',
   'GAME::CREATED',
@@ -93,19 +94,27 @@ export const reducer = (
       };
       break;
 
-    case 'DICES::DEFINE::VALUES': {
-      const barbariansPosition =
-        state.barbarians.position +
-        (action.values.specialValue === BARBARIANS ? 1 : 0);
+    case 'BARBARIANS::ATTACK':
       newState = {
         ...state,
         barbarians: {
-          ...state.barbarians,
-          position:
-            barbariansPosition === ATTACK_POSITION
-              ? barbariansPosition
-              : barbariansPosition % ATTACK_POSITION,
+          position: 0,
         },
+      };
+      break;
+
+    case 'BARBARIANS::PROGRESS':
+      newState = {
+        ...state,
+        barbarians: {
+          position: state.barbarians.position + 1,
+        },
+      };
+      break;
+
+    case 'DICES::DEFINE::VALUES': {
+      newState = {
+        ...state,
         dices: {
           ...state.dices,
           history: [...state.dices.history, action.values],
@@ -216,7 +225,7 @@ export const reducer = (
         !softActions.find(type => type === action.type)
       )
         console.warn(
-          'Ooops, the reducer is about to return the current state without changes!'
+          `Ooops, the reducer is about to return the current state without changes! The action is ${action.type}`
         );
       newState = state;
       break;
