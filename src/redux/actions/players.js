@@ -24,6 +24,33 @@ export const deselectPlayer = (): ThunkAction => (dispatch: Dispatch) => {
   dispatch({ type: 'PLAYER::DESELECT' });
 };
 
+export const addColony = (playerUuid: string): ThunkAction => (
+  dispatch: Dispatch
+) => {
+  dispatch({
+    type: 'PLAYER::ADD::COLONY',
+    playerUuid,
+  });
+};
+
+export const addCity = (playerUuid: string): ThunkAction => (
+  dispatch: Dispatch
+) => {
+  dispatch({
+    type: 'PLAYER::ADD::CITY',
+    playerUuid,
+  });
+};
+
+export const destroyCity = (playerUuid: string): ThunkAction => (
+  dispatch: Dispatch
+) => {
+  dispatch({
+    type: 'PLAYER::DESTROY::CITY',
+    playerUuid,
+  });
+};
+
 export const addVictoryPoint = (playerUuid: string): ThunkAction => (
   dispatch: Dispatch
 ) => {

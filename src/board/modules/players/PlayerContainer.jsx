@@ -10,6 +10,9 @@ import {
   addNewPlayer,
   selectPlayer,
   deselectPlayer,
+  addColony,
+  addCity,
+  destroyCity,
   addVictoryPoint,
   attributeLongestRoad,
   attributeStrongestArmy,
@@ -35,6 +38,9 @@ type DispatchProps = {
   +addNewPlayer: (nickname: string) => any,
   +selectPlayer: (playerUuid: string) => any,
   +deselectPlayer: () => any,
+  +addColony: (playerUuid: string) => any,
+  +addCity: (playerUuid: string) => any,
+  +destroyCity: (playerUuid: string) => any,
   +addVictoryPoint: (playerUuid: string) => any,
   +attributeLongestRoad: (playerUuid: string) => any,
   +attributeStrongestArmy: (playerUuid: string) => any,
@@ -49,6 +55,9 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   addNewPlayer: nickname => dispatch(addNewPlayer(nickname)),
   selectPlayer: playerUuid => dispatch(selectPlayer(playerUuid)),
   deselectPlayer: () => dispatch(deselectPlayer()),
+  addColony: playerUuid => dispatch(addColony(playerUuid)),
+  addCity: playerUuid => dispatch(addCity(playerUuid)),
+  destroyCity: playerUuid => dispatch(destroyCity(playerUuid)),
   addVictoryPoint: playerUuid => dispatch(addVictoryPoint(playerUuid)),
   attributeLongestRoad: playerUuid =>
     dispatch(attributeLongestRoad(playerUuid)),
@@ -64,6 +73,9 @@ const DicesContainer = (props: Props) => {
   const {
     players,
     selectedPlayerUuid,
+    addColony,
+    addCity,
+    destroyCity,
     addVictoryPoint,
     attributeLongestRoad,
     attributeStrongestArmy,
@@ -136,6 +148,9 @@ const DicesContainer = (props: Props) => {
         <PlayerModal
           deselect={props.deselectPlayer}
           player={selectedPlayer}
+          addColony={uuid => addColony(uuid)}
+          addCity={uuid => addCity(uuid)}
+          destroyCity={uuid => destroyCity(uuid)}
           addVictoryPoint={uuid => addVictoryPoint(uuid)}
           attributeLongestRoad={uuid => attributeLongestRoad(uuid)}
           attributeStrongestArmy={uuid => attributeStrongestArmy(uuid)}
