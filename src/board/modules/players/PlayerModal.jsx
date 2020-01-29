@@ -36,6 +36,7 @@ const PlayerModal = (props: OwnProps) => {
       case NO_ACTION:
         toggleActionPanel(NO_ACTION);
         changeActionsDOM(null);
+        break;
       case COLONIES_ACTIONS:
         if (showActionsPanel === COLONIES_ACTIONS) {
           toggleActionPanel(NO_ACTION);
@@ -84,6 +85,8 @@ const PlayerModal = (props: OwnProps) => {
           );
         }
         break;
+      default:
+        return;
     }
   };
 
