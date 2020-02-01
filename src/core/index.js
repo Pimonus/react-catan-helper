@@ -85,6 +85,9 @@ export const computePlayersState = (
     newArmyHolder?: string,
     newRoadHolder?: string,
     newVictoryPoint?: string,
+    newColony?: string,
+    newCity?: string,
+    destroyCity?: string,
   }
 ): $ReadOnlyArray<Player> => {
   if (Object.keys(data).length !== 1)
@@ -112,6 +115,32 @@ export const computePlayersState = (
         player.uuid === data.newVictoryPoint
           ? player.victoryPoints + 1
           : player.victoryPoints,
+    }));
+  }
+  if (data.newColony) {
+    newState = state.map<Player>((player: Player) => ({
+      ...player,
+      colonies:
+        player.uuid === data.newColony ? player.colonies + 1 : player.colonies,
+    }));
+  }
+  if (data.newCity) {
+    newState = state.map<Player>((player: Player) => ({
+      ...player,
+      colonies:
+        player.uuid === data.newCity ? player.colonies - 1 : player.colonies,
+      cities: player.uuid === data.newCity ? player.cities + 1 : player.cities,
+    }));
+  }
+  if (data.destroyCity) {
+    newState = state.map<Player>((player: Player) => ({
+      ...player,
+      colonies:
+        player.uuid === data.destroyCity
+          ? player.colonies + 1
+          : player.colonies,
+      cities:
+        player.uuid === data.destroyCity ? player.cities - 1 : player.cities,
     }));
   }
   return computePlayersScores(newState);

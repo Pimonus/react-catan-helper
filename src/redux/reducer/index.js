@@ -189,6 +189,36 @@ export const reducer = (
       };
       break;
 
+    case 'PLAYER::ADD::COLONY': {
+      newState = {
+        ...state,
+        players: computePlayersState(state.players, {
+          newColony: action.playerUuid,
+        }),
+      };
+      break;
+    }
+
+    case 'PLAYER::ADD::CITY': {
+      newState = {
+        ...state,
+        players: computePlayersState(state.players, {
+          newCity: action.playerUuid,
+        }),
+      };
+      break;
+    }
+
+    case 'PLAYER::DESTROY::CITY': {
+      newState = {
+        ...state,
+        players: computePlayersState(state.players, {
+          destroyCity: action.playerUuid,
+        }),
+      };
+      break;
+    }
+
     case 'PLAYER::ADD::POINT': {
       newState = {
         ...state,

@@ -20,6 +20,8 @@
         "react/no-did-update-set-state": "off",
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
-        "no-unused-vars": "error"
+        "no-unused-vars": "error",
+        "no-fallthrough": "error",
+        "default-case": "error",
     }
 }
