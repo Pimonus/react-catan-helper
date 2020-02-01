@@ -1,6 +1,6 @@
 /* @flow */
 
-import React, { PureComponent } from 'react';
+import React, { useEffect } from 'react';
 import { Route /*, Link */ } from 'react-router-dom';
 import { connect } from 'react-redux';
 import cn from 'classnames';
@@ -15,25 +15,23 @@ import HomePage from './modules/home_page/HomePage.jsx';
 import PlayerContainer from './modules/players/PlayerContainer.jsx';
 import SwalManager from './modules/swals/SwalManager';
 
-import type { CatanState, Dispatch, GameState, Player } from '../flow';
+import type { CatanState, Dispatch, GameState } from '../flow';
 
 import './Board.css';
 
 type StateProps = {
   +game: GameState,
   +listenToShortcuts: boolean,
-  +players: $ReadOnlyArray<Player>,
 };
 
 type DispatchProps = {
-  +getExistingGame: () => boolean,
+  +getExistingGame: () => any,
   +rollDices: () => any,
 };
 
 const mapStateToProps = (state: CatanState): StateProps => ({
   game: state.game,
   listenToShortcuts: state.listenToShortcuts,
-  players: state.players,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
@@ -43,42 +41,38 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
 
 type Props = StateProps & DispatchProps;
 
-class Board extends PureComponent<Props> {
-  componentDidMount = () => {
-    this.props.getExistingGame();
-  };
+const Board = (props: Props) => {
+  const { game, getExistingGame, listenToShortcuts, rollDices } = props;
+  const { loading, paused } = game;
 
-  render() {
-    const { game, listenToShortcuts } = this.props;
-    const { loading, paused } = game;
+  useEffect(() => getExistingGame(), []);
 
-    return (
+  return (
+    <div
+      className="catan-game"
+      onKeyUp={e => {
+        if (listenToShortcuts && e.keyCode === 32) rollDices();
+      }}
+      tabIndex={0}
+    >
+      <main>
+        <Route exact path="/about-us" component={About} />
+      </main>
+      <Game pausedGame={paused || loading} />
+      <HomePage />
+      {loading ? <Loader /> : null}
+      <PlayerContainer pausedGame={paused || loading} />
+      <SwalManager />
       <div
-        className="catan-game"
-        onKeyUp={e => {
-          if (listenToShortcuts && e.keyCode === 32) this.props.rollDices();
-        }}
-        tabIndex={0}
+        className={cn('board', {
+          hidden: paused || loading,
+        })}
       >
-        <main>
-          <Route exact path="/about-us" component={About} />
-        </main>
-        <Game pausedGame={paused || loading} />
-        <HomePage />
-        {loading ? <Loader /> : null}
-        <PlayerContainer pausedGame={paused || loading} />
-        <SwalManager />
-        <div
-          className={cn('board', {
-            hidden: paused || loading,
-          })}
-        >
-          <DicesContainer pausedGame={paused || loading} />
-        </div>
+        <DicesContainer pausedGame={paused || loading} />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default connect(
   mapStateToProps,
