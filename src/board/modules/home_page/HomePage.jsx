@@ -35,6 +35,7 @@ type Props = StateProps & DispatchProps;
 
 const HomePage = (props: Props) => {
   const { availableGame, game } = props;
+
   return (
     <div className={cn('homepage', { visible: game.paused })}>
       <img src={catanLogo} alt="Catan" />

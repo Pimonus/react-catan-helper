@@ -17,6 +17,7 @@ type Props = {
 
 const Dice = (props: Props) => {
   const { spinning, flipped } = props;
+
   return (
     <div
       className={cn('dice', {
