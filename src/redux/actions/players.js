@@ -88,3 +88,12 @@ export const savePlayerNickname = (
     nickname,
   });
 };
+
+export const deletePlayer = (playerUuid: string): ThunkAction => (
+  dispatch: Dispatch
+) => {
+  dispatch({
+    type: 'PLAYER::DELETE',
+    playerUuid,
+  });
+};

@@ -92,6 +92,7 @@ export type CatanAction =
   | { type: 'PLAYER::ATTRIBUTE::ROAD', playerUuid: string }
   | { type: 'PLAYER::ATTRIBUTE::ARMY', playerUuid: string }
   | { type: 'PLAYER::SAVE::NICKNAME', playerUuid: string, nickname: string }
+  | { type: 'PLAYER::DELETE', playerUuid: string }
   | { type: 'SHORTCUTS::DISABLE' }
   | { type: 'SWAL::FIRE' }
   | { type: 'SWAL::DISMISS' };

@@ -6,7 +6,7 @@ import {
   computePlayersState,
   newPlayer,
 } from '../../core';
-import type { CatanAction, CatanState } from '../../flow';
+import type { CatanAction, CatanState, Player } from '../../flow';
 
 const softActions = [
   '@@INIT',
@@ -257,6 +257,19 @@ export const reducer = (
         players: computePlayersState(state.players, {
           newNickname: { uuid, nickname },
         }),
+      };
+      break;
+    }
+
+    case 'PLAYER::DELETE': {
+      const { playerUuid } = action;
+      const newPlayers: $ReadOnlyArray<Player> = state.players.filter(
+        player => player.uuid !== playerUuid
+      );
+      newState = {
+        ...state,
+        players: newPlayers,
+        selectedPlayerUuid: undefined,
       };
       break;
     }

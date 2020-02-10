@@ -16,6 +16,7 @@ type OwnProps = {
   +deselect: () => any,
   +destroyCity: (playerUuid: string) => any,
   +savePlayerNickname: (playerUuid: string, nickname: string) => any,
+  +deletePlayer: (playerUuid: string) => any,
   +player: Player,
 };
 
@@ -97,6 +98,10 @@ const PlayerModal = (props: OwnProps) => {
     <div className="player modal">
       <div className="container">
         <div className="cancel-cross" onClick={props.deselect}></div>
+        <div
+          className="trash-bin"
+          onClick={() => props.deletePlayer(player.uuid)}
+        ></div>
         <div className="title">
           {nicknameEdition ? (
             <input
