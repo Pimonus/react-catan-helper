@@ -1,7 +1,36 @@
 .modal.player {
+  cursor: url(../../../assets/images/cursor.png), auto !important;
+
   .container {
-    h1 {
-      margin-bottom: 1rem;
+    .title {
+      h1 {
+        margin-bottom: 0;
+      }
+
+      input {
+        height: 4rem;
+        text-align: center;
+        font-size: 3rem;
+        outline: none;
+        background: rgba(255, 255, 255, 0.6);
+        border: none;
+      }
+
+      .edit {
+        cursor: url(../../../assets/images/pointer.png), auto !important;
+        width: 2rem;
+        height: 2rem;
+        margin-left: 1rem;
+        background-image: url(../../../assets/images/feather_pen.png);
+        background-size: contain;
+      }
+    }
+
+    .colonies-manager,
+    .cities-manager,
+    .victory-points-manager,
+    .bottom-half .action {
+      cursor: url(../../../assets/images/pointer.png), auto !important;
     }
 
     .top-half,
@@ -61,6 +90,9 @@
         flex-direction: column;
 
         p {
+          cursor: url(../../../assets/images/pointer.png), auto;
+          width: fit-content;
+          align-self: center;
           font-size: 2rem;
 
           &:first-of-type {

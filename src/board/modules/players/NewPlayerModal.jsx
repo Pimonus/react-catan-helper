@@ -16,8 +16,7 @@ const NewPlayerModal = (props: OwnProps) => {
     <div className="new-player modal">
       <div className="container">
         <div className="cancel-cross" onClick={props.cancel}></div>
-        <h1>Nouveau Joueur</h1>
-        <p>Comment s'appelle votre nouveau participant ?</p>
+        <h1>Comment s'appelle votre nouveau joueur ?</h1>
         <input
           autoFocus
           type="text"

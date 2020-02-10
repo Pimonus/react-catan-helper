@@ -88,6 +88,10 @@ export const computePlayersState = (
     newColony?: string,
     newCity?: string,
     destroyCity?: string,
+    newNickname?: {
+      uuid: string,
+      nickname: string,
+    },
   }
 ): $ReadOnlyArray<Player> => {
   if (Object.keys(data).length !== 1)
@@ -141,6 +145,13 @@ export const computePlayersState = (
           : player.colonies,
       cities:
         player.uuid === data.destroyCity ? player.cities - 1 : player.cities,
+    }));
+  }
+  if (data.newNickname) {
+    const { uuid, nickname } = data.newNickname;
+    newState = state.map<Player>((player: Player) => ({
+      ...player,
+      nickname: player.uuid === uuid ? nickname : player.nickname,
     }));
   }
   return computePlayersScores(newState);

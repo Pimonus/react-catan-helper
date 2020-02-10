@@ -16,6 +16,7 @@ import {
   addVictoryPoint,
   attributeLongestRoad,
   attributeStrongestArmy,
+  savePlayerNickname,
 } from '../../../redux/actions/players';
 import type { CatanState, Dispatch, Player } from '../../../flow';
 
@@ -44,6 +45,7 @@ type DispatchProps = {
   +addVictoryPoint: (playerUuid: string) => any,
   +attributeLongestRoad: (playerUuid: string) => any,
   +attributeStrongestArmy: (playerUuid: string) => any,
+  +savePlayerNickname: (playerUuid: string, nickname: string) => any,
 };
 
 const mapStateToProps = (state: CatanState): StateProps => ({
@@ -63,6 +65,8 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     dispatch(attributeLongestRoad(playerUuid)),
   attributeStrongestArmy: playerUuid =>
     dispatch(attributeStrongestArmy(playerUuid)),
+  savePlayerNickname: (playerUuid, nickname) =>
+    dispatch(savePlayerNickname(playerUuid, nickname)),
 });
 
 type Props = OwnProps & StateProps & DispatchProps;
@@ -79,6 +83,7 @@ const DicesContainer = (props: Props) => {
     addVictoryPoint,
     attributeLongestRoad,
     attributeStrongestArmy,
+    savePlayerNickname,
   } = props;
   const playerCount = players.length;
 
@@ -154,6 +159,9 @@ const DicesContainer = (props: Props) => {
           addVictoryPoint={uuid => addVictoryPoint(uuid)}
           attributeLongestRoad={uuid => attributeLongestRoad(uuid)}
           attributeStrongestArmy={uuid => attributeStrongestArmy(uuid)}
+          savePlayerNickname={(uuid, nickname) =>
+            savePlayerNickname(uuid, nickname)
+          }
         />
       ) : null}
     </div>

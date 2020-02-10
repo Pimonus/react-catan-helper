@@ -55,6 +55,7 @@ export const reducer = (
                 loading: false,
                 paused: false,
               },
+              selectedPlayerUuid: undefined,
             };
       break;
     }
@@ -244,6 +245,17 @@ export const reducer = (
         ...state,
         players: computePlayersState(state.players, {
           newArmyHolder: action.playerUuid,
+        }),
+      };
+      break;
+    }
+
+    case 'PLAYER::SAVE::NICKNAME': {
+      const { playerUuid: uuid, nickname } = action;
+      newState = {
+        ...state,
+        players: computePlayersState(state.players, {
+          newNickname: { uuid, nickname },
         }),
       };
       break;

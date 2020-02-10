@@ -77,3 +77,14 @@ export const attributeStrongestArmy = (playerUuid: string): ThunkAction => (
     playerUuid,
   });
 };
+
+export const savePlayerNickname = (
+  playerUuid: string,
+  nickname: string
+): ThunkAction => (dispatch: Dispatch) => {
+  dispatch({
+    type: 'PLAYER::SAVE::NICKNAME',
+    playerUuid,
+    nickname,
+  });
+};

@@ -15,6 +15,7 @@ type OwnProps = {
   +attributeStrongestArmy: (playerUuid: string) => any,
   +deselect: () => any,
   +destroyCity: (playerUuid: string) => any,
+  +savePlayerNickname: (playerUuid: string, nickname: string) => any,
   +player: Player,
 };
 
@@ -30,6 +31,8 @@ const PlayerModal = (props: OwnProps) => {
 
   const [showActionsPanel, toggleActionPanel] = useState(NO_ACTION);
   const [actionsDOM, changeActionsDOM] = useState(null);
+  const [nickname, editNickname] = useState(player.nickname);
+  const [nicknameEdition, toggleNicknameEdition] = useState(false);
 
   const switchActionsDOM = (code: ACTION_CODE) => {
     switch (code) {
@@ -94,7 +97,34 @@ const PlayerModal = (props: OwnProps) => {
     <div className="player modal">
       <div className="container">
         <div className="cancel-cross" onClick={props.deselect}></div>
-        <h1>{player.nickname}</h1>
+        <div className="title">
+          {nicknameEdition ? (
+            <input
+              autoFocus
+              type="text"
+              value={nickname}
+              onChange={event => {
+                if (event.target.value.length < 20)
+                  editNickname(event.target.value);
+              }}
+              onFocus={event => event.target.select()}
+              onKeyUp={event => {
+                if (event.key === 'Escape' || event.key === 'Enter')
+                  toggleNicknameEdition(false);
+                if (event.key === 'Enter')
+                  props.savePlayerNickname(player.uuid, event.target.value);
+              }}
+            />
+          ) : (
+            <>
+              <h1>{player.nickname}</h1>
+              <div
+                className="edit"
+                onClick={() => toggleNicknameEdition(true)}
+              />
+            </>
+          )}
+        </div>
         <div className="top-half">
           <div
             className="colonies-manager"
