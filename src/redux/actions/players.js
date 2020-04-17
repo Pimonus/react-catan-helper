@@ -53,12 +53,11 @@ export const destroyCity = (playerUuid: string): ThunkAction => (
 
 export const addVictoryPoint = (playerUuid: string): ThunkAction => (
   dispatch: Dispatch
-) => {
-  dispatch({
-    type: 'PLAYER::ADD::POINT',
-    playerUuid,
-  });
-};
+) => dispatch({ type: 'PLAYER::ADD::POINT', playerUuid });
+
+export const removeVictoryPoint = (playerUuid: string): ThunkAction => (
+  dispatch: Dispatch
+) => dispatch({ type: 'PLAYER::REMOVE::POINT', playerUuid });
 
 export const attributeLongestRoad = (playerUuid: string): ThunkAction => (
   dispatch: Dispatch

@@ -230,6 +230,16 @@ export const reducer = (
       break;
     }
 
+    case 'PLAYER::REMOVE::POINT': {
+      newState = {
+        ...state,
+        players: computePlayersState(state.players, {
+          removeVictoryPoint: action.playerUuid,
+        }),
+      };
+      break;
+    }
+
     case 'PLAYER::ATTRIBUTE::ROAD': {
       newState = {
         ...state,

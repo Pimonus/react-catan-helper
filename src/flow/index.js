@@ -89,6 +89,7 @@ export type CatanAction =
   | { type: 'PLAYER::ADD::CITY', playerUuid: string }
   | { type: 'PLAYER::DESTROY::CITY', playerUuid: string }
   | { type: 'PLAYER::ADD::POINT', playerUuid: string }
+  | { type: 'PLAYER::REMOVE::POINT', playerUuid: string }
   | { type: 'PLAYER::ATTRIBUTE::ROAD', playerUuid: string }
   | { type: 'PLAYER::ATTRIBUTE::ARMY', playerUuid: string }
   | { type: 'PLAYER::SAVE::NICKNAME', playerUuid: string, nickname: string }

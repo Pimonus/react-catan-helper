@@ -92,6 +92,7 @@ export const computePlayersState = (
       uuid: string,
       nickname: string,
     },
+    removeVictoryPoint?: string,
   }
 ): $ReadOnlyArray<Player> => {
   if (Object.keys(data).length !== 1)
@@ -118,6 +119,15 @@ export const computePlayersState = (
       victoryPoints:
         player.uuid === data.newVictoryPoint
           ? player.victoryPoints + 1
+          : player.victoryPoints,
+    }));
+  }
+  if (data.removeVictoryPoint) {
+    newState = state.map<Player>((player: Player) => ({
+      ...player,
+      victoryPoints:
+        player.uuid === data.removeVictoryPoint
+          ? player.victoryPoints - 1
           : player.victoryPoints,
     }));
   }

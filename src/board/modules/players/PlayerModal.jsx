@@ -8,89 +8,89 @@ import type { Player } from '../../../flow';
 import './PlayerModal.css';
 
 type OwnProps = {
+  +player: Player,
   +addCity: (playerUuid: string) => any,
   +addColony: (playerUuid: string) => any,
   +addVictoryPoint: (playerUuid: string) => any,
   +attributeLongestRoad: (playerUuid: string) => any,
   +attributeStrongestArmy: (playerUuid: string) => any,
+  +deletePlayer: (playerUuid: string) => any,
   +deselect: () => any,
   +destroyCity: (playerUuid: string) => any,
+  +removeVictoryPoint: (playerUuid: string) => any,
   +savePlayerNickname: (playerUuid: string, nickname: string) => any,
-  +deletePlayer: (playerUuid: string) => any,
-  +player: Player,
 };
 
 const NO_ACTION = 0;
 const COLONIES_ACTIONS = 1;
 const CITIES_ACTIONS = 2;
 const VICTORY_POINTS_ACTIONS = 3;
-type ACTION_CODE = 0 | 1 | 2 | 3;
+type ACTION_TYPE = 0 | 1 | 2 | 3;
 
 const PlayerModal = (props: OwnProps) => {
   const { player } = props;
   const { cities, colonies, uuid, victoryPoints } = player;
 
-  const [showActionsPanel, toggleActionPanel] = useState(NO_ACTION);
-  const [actionsDOM, changeActionsDOM] = useState(null);
+  // const [showActionsPanel, toggleActionPanel] = useState(NO_ACTION);
+  const [actionType, setActionType] = useState(NO_ACTION);
   const [nickname, editNickname] = useState(player.nickname);
   const [nicknameEdition, toggleNicknameEdition] = useState(false);
 
-  const switchActionsDOM = (code: ACTION_CODE) => {
-    switch (code) {
+  const handleActionTypeChange = (type: ACTION_TYPE) => {
+    if (type !== NO_ACTION && type === actionType) setActionType(NO_ACTION);
+    else setActionType(type);
+  };
+
+  const getActionDOM = () => {
+    switch (actionType) {
       case NO_ACTION:
-        toggleActionPanel(NO_ACTION);
-        changeActionsDOM(null);
-        break;
+        return null;
       case COLONIES_ACTIONS:
-        if (showActionsPanel === COLONIES_ACTIONS) {
-          toggleActionPanel(NO_ACTION);
-          changeActionsDOM(null);
-        } else {
-          toggleActionPanel(COLONIES_ACTIONS);
-          changeActionsDOM(
-            <>
-              <p onClick={() => props.addColony(player.uuid)}>
-                Ajouter une colonie
-              </p>
-              <p onClick={() => props.addCity(player.uuid)}>
-                Transformer une colonie en ville
-              </p>
-            </>
-          );
-        }
-        break;
+        return (
+          <>
+            <p onClick={() => props.addColony(player.uuid)}>
+              Ajouter une colonie
+            </p>
+            <p onClick={() => props.addCity(player.uuid)}>
+              Transformer une colonie en ville
+            </p>
+            <p onClick={() => props.addCity(player.uuid)}>
+              Détruire une colonie
+            </p>
+          </>
+        );
       case CITIES_ACTIONS:
-        if (showActionsPanel === CITIES_ACTIONS) {
-          toggleActionPanel(NO_ACTION);
-          changeActionsDOM(null);
-        } else {
-          toggleActionPanel(CITIES_ACTIONS);
-          changeActionsDOM(
-            <>
-              <p onClick={() => props.destroyCity(player.uuid)}>
-                Détruire une ville
-              </p>
-            </>
-          );
-        }
-        break;
+        return (
+          <>
+            <p
+              onClick={() => {
+                if (player.cities > 1) {
+                  props.destroyCity(player.uuid);
+                } else if (player.cities === 1) {
+                  props.destroyCity(player.uuid);
+                  setActionType(NO_ACTION);
+                }
+              }}
+            >
+              Détruire une ville
+            </p>
+          </>
+        );
       case VICTORY_POINTS_ACTIONS:
-        if (showActionsPanel === VICTORY_POINTS_ACTIONS) {
-          toggleActionPanel(NO_ACTION);
-          changeActionsDOM(null);
-        } else {
-          toggleActionPanel(CITIES_ACTIONS);
-          changeActionsDOM(
-            <>
-              <p onClick={() => props.addVictoryPoint(player.uuid)}>
-                Ajouter un point de victoire
+        return (
+          <>
+            <p onClick={() => props.addVictoryPoint(player.uuid)}>
+              Ajouter un point de victoire
+            </p>
+            {player.victoryPoints > 0 && (
+              <p onClick={() => props.removeVictoryPoint(player.uuid)}>
+                Retirer un point de victoire
               </p>
-            </>
-          );
-        }
-        break;
+            )}
+          </>
+        );
       default:
-        return;
+        return null;
     }
   };
 
@@ -133,7 +133,7 @@ const PlayerModal = (props: OwnProps) => {
         <div className="top-half">
           <div
             className="colonies-manager"
-            onClick={() => switchActionsDOM(COLONIES_ACTIONS)}
+            onClick={() => handleActionTypeChange(COLONIES_ACTIONS)}
           >
             <span>{`${colonies} ${
               colonies > 1 ? 'colonies' : 'colonie'
@@ -144,14 +144,14 @@ const PlayerModal = (props: OwnProps) => {
               disabled: cities === 0,
             })}
             onClick={() => {
-              if (cities > 0) switchActionsDOM(CITIES_ACTIONS);
+              if (cities > 0) handleActionTypeChange(CITIES_ACTIONS);
             }}
           >
             <span>{`${cities} ${cities > 1 ? 'villes' : 'ville'}`}</span>
           </div>
           <div
             className="victory-points-manager"
-            onClick={() => switchActionsDOM(VICTORY_POINTS_ACTIONS)}
+            onClick={() => handleActionTypeChange(VICTORY_POINTS_ACTIONS)}
           >
             <span>{`${victoryPoints} ${
               victoryPoints > 1 ? 'points de victoire' : 'point de victoire'
@@ -160,11 +160,11 @@ const PlayerModal = (props: OwnProps) => {
         </div>
         <div
           className={cn('bottom-half', {
-            'with-actions': showActionsPanel,
+            'with-actions': actionType,
           })}
         >
-          {showActionsPanel ? (
-            actionsDOM
+          {actionType ? (
+            getActionDOM()
           ) : (
             <>
               <div
