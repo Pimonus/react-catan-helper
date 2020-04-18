@@ -34,6 +34,7 @@ type DispatchProps = {
   +deletePlayer: (playerUuid: string) => any,
   +deselectPlayer: () => any,
   +destroyCity: (playerUuid: string) => any,
+  +destroyColony: (playerUuid: string) => any,
   +removeVictoryPoint: (playerUuid: string) => any,
   +savePlayerNickname: (playerUuid: string, nickname: string) => any,
   +selectPlayer: (playerUuid: string) => any,
@@ -57,6 +58,8 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   deletePlayer: playerUuid => dispatch(playerActions.deletePlayer(playerUuid)),
   deselectPlayer: () => dispatch(playerActions.deselectPlayer()),
   destroyCity: playerUuid => dispatch(playerActions.destroyCity(playerUuid)),
+  destroyColony: playerUuid =>
+    dispatch(playerActions.destroyColony(playerUuid)),
   removeVictoryPoint: playerUuid =>
     dispatch(playerActions.removeVictoryPoint(playerUuid)),
   selectPlayer: playerUuid => dispatch(playerActions.selectPlayer(playerUuid)),
@@ -84,6 +87,7 @@ const DicesContainer = (props: Props) => {
     deletePlayer,
     deselectPlayer,
     destroyCity,
+    destroyColony,
     removeVictoryPoint,
     savePlayerNickname,
     selectPlayer,
@@ -165,6 +169,7 @@ const DicesContainer = (props: Props) => {
           attributeStrongestArmy={uuid => attributeStrongestArmy(uuid)}
           deletePlayer={uuid => deletePlayer(uuid)}
           destroyCity={uuid => destroyCity(uuid)}
+          destroyColony={uuid => destroyColony(uuid)}
           removeVictoryPoint={uuid => removeVictoryPoint(uuid)}
           savePlayerNickname={(uuid, nickname) =>
             savePlayerNickname(uuid, nickname)

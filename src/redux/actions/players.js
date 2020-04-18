@@ -44,12 +44,11 @@ export const addCity = (playerUuid: string): ThunkAction => (
 
 export const destroyCity = (playerUuid: string): ThunkAction => (
   dispatch: Dispatch
-) => {
-  dispatch({
-    type: 'PLAYER::DESTROY::CITY',
-    playerUuid,
-  });
-};
+) => dispatch({ type: 'PLAYER::DESTROY::CITY', playerUuid });
+
+export const destroyColony = (playerUuid: string): ThunkAction => (
+  dispatch: Dispatch
+) => dispatch({ type: 'PLAYER::DESTROY::COLONY', playerUuid });
 
 export const addVictoryPoint = (playerUuid: string): ThunkAction => (
   dispatch: Dispatch

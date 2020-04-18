@@ -17,6 +17,7 @@ type OwnProps = {
   +deletePlayer: (playerUuid: string) => any,
   +deselect: () => any,
   +destroyCity: (playerUuid: string) => any,
+  +destroyColony: (playerUuid: string) => any,
   +removeVictoryPoint: (playerUuid: string) => any,
   +savePlayerNickname: (playerUuid: string, nickname: string) => any,
 };
@@ -54,9 +55,11 @@ const PlayerModal = (props: OwnProps) => {
             <p onClick={() => props.addCity(player.uuid)}>
               Transformer une colonie en ville
             </p>
-            <p onClick={() => props.addCity(player.uuid)}>
-              Détruire une colonie
-            </p>
+            {player.colonies > 1 && (
+              <p onClick={() => props.destroyColony(player.uuid)}>
+                Détruire une colonie
+              </p>
+            )}
           </>
         );
       case CITIES_ACTIONS:
