@@ -2,10 +2,14 @@
 
 import React, { useState } from 'react';
 import cn from 'classnames';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 import type { Player } from '../../../flow';
 
 import './PlayerModal.css';
+
+const swal = withReactContent(Swal);
 
 type OwnProps = {
   +player: Player,
@@ -103,7 +107,39 @@ const PlayerModal = (props: OwnProps) => {
         <div className="cancel-cross" onClick={props.deselect}></div>
         <div
           className="trash-bin"
-          onClick={() => props.deletePlayer(player.uuid)}
+          onClick={() => {
+            swal.fire({
+              html: (
+                <div className="deletion-confirmation-swal">
+                  <div className="text">
+                    <div className="img" />
+                    <p>
+                      Vous êtes sur le point de faire disparaitre
+                      <span>{player.nickname}</span> de la partie.
+                    </p>
+                    <p>Que dites-vous ?</p>
+                  </div>
+                  <div className="buttons">
+                    <button
+                      className="danger"
+                      onClick={() => {
+                        props.deletePlayer(player.uuid);
+                        swal.close();
+                      }}
+                    >
+                      Coupez-lui la tête !
+                    </button>
+                    <button role="button" onClick={() => swal.close()}>
+                      Laissez-le sauf !
+                    </button>
+                  </div>
+                </div>
+              ),
+              backdrop: 'rgba(0,0,0,0.9)',
+              showConfirmButton: false,
+              showCancelButton: false,
+            });
+          }}
         ></div>
         <div className="title">
           {nicknameEdition ? (
