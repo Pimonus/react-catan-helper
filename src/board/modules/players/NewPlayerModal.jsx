@@ -14,7 +14,7 @@ const NewPlayerModal = (props: OwnProps) => {
 
   return (
     <div className="new-player modal">
-      <div className="container">
+      <form className="container">
         <div className="cancel-cross" onClick={props.cancel}></div>
         <h1>Comment s'appelle votre nouveau joueur ?</h1>
         <input
@@ -24,12 +24,13 @@ const NewPlayerModal = (props: OwnProps) => {
           onChange={event => setNickname(event.target.value)}
         />
         <button
+          type="submit"
           disabled={nickname === ''}
           onClick={() => props.submitAndClose(nickname)}
         >
           Enregistrer
         </button>
-      </div>
+      </form>
     </div>
   );
 };

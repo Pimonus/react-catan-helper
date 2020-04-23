@@ -1,11 +1,8 @@
 /* @flow */
 
+import playersReducer from './players';
 import { initialState } from '../store';
-import {
-  computePlayersScores,
-  computePlayersState,
-  newPlayer,
-} from '../../core';
+import { computePlayersScores, newPlayer } from '../../core';
 import type { CatanAction, CatanState, Player } from '../../flow';
 
 const softActions = [
@@ -190,73 +187,18 @@ export const reducer = (
       };
       break;
 
-    case 'PLAYER::ADD::COLONY': {
-      newState = {
-        ...state,
-        players: computePlayersState(state.players, {
-          newColony: action.playerUuid,
-        }),
-      };
-      break;
-    }
-
-    case 'PLAYER::ADD::CITY': {
-      newState = {
-        ...state,
-        players: computePlayersState(state.players, {
-          newCity: action.playerUuid,
-        }),
-      };
-      break;
-    }
-
-    case 'PLAYER::DESTROY::CITY': {
-      newState = {
-        ...state,
-        players: computePlayersState(state.players, {
-          destroyCity: action.playerUuid,
-        }),
-      };
-      break;
-    }
-
-    case 'PLAYER::ADD::POINT': {
-      newState = {
-        ...state,
-        players: computePlayersState(state.players, {
-          newVictoryPoint: action.playerUuid,
-        }),
-      };
-      break;
-    }
-
-    case 'PLAYER::ATTRIBUTE::ROAD': {
-      newState = {
-        ...state,
-        players: computePlayersState(state.players, {
-          newRoadHolder: action.playerUuid,
-        }),
-      };
-      break;
-    }
-
-    case 'PLAYER::ATTRIBUTE::ARMY': {
-      newState = {
-        ...state,
-        players: computePlayersState(state.players, {
-          newArmyHolder: action.playerUuid,
-        }),
-      };
-      break;
-    }
-
+    case 'PLAYER::ADD::COLONY':
+    case 'PLAYER::DESTROY::COLONY':
+    case 'PLAYER::ADD::CITY':
+    case 'PLAYER::DESTROY::CITY':
+    case 'PLAYER::ADD::POINT':
+    case 'PLAYER::REMOVE::POINT':
+    case 'PLAYER::ATTRIBUTE::ROAD':
+    case 'PLAYER::ATTRIBUTE::ARMY':
     case 'PLAYER::SAVE::NICKNAME': {
-      const { playerUuid: uuid, nickname } = action;
       newState = {
         ...state,
-        players: computePlayersState(state.players, {
-          newNickname: { uuid, nickname },
-        }),
+        players: playersReducer(state.players, action),
       };
       break;
     }

@@ -63,8 +63,24 @@ export type CatanState = {
 
 type ReduxAction = { type: '@@INIT' };
 
+export type PlayerAction =
+  | { type: 'PLAYER::ADD', nickname: string }
+  | { type: 'PLAYER::SELECT', playerUuid: string }
+  | { type: 'PLAYER::DESELECT' }
+  | { type: 'PLAYER::ADD::COLONY', playerUuid: string }
+  | { type: 'PLAYER::DESTROY::COLONY', playerUuid: string }
+  | { type: 'PLAYER::ADD::CITY', playerUuid: string }
+  | { type: 'PLAYER::DESTROY::CITY', playerUuid: string }
+  | { type: 'PLAYER::ADD::POINT', playerUuid: string }
+  | { type: 'PLAYER::REMOVE::POINT', playerUuid: string }
+  | { type: 'PLAYER::ATTRIBUTE::ROAD', playerUuid: string }
+  | { type: 'PLAYER::ATTRIBUTE::ARMY', playerUuid: string }
+  | { type: 'PLAYER::SAVE::NICKNAME', playerUuid: string, nickname: string }
+  | { type: 'PLAYER::DELETE', playerUuid: string };
+
 export type CatanAction =
   | ReduxAction
+  | PlayerAction
   | { type: 'GAME::CHECK' }
   | { type: 'GAME::FOUND' }
   | { type: 'GAME::NOT_FOUND' }
@@ -82,17 +98,6 @@ export type CatanAction =
   | { type: 'DICES::REVEAL' }
   | { type: 'DICES::SPIN' }
   | { type: 'DICES::STOP' }
-  | { type: 'PLAYER::ADD', nickname: string }
-  | { type: 'PLAYER::SELECT', playerUuid: string }
-  | { type: 'PLAYER::DESELECT' }
-  | { type: 'PLAYER::ADD::COLONY', playerUuid: string }
-  | { type: 'PLAYER::ADD::CITY', playerUuid: string }
-  | { type: 'PLAYER::DESTROY::CITY', playerUuid: string }
-  | { type: 'PLAYER::ADD::POINT', playerUuid: string }
-  | { type: 'PLAYER::ATTRIBUTE::ROAD', playerUuid: string }
-  | { type: 'PLAYER::ATTRIBUTE::ARMY', playerUuid: string }
-  | { type: 'PLAYER::SAVE::NICKNAME', playerUuid: string, nickname: string }
-  | { type: 'PLAYER::DELETE', playerUuid: string }
   | { type: 'SHORTCUTS::DISABLE' }
   | { type: 'SWAL::FIRE' }
   | { type: 'SWAL::DISMISS' };
