@@ -1,10 +1,13 @@
 /* @flow */
 
+import { saveGame } from './game';
 import { getClassicDiceValue, getSpecialDiceValue } from '../../core';
 import type { Dispatch, ThunkAction } from '../../flow';
 
 export const rollDices = (): ThunkAction => {
   return (dispatch: Dispatch) => {
+    dispatch(saveGame());
+
     dispatch({ type: 'DICES::FLIP' });
 
     dispatch({

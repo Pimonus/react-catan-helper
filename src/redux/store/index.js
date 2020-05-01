@@ -13,7 +13,6 @@ export const initialState: CatanState = {
   },
   dices: {
     flipped: false,
-    history: [],
     rolling: false,
     spinning: false,
     values: {

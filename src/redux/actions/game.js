@@ -45,8 +45,9 @@ export const resumeGame = (): ThunkAction => (dispatch: Dispatch) => {
   }
 };
 
-export const enableThief = (): ThunkAction => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: 'GAME::THIEF::ENABLE' });
-  };
+export const saveGame = (): ThunkAction => (dispatch: Dispatch) => {
+  dispatch({ type: 'GAME::SAVE' });
 };
+
+export const enableThief = (): ThunkAction => (dispatch: Dispatch) =>
+  dispatch({ type: 'GAME::THIEF::ENABLE' });

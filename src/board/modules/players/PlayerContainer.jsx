@@ -15,10 +15,6 @@ import roadIcon from '../../../assets/images/road_icon.png';
 
 import './PlayerContainer.css';
 
-type OwnProps = {
-  +pausedGame: boolean,
-};
-
 type StateProps = {
   +players: $ReadOnlyArray<Player>,
   +selectedPlayerUuid?: string,
@@ -67,14 +63,13 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     dispatch(playerActions.savePlayerNickname(playerUuid, nickname)),
 });
 
-type Props = OwnProps & StateProps & DispatchProps;
+type Props = StateProps & DispatchProps;
 
 const DicesContainer = (props: Props) => {
   const [showNewPlayerModal, toggleNewPlayerModal] = useState(false);
 
   const {
     // data
-    pausedGame,
     players,
     selectedPlayerUuid,
     // functions
@@ -104,11 +99,7 @@ const DicesContainer = (props: Props) => {
   );
 
   return (
-    <div
-      className={cn('player-container', {
-        hidden: pausedGame,
-      })}
-    >
+    <div className="player-container">
       {players.map((player, index) => {
         return (
           <>

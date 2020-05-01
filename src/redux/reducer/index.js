@@ -2,7 +2,11 @@
 
 import playersReducer from './players';
 import { initialState } from '../store';
-import { computePlayersScores, newPlayer } from '../../core';
+import {
+  computePlayersScores,
+  getStateForHistory,
+  newPlayer,
+} from '../../core';
 import type { CatanAction, CatanState, Player } from '../../flow';
 
 const softActions = [
@@ -11,6 +15,7 @@ const softActions = [
   'GAME::FOUND',
   'GAME::NOT_FOUND',
   'GAME::RESUME',
+  'GAME::SAVE',
   'SHORTCUTS::DISABLE',
   'SWAL::FIRE',
   'SWAL::DISMISS',
@@ -60,7 +65,11 @@ export const reducer = (
     case 'GAME::NEW':
       newState = {
         ...initialState,
-        game: { ...state.game, loading: true, paused: false },
+        game: {
+          ...state.game,
+          loading: true,
+          paused: false,
+        },
       };
       break;
 
@@ -115,7 +124,6 @@ export const reducer = (
         ...state,
         dices: {
           ...state.dices,
-          history: [...state.dices.history, action.values],
           values: action.values,
         },
       };
@@ -226,6 +234,12 @@ export const reducer = (
         );
       newState = state;
       break;
+  }
+
+  if (action.type === 'GAME::SAVE') {
+    const history = JSON.parse(localStorage.getItem('gameHistory') || '[]');
+    history.push(getStateForHistory(state));
+    localStorage.setItem('gameHistory', JSON.stringify(history));
   }
 
   if (

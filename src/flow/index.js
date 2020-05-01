@@ -1,11 +1,16 @@
 /* @flow */
 
-export type BarbariansState = {
+export type BarbariansStorableState = {
   +position: number,
 };
 
-export type GameState = {
+export type BarbariansState = BarbariansStorableState;
+
+export type GameStorableState = {
   +enabledThief: boolean,
+};
+
+export type GameState = GameStorableState & {
   +loading: boolean,
   +paused: boolean,
 };
@@ -26,12 +31,14 @@ export type DicesValues = {
   +specialValue: SpecialDiceValue,
 };
 
-export type DicesState = {
+export type DicesStorableState = {
+  +values: DicesValues,
+};
+
+export type DicesState = DicesStorableState & {
   +flipped: boolean,
-  +history: $ReadOnlyArray<DicesValues>,
   +rolling: boolean,
   +spinning: boolean,
-  +values: DicesValues,
 };
 
 export type Player = {
@@ -59,6 +66,13 @@ export type CatanState = {
   +listenToShortcuts: boolean,
   +players: $ReadOnlyArray<Player>,
   +selectedPlayerUuid?: string,
+};
+
+export type GameHistoryState = {
+  +game: GameStorableState,
+  +barbarians: BarbariansStorableState,
+  +dices: DicesStorableState,
+  +players: $ReadOnlyArray<Player>,
 };
 
 type ReduxAction = { type: '@@INIT' };
@@ -90,6 +104,7 @@ export type CatanAction =
   | { type: 'GAME::CREATED' }
   | { type: 'GAME::PAUSE' }
   | { type: 'GAME::RESUME' }
+  | { type: 'GAME::SAVE' }
   | { type: 'GAME::THIEF::ENABLE' }
   | { type: 'BARBARIANS::ATTACK' }
   | { type: 'BARBARIANS::PROGRESS' }

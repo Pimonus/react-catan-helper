@@ -3,6 +3,7 @@
 import uuidv1 from 'uuid/v1';
 
 import type {
+  CatanState,
   ClassicDiceValue,
   DicesValues,
   Player,
@@ -41,6 +42,20 @@ export const diceValueMatching = {
 
 export const THIEF_SCORE = 7;
 export const ATTACK_POSITION = 7;
+
+export const getStateForHistory = (state: CatanState): string =>
+  JSON.stringify({
+    game: {
+      enabledThief: state.game.enabledThief,
+    },
+    barbarians: {
+      position: state.barbarians.position,
+    },
+    dices: {
+      values: state.dices.values,
+    },
+    players: state.players,
+  });
 
 export const newPlayer = (nickname: string): Player => ({
   nickname,

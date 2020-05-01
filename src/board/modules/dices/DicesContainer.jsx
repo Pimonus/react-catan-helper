@@ -2,16 +2,11 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import cn from 'classnames';
 
 import Dice from './Dice';
 import type { CatanState, DicesValues } from '../../../flow';
 
 import './DicesContainer.css';
-
-type OwnProps = {
-  +pausedGame: boolean,
-};
 
 type StateProps = {
   +dicesValues: DicesValues,
@@ -27,18 +22,14 @@ const mapStateToProps = (state: CatanState): StateProps => ({
   spinning: state.dices.spinning,
 });
 
-type Props = OwnProps & StateProps;
+type Props = StateProps;
 
 const DicesContainer = (props: Props) => {
   const { flipped, spinning } = props;
   const { whiteValue, redValue, specialValue } = props.dicesValues;
 
   return (
-    <div
-      className={cn('dices-container', {
-        hidden: props.pausedGame,
-      })}
-    >
+    <div className="dices-container">
       <div className="top-dices">
         <Dice
           flipped={flipped}

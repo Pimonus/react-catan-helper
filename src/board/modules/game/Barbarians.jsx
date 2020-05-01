@@ -5,18 +5,13 @@ import { connect } from 'react-redux';
 import cn from 'classnames';
 
 import type { CatanState } from '../../../flow';
-// import barbariansPath from '../../../assets/images/barbarians_path.png';
 import './Barbarians.css';
-
-type OwnProps = {
-  +pausedGame: boolean,
-};
 
 type StateProps = {
   +position: number,
 };
 
-type Props = OwnProps & StateProps;
+type Props = StateProps;
 
 const mapStateToProps = (state: CatanState): StateProps => ({
   position: state.barbarians.position,
@@ -26,11 +21,7 @@ const BarbariansContainer = (props: Props) => {
   const { position } = props;
 
   return (
-    <div
-      className={cn('barbarians-container', {
-        hidden: props.pausedGame,
-      })}
-    >
+    <div className="barbarians-container">
       <div
         className={cn('step', {
           overtaken: position > 0,

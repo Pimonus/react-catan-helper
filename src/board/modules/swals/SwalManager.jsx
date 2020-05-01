@@ -129,7 +129,7 @@ class SwalManager extends PureComponent<Props> {
           });
       }
 
-      if (swalQueue.length > 0) this.processSwalQueue(swalQueue);
+      if (swalQueue.length > 0) await this.processSwalQueue(swalQueue);
     }
   }
 
