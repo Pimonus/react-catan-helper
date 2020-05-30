@@ -11,8 +11,7 @@ export const disableShortcuts = (): ThunkAction => {
 export const getExistingGame = (): ThunkAction => {
   return (dispatch: Dispatch) => {
     dispatch({ type: 'GAME::CHECK' });
-    if (localStorage.getItem('currentGame') === null)
-      dispatch({ type: 'GAME::NOT_FOUND' });
+    if (localStorage.getItem('currentGame') === null) dispatch({ type: 'GAME::NOT_FOUND' });
     else dispatch({ type: 'GAME::FOUND' });
   };
 };

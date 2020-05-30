@@ -6,30 +6,16 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 // actions
-import {
-  moveBarbariansForward,
-  resistBarbariansAttack,
-} from '../../../redux/actions/barbarians';
-import { disableShortcuts, enableThief } from '../../../redux/actions/game';
-import { dismissSwal, fireSwal } from '../../../redux/actions/swal';
+import { moveBarbariansForward, resistBarbariansAttack } from '@actions/barbarians';
+import { disableShortcuts, enableThief } from '@actions/game';
+import { dismissSwal, fireSwal } from '@actions/swal';
 // components
-import BarbariansSwal from './BarbariansSwal';
-import ThiefSwal from './ThiefSwal';
+import BarbariansSwal from '@modules/swals/BarbariansSwal.jsx';
+import ThiefSwal from '@modules/swals/ThiefSwal.jsx';
 // helpers
-import {
-  didBarbariansProgress,
-  didBarbariansReachCoast,
-  getDicesScore,
-  THIEF_SCORE,
-} from '../../../core';
+import { didBarbariansProgress, didBarbariansReachCoast, getDicesScore, THIEF_SCORE } from '@core';
 // types
-import type {
-  BarbariansState,
-  CatanState,
-  DicesState,
-  Dispatch,
-  GameState,
-} from '../../../flow';
+import type { BarbariansState, CatanState, DicesState, Dispatch, GameState } from '@flow';
 
 import './SwalManager.css';
 
@@ -46,8 +32,7 @@ type SwalWithCallback = {
   +callback: () => any,
 };
 
-const dicesHaveBeenRevealed = (flipped: boolean, stillFlipped: boolean) =>
-  flipped && !stillFlipped;
+const dicesHaveBeenRevealed = (flipped: boolean, stillFlipped: boolean) => flipped && !stillFlipped;
 
 type StateProps = {
   +_createdAt: Date,

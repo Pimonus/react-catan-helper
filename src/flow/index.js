@@ -15,13 +15,7 @@ export type GameState = GameStorableState & {
   +paused: boolean,
 };
 
-export type ClassicDiceValue =
-  | 'one'
-  | 'two'
-  | 'three'
-  | 'four'
-  | 'five'
-  | 'six';
+export type ClassicDiceValue = 'one' | 'two' | 'three' | 'four' | 'five' | 'six';
 
 export type SpecialDiceValue = 'blue' | 'green' | 'yellow' | 'barbarians';
 
@@ -64,8 +58,8 @@ export type TurnState = {
 
 export type GameHistoryState = {
   +enabled: boolean,
-  +nextTurnIndex?: string,
-  +previousTurnIndex?: string,
+  +nextTurnKey?: string,
+  +previousTurnKey?: string,
   +turnKeys: string[],
   +visualizedTurnState?: TurnState,
 };

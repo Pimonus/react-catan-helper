@@ -8,9 +8,7 @@ export const enableHistoryMode = (): ThunkAction => (dispatch: Dispatch) =>
 export const disableHistoryMode = (): ThunkAction => (dispatch: Dispatch) =>
   dispatch({ type: 'GAME::HISTORY::DISABLE' });
 
-export const fetchTurn = (turnKey?: string): ThunkAction => (
-  dispatch: Dispatch
-) => {
+export const fetchTurn = (turnKey?: string): ThunkAction => (dispatch: Dispatch) => {
   dispatch({ type: 'GAME::HISTORY::TURN::FETCH', turnKey });
   const history = JSON.parse(localStorage.getItem('gameHistory') || '');
   if (!history || !history[turnKey]) {

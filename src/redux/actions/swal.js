@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { Dispatch, ThunkAction } from '../../flow';
+import type { Dispatch, ThunkAction } from '@flow';
 
 export const fireSwal = (): ThunkAction => (dispatch: Dispatch) => {
   dispatch({ type: 'SWAL::FIRE' });

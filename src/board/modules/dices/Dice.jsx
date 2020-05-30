@@ -3,7 +3,7 @@
 import React from 'react';
 import cn from 'classnames';
 
-import type { ClassicDiceValue, SpecialDiceValue } from '../../../flow';
+import type { ClassicDiceValue, SpecialDiceValue } from '@flow';
 
 import './Dice.css';
 
@@ -16,22 +16,13 @@ type Props = {
 };
 
 const Dice = (props: Props) => {
-  const { spinning, flipped } = props;
+  const { flipped, red, special, spinning, value } = props;
 
   return (
-    <div
-      className={cn('dice', {
-        spinning,
-        flipped,
-      })}
-    >
+    <div className={cn('dice', { spinning, flipped })}>
       <div className="inner">
-        <div
-          className={`front ${props.red ? 'red' : ''} ${
-            props.special ? 'special' : ''
-          } ${props.value}`}
-        ></div>
-        <div className="back"></div>
+        <div className={cn('front', value, { red, special })} />
+        <div className="back" />
       </div>
     </div>
   );

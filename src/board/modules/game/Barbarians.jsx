@@ -1,24 +1,21 @@
 /* @flow */
 
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import type { CatanState } from '../../../flow';
 import './Barbarians.css';
 
-type StateProps = {
-  +position: number,
-};
+const BarbariansContainer = () => {
+  // use history value if history mode is enabled
+  const position = useSelector(state => {
+    const { enabled: isHistoryEnabled } = state.gameHistory;
+    const { visualizedTurnState } = state.gameHistory;
 
-type Props = StateProps;
-
-const mapStateToProps = (state: CatanState): StateProps => ({
-  position: state.barbarians.position,
-});
-
-const BarbariansContainer = (props: Props) => {
-  const { position } = props;
+    return isHistoryEnabled && visualizedTurnState
+      ? visualizedTurnState.barbarians.position
+      : state.barbarians.position;
+  });
 
   return (
     <div className="barbarians-container">
@@ -69,7 +66,4 @@ const BarbariansContainer = (props: Props) => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  null
-)(BarbariansContainer);
+export default BarbariansContainer;

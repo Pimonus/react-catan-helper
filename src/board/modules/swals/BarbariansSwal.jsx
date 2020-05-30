@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import barbarians from '../../../assets/images/barbarians.png';
+import barbarians from '@images/barbarians.png';
 
 import './BarbariansSwal.css';
 
@@ -14,11 +14,7 @@ const BarbariansSwal = (props: Props) => {
   return (
     <div className="barbarians-swal">
       <img src={barbarians} alt="Vilain barbarians" />
-      <p>
-        {props.progress
-          ? 'Les barbares avancent !'
-          : 'Les barbares attaquent !'}
-      </p>
+      <p>{props.progress ? 'Les barbares avancent !' : 'Les barbares attaquent !'}</p>
     </div>
   );
 };

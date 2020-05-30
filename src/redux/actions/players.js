@@ -1,19 +1,15 @@
 /* @flow */
 
-import type { Dispatch, ThunkAction } from '../../flow';
+import type { Dispatch, ThunkAction } from '@flow';
 
-export const addNewPlayer = (nickname: string): ThunkAction => (
-  dispatch: Dispatch
-) => {
+export const addNewPlayer = (nickname: string): ThunkAction => (dispatch: Dispatch) => {
   dispatch({
     type: 'PLAYER::ADD',
     nickname: nickname,
   });
 };
 
-export const selectPlayer = (playerUuid: string): ThunkAction => (
-  dispatch: Dispatch
-) => {
+export const selectPlayer = (playerUuid: string): ThunkAction => (dispatch: Dispatch) => {
   dispatch({
     type: 'PLAYER::SELECT',
     playerUuid,
@@ -24,62 +20,49 @@ export const deselectPlayer = (): ThunkAction => (dispatch: Dispatch) => {
   dispatch({ type: 'PLAYER::DESELECT' });
 };
 
-export const addColony = (playerUuid: string): ThunkAction => (
-  dispatch: Dispatch
-) => {
+export const addColony = (playerUuid: string): ThunkAction => (dispatch: Dispatch) => {
   dispatch({
     type: 'PLAYER::ADD::COLONY',
     playerUuid,
   });
 };
 
-export const addCity = (playerUuid: string): ThunkAction => (
-  dispatch: Dispatch
-) => {
+export const addCity = (playerUuid: string): ThunkAction => (dispatch: Dispatch) => {
   dispatch({
     type: 'PLAYER::ADD::CITY',
     playerUuid,
   });
 };
 
-export const destroyCity = (playerUuid: string): ThunkAction => (
-  dispatch: Dispatch
-) => dispatch({ type: 'PLAYER::DESTROY::CITY', playerUuid });
+export const destroyCity = (playerUuid: string): ThunkAction => (dispatch: Dispatch) =>
+  dispatch({ type: 'PLAYER::DESTROY::CITY', playerUuid });
 
-export const destroyColony = (playerUuid: string): ThunkAction => (
-  dispatch: Dispatch
-) => dispatch({ type: 'PLAYER::DESTROY::COLONY', playerUuid });
+export const destroyColony = (playerUuid: string): ThunkAction => (dispatch: Dispatch) =>
+  dispatch({ type: 'PLAYER::DESTROY::COLONY', playerUuid });
 
-export const addVictoryPoint = (playerUuid: string): ThunkAction => (
-  dispatch: Dispatch
-) => dispatch({ type: 'PLAYER::ADD::POINT', playerUuid });
+export const addVictoryPoint = (playerUuid: string): ThunkAction => (dispatch: Dispatch) =>
+  dispatch({ type: 'PLAYER::ADD::POINT', playerUuid });
 
-export const removeVictoryPoint = (playerUuid: string): ThunkAction => (
-  dispatch: Dispatch
-) => dispatch({ type: 'PLAYER::REMOVE::POINT', playerUuid });
+export const removeVictoryPoint = (playerUuid: string): ThunkAction => (dispatch: Dispatch) =>
+  dispatch({ type: 'PLAYER::REMOVE::POINT', playerUuid });
 
-export const attributeLongestRoad = (playerUuid: string): ThunkAction => (
-  dispatch: Dispatch
-) => {
+export const attributeLongestRoad = (playerUuid: string): ThunkAction => (dispatch: Dispatch) => {
   dispatch({
     type: 'PLAYER::ATTRIBUTE::ROAD',
     playerUuid,
   });
 };
 
-export const attributeStrongestArmy = (playerUuid: string): ThunkAction => (
-  dispatch: Dispatch
-) => {
+export const attributeStrongestArmy = (playerUuid: string): ThunkAction => (dispatch: Dispatch) => {
   dispatch({
     type: 'PLAYER::ATTRIBUTE::ARMY',
     playerUuid,
   });
 };
 
-export const savePlayerNickname = (
-  playerUuid: string,
-  nickname: string
-): ThunkAction => (dispatch: Dispatch) => {
+export const savePlayerNickname = (playerUuid: string, nickname: string): ThunkAction => (
+  dispatch: Dispatch
+) => {
   dispatch({
     type: 'PLAYER::SAVE::NICKNAME',
     playerUuid,
@@ -87,9 +70,7 @@ export const savePlayerNickname = (
   });
 };
 
-export const deletePlayer = (playerUuid: string): ThunkAction => (
-  dispatch: Dispatch
-) => {
+export const deletePlayer = (playerUuid: string): ThunkAction => (dispatch: Dispatch) => {
   dispatch({
     type: 'PLAYER::DELETE',
     playerUuid,

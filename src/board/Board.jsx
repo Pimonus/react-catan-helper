@@ -3,17 +3,17 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { rollDices } from '../redux/actions/dices';
-import { getExistingGame } from '../redux/actions/game';
-import Loader from './Loader.jsx';
-import DicesContainer from './modules/dices/DicesContainer.jsx';
-import Game from './modules/game/Game.jsx';
-import GameHistoryContainer from './modules/game_history/GameHistoryContainer.jsx';
-import HomePage from './modules/home_page/HomePage.jsx';
-import PlayerContainer from './modules/players/PlayerContainer.jsx';
-import SwalManager from './modules/swals/SwalManager';
+import { rollDices } from '@actions/dices';
+import { getExistingGame } from '@actions/game';
+import Loader from '@board/Loader.jsx';
+import DicesContainer from '@modules/dices/DicesContainer.jsx';
+import Game from '@modules/game/Game.jsx';
+import GameHistoryContainer from '@modules/game_history/GameHistoryContainer.jsx';
+import HomePage from '@modules/home_page/HomePage.jsx';
+import PlayerContainer from '@modules/players/PlayerContainer.jsx';
+import SwalManager from '@modules/swals/SwalManager';
 
-import type { CatanState, Dispatch, GameState } from '../flow';
+import type { CatanState, Dispatch, GameState } from '@flow';
 
 import './Board.css';
 

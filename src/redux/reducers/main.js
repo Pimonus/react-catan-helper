@@ -4,7 +4,7 @@ import randomstring from 'randomstring';
 
 import playerReducer from '@reducers/player';
 import { initialState } from '@store';
-import { computePlayersScores, getStateForHistory, newPlayer } from '@core';
+import { computePlayersScores, getStateForHistory, getStateForStorage, newPlayer } from '@core';
 import type { CatanAction, CatanState, Player } from '@flow';
 
 const softActions = [
@@ -35,10 +35,7 @@ const enablingShortcutsActions = [
   'SWAL::DISMISS',
 ];
 
-export const reducer = (
-  state: CatanState = initialState,
-  action: CatanAction
-) => {
+export const reducer = (state: CatanState = initialState, action: CatanAction) => {
   let newState: CatanState;
   switch (action.type) {
     case 'GAME::FOUND': {
@@ -104,9 +101,7 @@ export const reducer = (
           ...state.gameHistory,
           enabled: true,
           nextTurnKey: undefined,
-          previousTurnKey: turnKeys.length
-            ? turnKeys[turnKeys.length - 1]
-            : undefined,
+          previousTurnKey: turnKeys.length ? turnKeys[turnKeys.length - 1] : undefined,
         },
       };
       break;
@@ -118,7 +113,9 @@ export const reducer = (
         gameHistory: {
           ...state.gameHistory,
           enabled: false,
-          visualizedTurnIndex: undefined,
+          nextTurnKey: undefined,
+          previousTurnKey: undefined,
+          visualizedTurnState: undefined,
         },
       };
       break;
@@ -284,11 +281,13 @@ export const reducer = (
     default:
       if (
         !action.type.startsWith('@@redux') &&
-        !softActions.find(type => type === action.type)
-      )
+        !softActions.find(type => type === action.type) &&
+        process.env.NODE_ENV === 'development'
+      ) {
         console.warn(
           `Ooops, the reducer is about to return the current state without changes! The action is ${action.type}`
         );
+      }
       newState = state;
       break;
   }
@@ -310,12 +309,8 @@ export const reducer = (
     };
   }
 
-  if (
-    newState &&
-    !action.type.startsWith('@@redux') &&
-    !softActions.includes(action.type)
-  ) {
-    localStorage.setItem('currentGame', JSON.stringify(newState));
+  if (newState && !action.type.startsWith('@@redux') && !softActions.includes(action.type)) {
+    localStorage.setItem('currentGame', getStateForStorage(newState));
   }
 
   return {

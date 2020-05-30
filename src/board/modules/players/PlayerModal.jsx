@@ -5,7 +5,7 @@ import cn from 'classnames';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-import type { Player } from '../../../flow';
+import type { Player } from '@flow';
 
 import './PlayerModal.css';
 
@@ -53,16 +53,10 @@ const PlayerModal = (props: OwnProps) => {
       case COLONIES_ACTIONS:
         return (
           <>
-            <p onClick={() => props.addColony(player.uuid)}>
-              Ajouter une colonie
-            </p>
-            <p onClick={() => props.addCity(player.uuid)}>
-              Transformer une colonie en ville
-            </p>
+            <p onClick={() => props.addColony(player.uuid)}>Ajouter une colonie</p>
+            <p onClick={() => props.addCity(player.uuid)}>Transformer une colonie en ville</p>
             {player.colonies > 1 && (
-              <p onClick={() => props.destroyColony(player.uuid)}>
-                Détruire une colonie
-              </p>
+              <p onClick={() => props.destroyColony(player.uuid)}>Détruire une colonie</p>
             )}
           </>
         );
@@ -86,9 +80,7 @@ const PlayerModal = (props: OwnProps) => {
       case VICTORY_POINTS_ACTIONS:
         return (
           <>
-            <p onClick={() => props.addVictoryPoint(player.uuid)}>
-              Ajouter un point de victoire
-            </p>
+            <p onClick={() => props.addVictoryPoint(player.uuid)}>Ajouter un point de victoire</p>
             {player.victoryPoints > 0 && (
               <p onClick={() => props.removeVictoryPoint(player.uuid)}>
                 Retirer un point de victoire
@@ -148,13 +140,11 @@ const PlayerModal = (props: OwnProps) => {
               type="text"
               value={nickname}
               onChange={event => {
-                if (event.target.value.length < 20)
-                  editNickname(event.target.value);
+                if (event.target.value.length < 20) editNickname(event.target.value);
               }}
               onFocus={event => event.target.select()}
               onKeyUp={event => {
-                if (event.key === 'Escape' || event.key === 'Enter')
-                  toggleNicknameEdition(false);
+                if (event.key === 'Escape' || event.key === 'Enter') toggleNicknameEdition(false);
                 if (event.key === 'Enter')
                   props.savePlayerNickname(player.uuid, event.target.value);
               }}
@@ -162,10 +152,7 @@ const PlayerModal = (props: OwnProps) => {
           ) : (
             <>
               <h1>{player.nickname}</h1>
-              <div
-                className="edit"
-                onClick={() => toggleNicknameEdition(true)}
-              />
+              <div className="edit" onClick={() => toggleNicknameEdition(true)} />
             </>
           )}
         </div>
@@ -174,9 +161,7 @@ const PlayerModal = (props: OwnProps) => {
             className="colonies-manager"
             onClick={() => handleActionTypeChange(COLONIES_ACTIONS)}
           >
-            <span>{`${colonies} ${
-              colonies > 1 ? 'colonies' : 'colonie'
-            }`}</span>
+            <span>{`${colonies} ${colonies > 1 ? 'colonies' : 'colonie'}`}</span>
           </div>
           <div
             className={cn('cities-manager', {
@@ -206,19 +191,13 @@ const PlayerModal = (props: OwnProps) => {
             getActionDOM()
           ) : (
             <>
-              <div
-                className="action road"
-                onClick={() => props.attributeLongestRoad(uuid)}
-              >
+              <div className="action road" onClick={() => props.attributeLongestRoad(uuid)}>
                 <div className="img">
                   {player.hasLongestRoad ? <div className="checked" /> : null}
                 </div>
                 <p>Route la plus longue</p>
               </div>
-              <div
-                className="action army"
-                onClick={() => props.attributeStrongestArmy(uuid)}
-              >
+              <div className="action army" onClick={() => props.attributeStrongestArmy(uuid)}>
                 <div className="img">
                   {player.hasStrongestArmy ? <div className="checked" /> : null}
                 </div>

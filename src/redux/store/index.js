@@ -1,7 +1,7 @@
 /* @flow */
 
-import { SIX, BARBARIANS } from '../../core';
-import type { CatanState } from '../../flow';
+import { SIX, BARBARIANS } from '@core';
+import type { CatanState } from '@flow';
 
 export const initialState: CatanState = {
   _createdAt: new Date(),
@@ -28,8 +28,8 @@ export const initialState: CatanState = {
   },
   gameHistory: {
     enabled: false,
-    nextTurnIndex: undefined,
-    previousTurnIndex: undefined,
+    nextTurnKey: undefined,
+    previousTurnKey: undefined,
     visualizedTurnState: undefined,
     turnKeys: [],
   },

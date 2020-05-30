@@ -1,42 +1,30 @@
 /* @flow */
 
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import Dice from './Dice';
-import type { CatanState, DicesValues } from '../../../flow';
+import Dice from '@modules/dices/Dice.jsx';
 
 import './DicesContainer.css';
 
-type StateProps = {
-  +dicesValues: DicesValues,
-  +flipped: boolean,
-  +rolling: boolean,
-  +spinning: boolean,
-};
+const DicesContainer = () => {
+  const flipped = useSelector(state => state.dices.flipped);
+  const spinning = useSelector(state => state.dices.spinning);
 
-const mapStateToProps = (state: CatanState): StateProps => ({
-  dicesValues: state.dices.values,
-  flipped: state.dices.flipped,
-  rolling: state.dices.rolling,
-  spinning: state.dices.spinning,
-});
+  // use history values if history mode is enabled
+  const { whiteValue, redValue, specialValue } = useSelector(state => {
+    const { enabled: isHistoryEnabled } = state.gameHistory;
+    const { visualizedTurnState } = state.gameHistory;
 
-type Props = StateProps;
-
-const DicesContainer = (props: Props) => {
-  const { flipped, spinning } = props;
-  const { whiteValue, redValue, specialValue } = props.dicesValues;
+    return isHistoryEnabled && visualizedTurnState
+      ? visualizedTurnState.dices.values
+      : state.dices.values;
+  });
 
   return (
     <div className="dices-container">
       <div className="top-dices">
-        <Dice
-          flipped={flipped}
-          spinning={spinning}
-          value={specialValue}
-          special
-        />
+        <Dice flipped={flipped} spinning={spinning} value={specialValue} special />
       </div>
       <div className="bottom-dices">
         <Dice flipped={flipped} spinning={spinning} value={redValue} red />
@@ -46,7 +34,4 @@ const DicesContainer = (props: Props) => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  null
-)(DicesContainer);
+export default DicesContainer;
