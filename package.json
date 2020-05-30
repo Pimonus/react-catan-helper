@@ -1,13 +1,13 @@
 {
-  "version": "1.1",
+  "version": "1.1.0",
   "private": true,
   "homepage": ".",
   "scripts": {
     "deploy": "now && now alias",
-    "start": "react-scripts start",
+    "start": "craco start",
     "now-start": "serve -s ./build",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "build": "craco build",
+    "test": "craco test --env=jsdom",
     "eject": "react-scripts eject",
     "precommit": "pretty-quick --staged",
     "flow": "flow"
@@ -21,6 +21,7 @@
     "react-scripts": "2.1.8"
   },
   "dependencies": {
+    "@craco/craco": "^5.6.4",
     "babel-eslint": "^9.0.0",
     "classnames": "^2.2.6",
     "connected-react-router": "4.5.0",

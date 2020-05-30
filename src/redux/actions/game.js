@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { Dispatch, ThunkAction } from '../../flow';
+import type { Dispatch, ThunkAction } from '@flow';
 
 export const disableShortcuts = (): ThunkAction => {
   return (dispatch: Dispatch) => {

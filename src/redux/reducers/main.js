@@ -1,13 +1,11 @@
 /* @flow */
 
-import playersReducer from './players';
-import { initialState } from '../store';
-import {
-  computePlayersScores,
-  getStateForHistory,
-  newPlayer,
-} from '../../core';
-import type { CatanAction, CatanState, Player } from '../../flow';
+import randomstring from 'randomstring';
+
+import playerReducer from '@reducers/player';
+import { initialState } from '@store';
+import { computePlayersScores, getStateForHistory, newPlayer } from '@core';
+import type { CatanAction, CatanState, Player } from '@flow';
 
 const softActions = [
   '@@INIT',
@@ -16,6 +14,9 @@ const softActions = [
   'GAME::NOT_FOUND',
   'GAME::RESUME',
   'GAME::SAVE',
+  'GAME::HISTORY::ENABLE',
+  'GAME::HISTORY::DISABLE',
+  'GAME::HISTORY::TURN::VISUALIZE',
   'SHORTCUTS::DISABLE',
   'SWAL::FIRE',
   'SWAL::DISMISS',
@@ -27,6 +28,7 @@ const enablingShortcutsActions = [
   'DICES::REVEAL',
   'GAME::LOAD',
   'GAME::CREATED',
+  'GAME::HISTORY::DISABLE',
   'GAME::THIEF::ENABLE',
   'PLAYER::ADD',
   'PLAYER::DESELECT',
@@ -93,6 +95,61 @@ export const reducer = (
         game: { ...state.game, loading: true, paused: false },
       };
       break;
+
+    case 'GAME::HISTORY::ENABLE': {
+      const { turnKeys } = state.gameHistory;
+      newState = {
+        ...state,
+        gameHistory: {
+          ...state.gameHistory,
+          enabled: true,
+          nextTurnKey: undefined,
+          previousTurnKey: turnKeys.length
+            ? turnKeys[turnKeys.length - 1]
+            : undefined,
+        },
+      };
+      break;
+    }
+
+    case 'GAME::HISTORY::DISABLE':
+      newState = {
+        ...state,
+        gameHistory: {
+          ...state.gameHistory,
+          enabled: false,
+          visualizedTurnIndex: undefined,
+        },
+      };
+      break;
+
+    case 'GAME::HISTORY::TURN::VISUALIZE': {
+      const { turnKey } = action;
+      const { turnKeys } = state.gameHistory;
+      const visualizedTurnIndex = turnKeys.indexOf(turnKey);
+
+      let nextTurnKey, previousTurnKey;
+      if (!turnKey) {
+        nextTurnKey = undefined;
+        previousTurnKey = turnKeys[turnKeys.length - 1];
+      } else if (visualizedTurnIndex === 0) {
+        nextTurnKey = turnKeys.length > 1 ? turnKeys[1] : undefined;
+        previousTurnKey = undefined;
+      } else {
+        nextTurnKey = turnKeys[visualizedTurnIndex + 1];
+        previousTurnKey = turnKeys[visualizedTurnIndex - 1];
+      }
+      newState = {
+        ...state,
+        gameHistory: {
+          ...state.gameHistory,
+          nextTurnKey,
+          previousTurnKey,
+          visualizedTurnState: action.turn,
+        },
+      };
+      break;
+    }
 
     case 'GAME::THIEF::ENABLE':
       newState = {
@@ -206,7 +263,7 @@ export const reducer = (
     case 'PLAYER::SAVE::NICKNAME': {
       newState = {
         ...state,
-        players: playersReducer(state.players, action),
+        players: playerReducer(state.players, action),
       };
       break;
     }
@@ -237,9 +294,20 @@ export const reducer = (
   }
 
   if (action.type === 'GAME::SAVE') {
-    const history = JSON.parse(localStorage.getItem('gameHistory') || '[]');
-    history.push(getStateForHistory(state));
+    const history = JSON.parse(localStorage.getItem('gameHistory') || '{}');
+    const newTurnKey = randomstring.generate({
+      length: 6,
+      charset: 'hex',
+    });
+    history[newTurnKey] = getStateForHistory(state);
     localStorage.setItem('gameHistory', JSON.stringify(history));
+    newState = {
+      ...state,
+      gameHistory: {
+        ...state.gameHistory,
+        turnKeys: [...state.gameHistory.turnKeys, newTurnKey],
+      },
+    };
   }
 
   if (
