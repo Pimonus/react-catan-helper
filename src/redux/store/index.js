@@ -26,6 +26,13 @@ export const initialState: CatanState = {
     loading: false,
     paused: true,
   },
+  gameHistory: {
+    enabled: false,
+    nextTurnIndex: undefined,
+    previousTurnIndex: undefined,
+    visualizedTurnState: undefined,
+    turnKeys: [],
+  },
   listenToShortcuts: false,
   players: [],
 };

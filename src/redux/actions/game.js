@@ -20,6 +20,7 @@ export const getExistingGame = (): ThunkAction => {
 export const newGame = (): ThunkAction => {
   return (dispatch: Dispatch) => {
     dispatch({ type: 'GAME::NEW' });
+    localStorage.removeItem('gameHistory');
     setTimeout(() => {
       dispatch({ type: 'GAME::CREATED' });
     }, 2000);

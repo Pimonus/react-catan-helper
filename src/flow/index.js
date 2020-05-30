@@ -55,6 +55,21 @@ export type Player = {
   +victoryPoints: number,
 };
 
+export type TurnState = {
+  +game: GameStorableState,
+  +barbarians: BarbariansStorableState,
+  +dices: DicesStorableState,
+  +players: $ReadOnlyArray<Player>,
+};
+
+export type GameHistoryState = {
+  +enabled: boolean,
+  +nextTurnIndex?: string,
+  +previousTurnIndex?: string,
+  +turnKeys: string[],
+  +visualizedTurnState?: TurnState,
+};
+
 export type CatanState = {
   +_createdAt: Date,
   +_resumedAt: Date | null,
@@ -63,16 +78,10 @@ export type CatanState = {
   +barbarians: BarbariansState,
   +dices: DicesState,
   +game: GameState,
+  +gameHistory: GameHistoryState,
   +listenToShortcuts: boolean,
   +players: $ReadOnlyArray<Player>,
   +selectedPlayerUuid?: string,
-};
-
-export type GameHistoryState = {
-  +game: GameStorableState,
-  +barbarians: BarbariansStorableState,
-  +dices: DicesStorableState,
-  +players: $ReadOnlyArray<Player>,
 };
 
 type ReduxAction = { type: '@@INIT' };
@@ -106,6 +115,21 @@ export type CatanAction =
   | { type: 'GAME::RESUME' }
   | { type: 'GAME::SAVE' }
   | { type: 'GAME::THIEF::ENABLE' }
+  | { type: 'GAME::HISTORY::ENABLE' }
+  | { type: 'GAME::HISTORY::DISABLE' }
+  | {
+      type: 'GAME::HISTORY::TURN::FETCH',
+      turnKey?: string,
+    }
+  | {
+      type: 'GAME::HISTORY::TURN::FETCH!!ERROR',
+      turnKey?: string,
+    }
+  | {
+      type: 'GAME::HISTORY::TURN::VISUALIZE',
+      turn: TurnState,
+      turnKey?: string,
+    }
   | { type: 'BARBARIANS::ATTACK' }
   | { type: 'BARBARIANS::PROGRESS' }
   | { type: 'DICES::DEFINE::VALUES', values: DicesValues }
