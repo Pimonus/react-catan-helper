@@ -17,6 +17,7 @@ export const fetchTurn = (turnKey?: string): ThunkAction => (dispatch: Dispatch)
     dispatch({
       type: 'GAME::HISTORY::TURN::VISUALIZE',
       turn: JSON.parse(history[turnKey] || ''),
+      turnKey,
     });
   }
 };

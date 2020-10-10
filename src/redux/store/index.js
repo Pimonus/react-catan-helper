@@ -30,6 +30,7 @@ export const initialState: CatanState = {
     enabled: false,
     nextTurnKey: undefined,
     previousTurnKey: undefined,
+    visualizedTurnIndex: undefined,
     visualizedTurnState: undefined,
     turnKeys: [],
   },

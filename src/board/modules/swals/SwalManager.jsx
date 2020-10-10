@@ -7,7 +7,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 // actions
 import { moveBarbariansForward, resistBarbariansAttack } from '@actions/barbarians';
-import { disableShortcuts, enableThief } from '@actions/game';
+import { disableShortcuts, enableThief, saveGame } from '@actions/game';
 import { dismissSwal, fireSwal } from '@actions/swal';
 // components
 import BarbariansSwal from '@modules/swals/BarbariansSwal.jsx';
@@ -48,6 +48,7 @@ type DispatchProps = {
   +fireSwal: () => any,
   +moveBarbariansForward: () => any,
   +resistBarbariansAttack: () => any,
+  +saveGame: () => any,
 };
 
 const mapStateToProps = (state: CatanState): StateProps => ({
@@ -64,6 +65,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   fireSwal: () => dispatch(fireSwal()),
   moveBarbariansForward: () => dispatch(moveBarbariansForward()),
   resistBarbariansAttack: () => dispatch(resistBarbariansAttack()),
+  saveGame: () => dispatch(saveGame()),
 });
 
 type Props = StateProps & DispatchProps;
@@ -115,6 +117,7 @@ class SwalManager extends PureComponent<Props> {
       }
 
       if (swalQueue.length > 0) await this.processSwalQueue(swalQueue);
+      this.props.saveGame();
     }
   }
 

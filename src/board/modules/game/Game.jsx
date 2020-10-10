@@ -22,14 +22,14 @@ const GameMenu = () => {
 
   return (
     <div className="game-container">
-      {enabledThief ? (
+      {enabledThief && (
         <>
           <img className="thief-icon" src={thiefIcon} data-tip="React-tooltip" alt="Bad thief!" />
           <Tooltip className="tooltip" place="left" type="dark" effect="solid">
             Le Voleur est activé (héhé)
           </Tooltip>
         </>
-      ) : null}
+      )}
       <Barbarians />
     </div>
   );

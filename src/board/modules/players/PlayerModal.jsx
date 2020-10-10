@@ -121,9 +121,7 @@ const PlayerModal = (props: OwnProps) => {
                     >
                       Coupez-lui la tête !
                     </button>
-                    <button role="button" onClick={() => swal.close()}>
-                      Laissez-le sauf !
-                    </button>
+                    <button onClick={() => swal.close()}>Laissez-le sauf !</button>
                   </div>
                 </div>
               ),
@@ -192,15 +190,11 @@ const PlayerModal = (props: OwnProps) => {
           ) : (
             <>
               <div className="action road" onClick={() => props.attributeLongestRoad(uuid)}>
-                <div className="img">
-                  {player.hasLongestRoad ? <div className="checked" /> : null}
-                </div>
+                <div className="img">{player.hasLongestRoad && <div className="checked" />}</div>
                 <p>Route la plus longue</p>
               </div>
               <div className="action army" onClick={() => props.attributeStrongestArmy(uuid)}>
-                <div className="img">
-                  {player.hasStrongestArmy ? <div className="checked" /> : null}
-                </div>
+                <div className="img">{player.hasStrongestArmy && <div className="checked" />}</div>
                 <p>Armée la plus puissante</p>
               </div>
             </>

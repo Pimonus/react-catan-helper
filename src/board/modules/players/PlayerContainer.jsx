@@ -28,7 +28,7 @@ import roadIcon from '@images/road_icon.png';
 
 import './PlayerContainer.css';
 
-const DicesContainer = () => {
+const PlayerContainer = () => {
   const [showNewPlayerModal, toggleNewPlayerModal] = useState(false);
 
   const selectedPlayerUuid = useSelector(state => state.selectedPlayerUuid);
@@ -51,59 +51,51 @@ const DicesContainer = () => {
 
   return (
     <div className="player-container">
-      {players.map((player, index) => {
-        return (
-          <>
-            <div
-              key={`player_${index}`}
-              className={cn('player', {
-                leader: player.isLeader,
-              })}
-              data-bg={index % playerCount}
-              onClick={() => dispatch(selectPlayer(player.uuid))}
-            >
-              <div className="avatar" data-avatar={index % playerCount}></div>
-              <p className="nickname">{player.nickname}</p>
-            </div>
-            <p className="score">
-              {`${player.score} points de victoire`}
-              {player.isLeader ? (
-                <span>
-                  <img src={medalIcon} alt="Catan" />
-                </span>
-              ) : null}
-              {player.hasStrongestArmy ? (
-                <span>
-                  <img src={armyIcon} alt="Catan" />
-                </span>
-              ) : null}
-              {player.hasLongestRoad ? (
-                <span>
-                  <img src={roadIcon} alt="Catan" />
-                </span>
-              ) : null}
-            </p>
-          </>
-        );
-      })}
-      <button
-        className="new-player"
-        onClick={() => dispatch(toggleNewPlayerModal(!showNewPlayerModal))}
-      >
+      {players.map((player, index) => (
+        <div key={`player_${index}`}>
+          <div
+            className={cn('player', { leader: player.isLeader })}
+            data-bg={index % playerCount}
+            onClick={() => dispatch(selectPlayer(player.uuid))}
+          >
+            <div className="avatar" data-avatar={index % playerCount}></div>
+            <p className="nickname">{player.nickname}</p>
+          </div>
+          <p className="score">
+            {`${player.score} points de victoire`}
+            {player.isLeader && (
+              <span>
+                <img src={medalIcon} alt="Catan" />
+              </span>
+            )}
+            {player.hasStrongestArmy && (
+              <span>
+                <img src={armyIcon} alt="Catan" />
+              </span>
+            )}
+            {player.hasLongestRoad && (
+              <span>
+                <img src={roadIcon} alt="Catan" />
+              </span>
+            )}
+          </p>
+        </div>
+      ))}
+      <button className="new-player" onClick={() => toggleNewPlayerModal(!showNewPlayerModal)}>
         + Nouveau Joueur
       </button>
-      {showNewPlayerModal ? (
+      {showNewPlayerModal && (
         <NewPlayerModal
           cancel={() => toggleNewPlayerModal(false)}
           submitAndClose={nickname => submitNewPlayer(nickname)}
         />
-      ) : null}
+      )}
       {selectedPlayer && (
         <PlayerModal
           // data
           player={selectedPlayer}
           // functions
-          deselect={() => dispatch(deselectPlayer)}
+          deselect={() => dispatch(deselectPlayer())}
           addCity={uuid => dispatch(addCity(uuid))}
           addColony={uuid => dispatch(addColony(uuid))}
           addVictoryPoint={uuid => dispatch(addVictoryPoint(uuid))}
@@ -120,4 +112,4 @@ const DicesContainer = () => {
   );
 };
 
-export default DicesContainer;
+export default PlayerContainer;

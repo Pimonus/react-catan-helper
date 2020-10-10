@@ -38,7 +38,7 @@ const HomePage = (props: Props) => {
   return (
     <div className={cn('homepage', { visible: game.paused })}>
       <img src={catanLogo} alt="Catan" />
-      {availableGame ? <h1 onClick={props.resumeGame}>Reprendre la dernière partie</h1> : null}
+      {availableGame && <h1 onClick={props.resumeGame}>Reprendre la dernière partie</h1>}
       <h1 onClick={props.newGame}>Nouvelle partie</h1>
     </div>
   );

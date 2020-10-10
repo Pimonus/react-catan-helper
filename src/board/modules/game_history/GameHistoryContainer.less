@@ -1,9 +1,10 @@
 .game-history-container {
-  position: fixed;
-  bottom: 0;
-  z-index: 1;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
   width: 100%;
-  height: fit-content;
+  height: 100%;
+  margin: auto 0 0 0;
   display: flex;
   justify-content: center;
 
@@ -14,13 +15,41 @@
     cursor: url('../../../assets/images/pointer.png'), auto !important;
   }
 
+  .turn {
+    position: absolute;
+    height: fit-content;
+    margin: 0;
+    font-size: 3rem;
+    top: -55px;
+    transition: top 0.1s linear;
+
+    &.visible {
+      top: 32px;
+    }
+  }
+
   .backward, .forward {
+    position: absolute;
     width: 130px;
+    bottom: -130px;
     cursor: url('../../../assets/images/pointer.png'), auto !important;
+    transition: bottom 0.1s linear;
+
+    &.backward {
+      left: 25%;
+    }
+
+    &.forward {
+      right: 25%;
+    }
 
     &.disabled {
       opacity: 0.4;
       cursor: url('../../../assets/images/forbidden.png'), auto !important;
+    }
+
+    &.visible {
+      bottom: 0;
     }
   }
 }

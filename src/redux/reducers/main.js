@@ -29,6 +29,7 @@ const enablingShortcutsActions = [
   'GAME::LOAD',
   'GAME::CREATED',
   'GAME::HISTORY::DISABLE',
+  'GAME::SAVE',
   'GAME::THIEF::ENABLE',
   'PLAYER::ADD',
   'PLAYER::DESELECT',
@@ -45,7 +46,7 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
 
     case 'GAME::LOAD': {
       newState =
-        // FIXME action.state === null is not possible
+        // FIXME action.state === null is impossible
         action.state === null || action.state === undefined
           ? initialState
           : {
@@ -55,6 +56,10 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
                 ...action.state.game,
                 loading: false,
                 paused: false,
+              },
+              gameHistory: {
+                enabled: false,
+                turnKeys: action.state.gameHistory.turnKeys,
               },
               selectedPlayerUuid: undefined,
             };
@@ -101,7 +106,8 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
           ...state.gameHistory,
           enabled: true,
           nextTurnKey: undefined,
-          previousTurnKey: turnKeys.length ? turnKeys[turnKeys.length - 1] : undefined,
+          previousTurnKey: turnKeys.length > 1 ? turnKeys[turnKeys.length - 2] : undefined,
+          visualizedTurnIndex: turnKeys.length - 1,
         },
       };
       break;
@@ -115,6 +121,7 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
           enabled: false,
           nextTurnKey: undefined,
           previousTurnKey: undefined,
+          visualizedTurnIndex: undefined,
           visualizedTurnState: undefined,
         },
       };
@@ -124,6 +131,9 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
       const { turnKey } = action;
       const { turnKeys } = state.gameHistory;
       const visualizedTurnIndex = turnKeys.indexOf(turnKey);
+
+      console.log('trying to figure the prev and next turn keys out');
+      console.log('turnKey : ', turnKey);
 
       let nextTurnKey, previousTurnKey;
       if (!turnKey) {
@@ -142,6 +152,7 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
           ...state.gameHistory,
           nextTurnKey,
           previousTurnKey,
+          visualizedTurnIndex,
           visualizedTurnState: action.turn,
         },
       };
@@ -305,6 +316,7 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
       gameHistory: {
         ...state.gameHistory,
         turnKeys: [...state.gameHistory.turnKeys, newTurnKey],
+        visualizedTurnIndex: undefined,
       },
     };
   }

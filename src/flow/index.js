@@ -61,6 +61,7 @@ export type GameHistoryState = {
   +nextTurnKey?: string,
   +previousTurnKey?: string,
   +turnKeys: string[],
+  +visualizedTurnIndex?: number,
   +visualizedTurnState?: TurnState,
 };
 

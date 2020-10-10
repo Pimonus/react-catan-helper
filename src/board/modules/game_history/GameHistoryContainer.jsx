@@ -20,22 +20,29 @@ const GameHistoryContainer = () => {
   const historyModeEnabled = useSelector(state => state.gameHistory.enabled);
   const nextTurnKey = useSelector(state => state.gameHistory.nextTurnKey);
   const previousTurnKey = useSelector(state => state.gameHistory.previousTurnKey);
+  const visualizedTurnIndex = useSelector(state => state.gameHistory.visualizedTurnIndex);
+
+  const renderTurn = (): string => {
+    if (!nextTurnKey) return 'Dernier tour';
+    return `Tour ${visualizedTurnIndex + 1}`;
+  };
 
   return (
     <>
       <div className="game-history-container">
-        {historyModeEnabled && (
-          <img
-            className={cn('backward', { disabled: !previousTurnKey })}
-            src={backwardSign}
-            onClick={() => {
-              if (previousTurnKey) dispatch(fetchTurn(previousTurnKey));
-            }}
-          />
-        )}
+        <p className={cn('turn', { visible: historyModeEnabled })}>{renderTurn()}</p>
+        <img
+          alt="previous turn"
+          className={cn('backward', { disabled: !previousTurnKey, visible: historyModeEnabled })}
+          src={backwardSign}
+          onClick={() => {
+            if (previousTurnKey) dispatch(fetchTurn(previousTurnKey));
+          }}
+        />
         {!historyModeEnabled ? (
           <>
             <img
+              alt="enable history mode"
               className="toggle"
               src={enableHistoryIcon}
               onClick={() => dispatch(enableHistoryMode())}
@@ -50,6 +57,7 @@ const GameHistoryContainer = () => {
         ) : (
           <>
             <img
+              alt="disable history mode"
               className="toggle"
               src={disableHistoryIcon}
               onClick={() => dispatch(disableHistoryMode())}
@@ -62,13 +70,12 @@ const GameHistoryContainer = () => {
             </Tooltip>
           </>
         )}
-        {historyModeEnabled && (
-          <img
-            className={cn('forward', { disabled: !nextTurnKey })}
-            src={forwardSign}
-            onClick={() => dispatch(fetchTurn(nextTurnKey))}
-          />
-        )}
+        <img
+          alt="next turn"
+          className={cn('forward', { disabled: !nextTurnKey, visible: historyModeEnabled })}
+          src={forwardSign}
+          onClick={() => dispatch(fetchTurn(nextTurnKey))}
+        />
       </div>
     </>
   );
