@@ -1,4 +1,4 @@
-/* @flow */
+/** @flow */
 
 import { SIX, BARBARIANS } from '@core';
 import type { CatanState } from '@flow';

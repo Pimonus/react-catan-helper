@@ -1,4 +1,4 @@
-/* @flow */
+/** @flow */
 
 import { saveGame } from './game';
 import { getClassicDiceValue, getSpecialDiceValue } from '@core';

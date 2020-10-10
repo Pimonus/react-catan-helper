@@ -1,4 +1,4 @@
-/* @flow */
+/** @flow */
 
 import { computePlayersScores } from '@core';
 import type { Player, PlayerAction } from '@flow';
