@@ -4,6 +4,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
+import { ATTACK_POSITION } from '@core';
 import './Barbarians.css';
 
 const BarbariansContainer = () => {
@@ -61,7 +62,7 @@ const BarbariansContainer = () => {
           current: position === 6,
         })}
       />
-      <div className="step attack" />
+      <div className={cn('step attack', { active: position === ATTACK_POSITION })} />
     </div>
   );
 };
