@@ -7,9 +7,3 @@ export const moveBarbariansForward = (): ThunkAction => {
     dispatch({ type: 'BARBARIANS::PROGRESS' });
   };
 };
-
-export const resistBarbariansAttack = (): ThunkAction => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: 'BARBARIANS::ATTACK' });
-  };
-};
