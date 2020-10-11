@@ -1,13 +1,12 @@
-/* @flow */
+/** @flow */
 
 import React from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 
-import { newGame, resumeGame } from '../../../redux/actions/game';
-import type { CatanState, Dispatch, GameState } from '../../../flow';
-
-import catanLogo from '../../../assets/images/catan_logo.png';
+import { newGame, resumeGame } from '@actions/game';
+import type { CatanState, Dispatch, GameState } from '@flow';
+import catanLogo from '@images/catan_logo.png';
 
 import './HomePage.css';
 
@@ -39,9 +38,7 @@ const HomePage = (props: Props) => {
   return (
     <div className={cn('homepage', { visible: game.paused })}>
       <img src={catanLogo} alt="Catan" />
-      {availableGame ? (
-        <h1 onClick={props.resumeGame}>Reprendre la dernière partie</h1>
-      ) : null}
+      {availableGame && <h1 onClick={props.resumeGame}>Reprendre la dernière partie</h1>}
       <h1 onClick={props.newGame}>Nouvelle partie</h1>
     </div>
   );

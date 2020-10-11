@@ -1,9 +1,11 @@
-/* @flow */
+/** @flow */
 
-import playersReducer from './players';
-import { initialState } from '../store';
-import { computePlayersScores, newPlayer } from '../../core';
-import type { CatanAction, CatanState, Player } from '../../flow';
+import randomstring from 'randomstring';
+
+import playerReducer from '@reducers/player';
+import { initialState } from '@store';
+import { computePlayersScores, getStateForHistory, getStateForStorage, newPlayer } from '@core';
+import type { CatanAction, CatanState, Player } from '@flow';
 
 const softActions = [
   '@@INIT',
@@ -11,6 +13,10 @@ const softActions = [
   'GAME::FOUND',
   'GAME::NOT_FOUND',
   'GAME::RESUME',
+  'GAME::SAVE',
+  'GAME::HISTORY::ENABLE',
+  'GAME::HISTORY::DISABLE',
+  'GAME::HISTORY::TURN::VISUALIZE',
   'SHORTCUTS::DISABLE',
   'SWAL::FIRE',
   'SWAL::DISMISS',
@@ -22,16 +28,15 @@ const enablingShortcutsActions = [
   'DICES::REVEAL',
   'GAME::LOAD',
   'GAME::CREATED',
+  'GAME::HISTORY::DISABLE',
+  'GAME::SAVE',
   'GAME::THIEF::ENABLE',
   'PLAYER::ADD',
   'PLAYER::DESELECT',
   'SWAL::DISMISS',
 ];
 
-export const reducer = (
-  state: CatanState = initialState,
-  action: CatanAction
-) => {
+export const reducer = (state: CatanState = initialState, action: CatanAction) => {
   let newState: CatanState;
   switch (action.type) {
     case 'GAME::FOUND': {
@@ -41,7 +46,7 @@ export const reducer = (
 
     case 'GAME::LOAD': {
       newState =
-        // FIXME action.state === null is not possible
+        // FIXME action.state === null is impossible
         action.state === null || action.state === undefined
           ? initialState
           : {
@@ -52,6 +57,10 @@ export const reducer = (
                 loading: false,
                 paused: false,
               },
+              gameHistory: {
+                enabled: false,
+                turnKeys: action.state.gameHistory.turnKeys,
+              },
               selectedPlayerUuid: undefined,
             };
       break;
@@ -60,7 +69,11 @@ export const reducer = (
     case 'GAME::NEW':
       newState = {
         ...initialState,
-        game: { ...state.game, loading: true, paused: false },
+        game: {
+          ...state.game,
+          loading: true,
+          paused: false,
+        },
       };
       break;
 
@@ -84,6 +97,67 @@ export const reducer = (
         game: { ...state.game, loading: true, paused: false },
       };
       break;
+
+    case 'GAME::HISTORY::ENABLE': {
+      const { turnKeys } = state.gameHistory;
+      newState = {
+        ...state,
+        gameHistory: {
+          ...state.gameHistory,
+          enabled: true,
+          nextTurnKey: undefined,
+          previousTurnKey: turnKeys.length > 1 ? turnKeys[turnKeys.length - 2] : undefined,
+          visualizedTurnIndex: turnKeys.length - 1,
+        },
+      };
+      break;
+    }
+
+    case 'GAME::HISTORY::DISABLE':
+      newState = {
+        ...state,
+        gameHistory: {
+          ...state.gameHistory,
+          enabled: false,
+          nextTurnKey: undefined,
+          previousTurnKey: undefined,
+          visualizedTurnIndex: undefined,
+          visualizedTurnState: undefined,
+        },
+      };
+      break;
+
+    case 'GAME::HISTORY::TURN::VISUALIZE': {
+      const { turnKey } = action;
+      const { turnKeys } = state.gameHistory;
+      const visualizedTurnIndex = turnKeys.indexOf(turnKey);
+
+      console.log('trying to figure the prev and next turn keys out');
+      console.log('turnKey : ', turnKey);
+
+      let nextTurnKey, previousTurnKey;
+      if (!turnKey) {
+        nextTurnKey = undefined;
+        previousTurnKey = turnKeys[turnKeys.length - 1];
+      } else if (visualizedTurnIndex === 0) {
+        nextTurnKey = turnKeys.length > 1 ? turnKeys[1] : undefined;
+        previousTurnKey = undefined;
+      } else {
+        nextTurnKey = turnKeys[visualizedTurnIndex + 1];
+        previousTurnKey = turnKeys[visualizedTurnIndex - 1];
+      }
+      newState = {
+        ...state,
+        gameHistory: {
+          ...state.gameHistory,
+          nextTurnKey,
+          previousTurnKey,
+          visualizedTurnIndex,
+          visualizedTurnState: action.turn,
+        },
+      };
+      break;
+    }
 
     case 'GAME::THIEF::ENABLE':
       newState = {
@@ -115,7 +189,6 @@ export const reducer = (
         ...state,
         dices: {
           ...state.dices,
-          history: [...state.dices.history, action.values],
           values: action.values,
         },
       };
@@ -198,7 +271,7 @@ export const reducer = (
     case 'PLAYER::SAVE::NICKNAME': {
       newState = {
         ...state,
-        players: playersReducer(state.players, action),
+        players: playerReducer(state.players, action),
       };
       break;
     }
@@ -219,21 +292,37 @@ export const reducer = (
     default:
       if (
         !action.type.startsWith('@@redux') &&
-        !softActions.find(type => type === action.type)
-      )
+        !softActions.find(type => type === action.type) &&
+        process.env.NODE_ENV === 'development'
+      ) {
         console.warn(
           `Ooops, the reducer is about to return the current state without changes! The action is ${action.type}`
         );
+      }
       newState = state;
       break;
   }
 
-  if (
-    newState &&
-    !action.type.startsWith('@@redux') &&
-    !softActions.includes(action.type)
-  ) {
-    localStorage.setItem('currentGame', JSON.stringify(newState));
+  if (action.type === 'GAME::SAVE') {
+    const history = JSON.parse(localStorage.getItem('gameHistory') || '{}');
+    const newTurnKey = randomstring.generate({
+      length: 6,
+      charset: 'hex',
+    });
+    history[newTurnKey] = getStateForHistory(state);
+    localStorage.setItem('gameHistory', JSON.stringify(history));
+    newState = {
+      ...state,
+      gameHistory: {
+        ...state.gameHistory,
+        turnKeys: [...state.gameHistory.turnKeys, newTurnKey],
+        visualizedTurnIndex: undefined,
+      },
+    };
+  }
+
+  if (newState && !action.type.startsWith('@@redux') && !softActions.includes(action.type)) {
+    localStorage.setItem('currentGame', getStateForStorage(newState));
   }
 
   return {

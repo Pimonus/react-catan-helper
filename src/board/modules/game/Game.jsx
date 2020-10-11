@@ -1,57 +1,38 @@
-/* @flow */
+/** @flow */
 
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Tooltip from 'react-tooltip';
-import cn from 'classnames';
 
-import Barbarians from './Barbarians';
-import type { CatanState } from '../../../flow';
-import thiefIcon from '../../../assets/images/brigand.png';
+import Barbarians from '@modules/game/Barbarians';
+import thiefIcon from '@images/brigand.png';
+
 import './Game.css';
 
-type OwnProps = {
-  +pausedGame: boolean,
-};
+const GameMenu = () => {
+  // use history value if history mode is enabled
+  const enabledThief = useSelector(state => {
+    const { enabled: isHistoryEnabled } = state.gameHistory;
+    const { visualizedTurnState } = state.gameHistory;
 
-type StateProps = {
-  +enabledThief: boolean,
-};
-
-const mapStateToProps = (state: CatanState): StateProps => ({
-  enabledThief: state.game.enabledThief,
-});
-
-type Props = OwnProps & StateProps;
-
-const GameMenu = (props: Props) => {
-  const { enabledThief } = props;
+    return isHistoryEnabled && visualizedTurnState
+      ? visualizedTurnState.game.enabledThief
+      : state.game.enabledThief;
+  });
 
   return (
-    <div
-      className={cn('game-container', {
-        hidden: props.pausedGame,
-      })}
-    >
-      {enabledThief ? (
+    <div className="game-container">
+      {enabledThief && (
         <>
-          <img
-            className="thief-icon"
-            src={thiefIcon}
-            data-tip="React-tooltip"
-            alt="Bad thief!"
-          />
+          <img className="thief-icon" src={thiefIcon} data-tip="React-tooltip" alt="Bad thief!" />
           <Tooltip className="tooltip" place="left" type="dark" effect="solid">
             Le Voleur est activé (héhé)
           </Tooltip>
         </>
-      ) : null}
+      )}
       <Barbarians />
     </div>
   );
 };
 
-export default connect(
-  mapStateToProps,
-  null
-)(GameMenu);
+export default GameMenu;

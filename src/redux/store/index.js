@@ -1,7 +1,7 @@
-/* @flow */
+/** @flow */
 
-import { SIX, BARBARIANS } from '../../core';
-import type { CatanState } from '../../flow';
+import { SIX, BARBARIANS } from '@core';
+import type { CatanState } from '@flow';
 
 export const initialState: CatanState = {
   _createdAt: new Date(),
@@ -13,7 +13,6 @@ export const initialState: CatanState = {
   },
   dices: {
     flipped: false,
-    history: [],
     rolling: false,
     spinning: false,
     values: {
@@ -26,6 +25,14 @@ export const initialState: CatanState = {
     enabledThief: false,
     loading: false,
     paused: true,
+  },
+  gameHistory: {
+    enabled: false,
+    nextTurnKey: undefined,
+    previousTurnKey: undefined,
+    visualizedTurnIndex: undefined,
+    visualizedTurnState: undefined,
+    turnKeys: [],
   },
   listenToShortcuts: false,
   players: [],
