@@ -1,4 +1,4 @@
-/* @flow */
+/** @flow */
 
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
@@ -6,30 +6,16 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 // actions
-import {
-  moveBarbariansForward,
-  resistBarbariansAttack,
-} from '../../../redux/actions/barbarians';
-import { disableShortcuts, enableThief } from '../../../redux/actions/game';
-import { dismissSwal, fireSwal } from '../../../redux/actions/swal';
+import { moveBarbariansForward, resistBarbariansAttack } from '@actions/barbarians';
+import { disableShortcuts, enableThief, saveGame } from '@actions/game';
+import { dismissSwal, fireSwal } from '@actions/swal';
 // components
-import BarbariansSwal from './BarbariansSwal';
-import ThiefSwal from './ThiefSwal';
+import BarbariansSwal from '@modules/swals/BarbariansSwal.jsx';
+import ThiefSwal from '@modules/swals/ThiefSwal.jsx';
 // helpers
-import {
-  didBarbariansProgress,
-  didBarbariansReachCoast,
-  getDicesScore,
-  THIEF_SCORE,
-} from '../../../core';
+import { didBarbariansProgress, didBarbariansReachCoast, getDicesScore, THIEF_SCORE } from '@core';
 // types
-import type {
-  BarbariansState,
-  CatanState,
-  DicesState,
-  Dispatch,
-  GameState,
-} from '../../../flow';
+import type { BarbariansState, CatanState, DicesState, Dispatch, GameState } from '@flow';
 
 import './SwalManager.css';
 
@@ -46,8 +32,7 @@ type SwalWithCallback = {
   +callback: () => any,
 };
 
-const dicesHaveBeenRevealed = (flipped: boolean, stillFlipped: boolean) =>
-  flipped && !stillFlipped;
+const dicesHaveBeenRevealed = (flipped: boolean, stillFlipped: boolean) => flipped && !stillFlipped;
 
 type StateProps = {
   +_createdAt: Date,
@@ -63,6 +48,7 @@ type DispatchProps = {
   +fireSwal: () => any,
   +moveBarbariansForward: () => any,
   +resistBarbariansAttack: () => any,
+  +saveGame: () => any,
 };
 
 const mapStateToProps = (state: CatanState): StateProps => ({
@@ -79,6 +65,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   fireSwal: () => dispatch(fireSwal()),
   moveBarbariansForward: () => dispatch(moveBarbariansForward()),
   resistBarbariansAttack: () => dispatch(resistBarbariansAttack()),
+  saveGame: () => dispatch(saveGame()),
 });
 
 type Props = StateProps & DispatchProps;
@@ -129,7 +116,8 @@ class SwalManager extends PureComponent<Props> {
           });
       }
 
-      if (swalQueue.length > 0) this.processSwalQueue(swalQueue);
+      if (swalQueue.length > 0) await this.processSwalQueue(swalQueue);
+      this.props.saveGame();
     }
   }
 

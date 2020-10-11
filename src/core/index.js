@@ -1,13 +1,8 @@
-/* @flow */
+/** @flow */
 
 import uuidv1 from 'uuid/v1';
 
-import type {
-  ClassicDiceValue,
-  DicesValues,
-  Player,
-  SpecialDiceValue,
-} from '../flow';
+import type { CatanState, ClassicDiceValue, DicesValues, Player, SpecialDiceValue } from '@flow';
 
 export const ONE = 'one';
 export const TWO = 'two';
@@ -21,14 +16,7 @@ export const BLUE = 'blue';
 export const GREEN = 'green';
 
 const classicDiceValues = [ONE, TWO, THREE, FOUR, FIVE, SIX];
-const specialDiceValues = [
-  BARBARIANS,
-  BARBARIANS,
-  BARBARIANS,
-  YELLOW,
-  GREEN,
-  BLUE,
-];
+const specialDiceValues = [BARBARIANS, BARBARIANS, BARBARIANS, YELLOW, GREEN, BLUE];
 
 export const diceValueMatching = {
   one: 1,
@@ -41,6 +29,32 @@ export const diceValueMatching = {
 
 export const THIEF_SCORE = 7;
 export const ATTACK_POSITION = 7;
+
+export const getStateForHistory = (state: CatanState): string =>
+  JSON.stringify({
+    game: {
+      enabledThief: state.game.enabledThief,
+    },
+    barbarians: {
+      position: state.barbarians.position,
+    },
+    dices: {
+      values: state.dices.values,
+    },
+    players: state.players,
+  });
+
+export const getStateForStorage = (state: CatanState): string =>
+  JSON.stringify({
+    ...state,
+    gameHistory: {
+      ...state.gameHistory,
+      enabled: false,
+      nextTurnKey: undefined,
+      previousTurnKey: undefined,
+      visualizedTurnState: undefined,
+    },
+  });
 
 export const newPlayer = (nickname: string): Player => ({
   nickname,
@@ -61,9 +75,7 @@ export const getPlayerScore = (player: Player): number =>
   2 * player.cities +
   player.colonies;
 
-export const computePlayersScores = (
-  state: $ReadOnlyArray<Player>
-): $ReadOnlyArray<Player> => {
+export const computePlayersScores = (state: $ReadOnlyArray<Player>): $ReadOnlyArray<Player> => {
   let topScore = 0;
   let newState: Array<Player> = state.map(player => {
     const score = getPlayerScore(player);
@@ -117,44 +129,34 @@ export const computePlayersState = (
     newState = state.map<Player>((player: Player) => ({
       ...player,
       victoryPoints:
-        player.uuid === data.newVictoryPoint
-          ? player.victoryPoints + 1
-          : player.victoryPoints,
+        player.uuid === data.newVictoryPoint ? player.victoryPoints + 1 : player.victoryPoints,
     }));
   }
   if (data.removeVictoryPoint) {
     newState = state.map<Player>((player: Player) => ({
       ...player,
       victoryPoints:
-        player.uuid === data.removeVictoryPoint
-          ? player.victoryPoints - 1
-          : player.victoryPoints,
+        player.uuid === data.removeVictoryPoint ? player.victoryPoints - 1 : player.victoryPoints,
     }));
   }
   if (data.newColony) {
     newState = state.map<Player>((player: Player) => ({
       ...player,
-      colonies:
-        player.uuid === data.newColony ? player.colonies + 1 : player.colonies,
+      colonies: player.uuid === data.newColony ? player.colonies + 1 : player.colonies,
     }));
   }
   if (data.newCity) {
     newState = state.map<Player>((player: Player) => ({
       ...player,
-      colonies:
-        player.uuid === data.newCity ? player.colonies - 1 : player.colonies,
+      colonies: player.uuid === data.newCity ? player.colonies - 1 : player.colonies,
       cities: player.uuid === data.newCity ? player.cities + 1 : player.cities,
     }));
   }
   if (data.destroyCity) {
     newState = state.map<Player>((player: Player) => ({
       ...player,
-      colonies:
-        player.uuid === data.destroyCity
-          ? player.colonies + 1
-          : player.colonies,
-      cities:
-        player.uuid === data.destroyCity ? player.cities - 1 : player.cities,
+      colonies: player.uuid === data.destroyCity ? player.colonies + 1 : player.colonies,
+      cities: player.uuid === data.destroyCity ? player.cities - 1 : player.cities,
     }));
   }
   if (data.newNickname) {
@@ -180,8 +182,6 @@ export const getSpecialDiceValue = (): SpecialDiceValue => {
 export const getDicesScore = (values: DicesValues): number =>
   diceValueMatching[values.redValue] + diceValueMatching[values.whiteValue];
 
-export const didBarbariansProgress = (values: DicesValues) =>
-  values.specialValue === BARBARIANS;
+export const didBarbariansProgress = (values: DicesValues) => values.specialValue === BARBARIANS;
 
-export const didBarbariansReachCoast = (advance: number) =>
-  advance === ATTACK_POSITION - 1;
+export const didBarbariansReachCoast = (advance: number) => advance === ATTACK_POSITION - 1;

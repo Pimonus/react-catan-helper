@@ -1,8 +1,8 @@
-/* @flow */
+/** @flow */
 
 import React from 'react';
 
-import thief from '../../../assets/images/brigand.png';
+import thief from '@images/brigand.png';
 
 import './ThiefSwall.css';
 

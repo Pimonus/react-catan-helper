@@ -1,22 +1,21 @@
-/* @flow */
+/** @flow */
 
-export type BarbariansState = {
+export type BarbariansStorableState = {
   +position: number,
 };
 
-export type GameState = {
+export type BarbariansState = BarbariansStorableState;
+
+export type GameStorableState = {
   +enabledThief: boolean,
+};
+
+export type GameState = GameStorableState & {
   +loading: boolean,
   +paused: boolean,
 };
 
-export type ClassicDiceValue =
-  | 'one'
-  | 'two'
-  | 'three'
-  | 'four'
-  | 'five'
-  | 'six';
+export type ClassicDiceValue = 'one' | 'two' | 'three' | 'four' | 'five' | 'six';
 
 export type SpecialDiceValue = 'blue' | 'green' | 'yellow' | 'barbarians';
 
@@ -26,12 +25,14 @@ export type DicesValues = {
   +specialValue: SpecialDiceValue,
 };
 
-export type DicesState = {
+export type DicesStorableState = {
+  +values: DicesValues,
+};
+
+export type DicesState = DicesStorableState & {
   +flipped: boolean,
-  +history: $ReadOnlyArray<DicesValues>,
   +rolling: boolean,
   +spinning: boolean,
-  +values: DicesValues,
 };
 
 export type Player = {
@@ -48,6 +49,22 @@ export type Player = {
   +victoryPoints: number,
 };
 
+export type TurnState = {
+  +game: GameStorableState,
+  +barbarians: BarbariansStorableState,
+  +dices: DicesStorableState,
+  +players: $ReadOnlyArray<Player>,
+};
+
+export type GameHistoryState = {
+  +enabled: boolean,
+  +nextTurnKey?: string,
+  +previousTurnKey?: string,
+  +turnKeys: string[],
+  +visualizedTurnIndex?: number,
+  +visualizedTurnState?: TurnState,
+};
+
 export type CatanState = {
   +_createdAt: Date,
   +_resumedAt: Date | null,
@@ -56,6 +73,7 @@ export type CatanState = {
   +barbarians: BarbariansState,
   +dices: DicesState,
   +game: GameState,
+  +gameHistory: GameHistoryState,
   +listenToShortcuts: boolean,
   +players: $ReadOnlyArray<Player>,
   +selectedPlayerUuid?: string,
@@ -90,7 +108,23 @@ export type CatanAction =
   | { type: 'GAME::CREATED' }
   | { type: 'GAME::PAUSE' }
   | { type: 'GAME::RESUME' }
+  | { type: 'GAME::SAVE' }
   | { type: 'GAME::THIEF::ENABLE' }
+  | { type: 'GAME::HISTORY::ENABLE' }
+  | { type: 'GAME::HISTORY::DISABLE' }
+  | {
+      type: 'GAME::HISTORY::TURN::FETCH',
+      turnKey?: string,
+    }
+  | {
+      type: 'GAME::HISTORY::TURN::FETCH!!ERROR',
+      turnKey?: string,
+    }
+  | {
+      type: 'GAME::HISTORY::TURN::VISUALIZE',
+      turn: TurnState,
+      turnKey?: string,
+    }
   | { type: 'BARBARIANS::ATTACK' }
   | { type: 'BARBARIANS::PROGRESS' }
   | { type: 'DICES::DEFINE::VALUES', values: DicesValues }

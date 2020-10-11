@@ -1,7 +1,7 @@
-/* @flow */
+/** @flow */
 
-import { computePlayersScores } from '../../core';
-import type { Player, PlayerAction } from '../../flow';
+import { computePlayersScores } from '@core';
+import type { Player, PlayerAction } from '@flow';
 
 const reducer = (
   state: $ReadOnlyArray<Player> = [],
@@ -13,10 +13,7 @@ const reducer = (
     case 'PLAYER::ADD::COLONY': {
       newState = state.map<Player>((player: Player) => ({
         ...player,
-        colonies:
-          player.uuid === action.playerUuid
-            ? player.colonies + 1
-            : player.colonies,
+        colonies: player.uuid === action.playerUuid ? player.colonies + 1 : player.colonies,
       }));
       break;
     }
@@ -24,10 +21,7 @@ const reducer = (
     case 'PLAYER::DESTROY::COLONY': {
       newState = state.map<Player>((player: Player) => ({
         ...player,
-        colonies:
-          player.uuid === action.playerUuid
-            ? player.colonies - 1
-            : player.colonies,
+        colonies: player.uuid === action.playerUuid ? player.colonies - 1 : player.colonies,
       }));
       break;
     }
@@ -35,12 +29,8 @@ const reducer = (
     case 'PLAYER::ADD::CITY': {
       newState = state.map<Player>((player: Player) => ({
         ...player,
-        colonies:
-          player.uuid === action.playerUuid
-            ? player.colonies - 1
-            : player.colonies,
-        cities:
-          player.uuid === action.playerUuid ? player.cities + 1 : player.cities,
+        colonies: player.uuid === action.playerUuid ? player.colonies - 1 : player.colonies,
+        cities: player.uuid === action.playerUuid ? player.cities + 1 : player.cities,
       }));
       break;
     }
@@ -48,12 +38,8 @@ const reducer = (
     case 'PLAYER::DESTROY::CITY': {
       newState = state.map<Player>((player: Player) => ({
         ...player,
-        colonies:
-          player.uuid === action.playerUuid
-            ? player.colonies + 1
-            : player.colonies,
-        cities:
-          player.uuid === action.playerUuid ? player.cities - 1 : player.cities,
+        colonies: player.uuid === action.playerUuid ? player.colonies + 1 : player.colonies,
+        cities: player.uuid === action.playerUuid ? player.cities - 1 : player.cities,
       }));
       break;
     }
@@ -62,9 +48,7 @@ const reducer = (
       newState = state.map<Player>((player: Player) => ({
         ...player,
         victoryPoints:
-          player.uuid === action.playerUuid
-            ? player.victoryPoints + 1
-            : player.victoryPoints,
+          player.uuid === action.playerUuid ? player.victoryPoints + 1 : player.victoryPoints,
       }));
       break;
     }
@@ -73,9 +57,7 @@ const reducer = (
       newState = state.map<Player>((player: Player) => ({
         ...player,
         victoryPoints:
-          player.uuid === action.playerUuid
-            ? player.victoryPoints - 1
-            : player.victoryPoints,
+          player.uuid === action.playerUuid ? player.victoryPoints - 1 : player.victoryPoints,
       }));
       break;
     }
@@ -105,12 +87,14 @@ const reducer = (
       break;
     }
 
-    default:
-      console.warn(
-        `Ooops, the player reducer is about to return the current players state without changes! The action is ${action.type}`
-      );
+    default: {
+      if (process.env.NODE_ENV === 'development')
+        console.warn(
+          `Ooops, the player reducer is about to return the current players state without changes! The action is ${action.type}`
+        );
       newState = state;
       break;
+    }
   }
 
   return computePlayersScores(newState);

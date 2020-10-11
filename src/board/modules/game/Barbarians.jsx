@@ -1,36 +1,24 @@
-/* @flow */
+/** @flow */
 
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import type { CatanState } from '../../../flow';
-// import barbariansPath from '../../../assets/images/barbarians_path.png';
 import './Barbarians.css';
 
-type OwnProps = {
-  +pausedGame: boolean,
-};
+const BarbariansContainer = () => {
+  // use history value if history mode is enabled
+  const position = useSelector(state => {
+    const { enabled: isHistoryEnabled } = state.gameHistory;
+    const { visualizedTurnState } = state.gameHistory;
 
-type StateProps = {
-  +position: number,
-};
-
-type Props = OwnProps & StateProps;
-
-const mapStateToProps = (state: CatanState): StateProps => ({
-  position: state.barbarians.position,
-});
-
-const BarbariansContainer = (props: Props) => {
-  const { position } = props;
+    return isHistoryEnabled && visualizedTurnState
+      ? visualizedTurnState.barbarians.position
+      : state.barbarians.position;
+  });
 
   return (
-    <div
-      className={cn('barbarians-container', {
-        hidden: props.pausedGame,
-      })}
-    >
+    <div className="barbarians-container">
       <div
         className={cn('step', {
           overtaken: position > 0,
@@ -78,7 +66,4 @@ const BarbariansContainer = (props: Props) => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  null
-)(BarbariansContainer);
+export default BarbariansContainer;

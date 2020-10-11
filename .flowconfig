@@ -7,5 +7,14 @@
 [lints]
 
 [options]
+module.name_mapper='^@images' ->'<PROJECT_ROOT>/src/assets/images'
+module.name_mapper='^@board' ->'<PROJECT_ROOT>/src/board/'
+module.name_mapper='^@modules' ->'<PROJECT_ROOT>/src/board/modules/'
+module.name_mapper='^@core' ->'<PROJECT_ROOT>/src/core/'
+module.name_mapper='^@flow' ->'<PROJECT_ROOT>/src/flow/'
+module.name_mapper='^@redux' ->'<PROJECT_ROOT>/src/redux/'
+module.name_mapper='^@actions' ->'<PROJECT_ROOT>/src/redux/actions/'
+module.name_mapper='^@reducers' ->'<PROJECT_ROOT>/src/redux/reducers/'
+module.name_mapper='^@store' ->'<PROJECT_ROOT>/src/redux/store/'
 
 [strict]
