@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 // actions
-import { moveBarbariansForward, resistBarbariansAttack } from '@actions/barbarians';
+import { moveBarbariansForward } from '@actions/barbarians';
 import { disableShortcuts, enableThief, saveGame } from '@actions/game';
 import { dismissSwal, fireSwal } from '@actions/swal';
 // components
@@ -47,7 +47,6 @@ type DispatchProps = {
   +enableThief: () => any,
   +fireSwal: () => any,
   +moveBarbariansForward: () => any,
-  +resistBarbariansAttack: () => any,
   +saveGame: () => any,
 };
 
@@ -64,7 +63,6 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   enableThief: () => dispatch(enableThief()),
   fireSwal: () => dispatch(fireSwal()),
   moveBarbariansForward: () => dispatch(moveBarbariansForward()),
-  resistBarbariansAttack: () => dispatch(resistBarbariansAttack()),
   saveGame: () => dispatch(saveGame()),
 });
 
@@ -96,24 +94,14 @@ class SwalManager extends PureComponent<Props> {
 
       // Barbarians progress swal
       if (didBarbariansProgress(dices.values)) {
-        if (didBarbariansReachCoast(barbarians.position))
-          swalQueue.push({
-            swal: {
-              timer: swalTimmer,
-              showConfirmButton: false,
-              html: <BarbariansSwal />,
-            },
-            callback: () => this.props.resistBarbariansAttack(),
-          });
-        else
-          swalQueue.push({
-            swal: {
-              timer: swalTimmer,
-              showConfirmButton: false,
-              html: <BarbariansSwal progress />,
-            },
-            callback: () => this.props.moveBarbariansForward(),
-          });
+        swalQueue.push({
+          swal: {
+            timer: swalTimmer,
+            showConfirmButton: false,
+            html: <BarbariansSwal attack={didBarbariansReachCoast(barbarians.position)} />,
+          },
+          callback: () => this.props.moveBarbariansForward(),
+        });
       }
 
       if (swalQueue.length > 0) await this.processSwalQueue(swalQueue);

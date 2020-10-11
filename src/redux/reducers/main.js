@@ -4,7 +4,13 @@ import randomstring from 'randomstring';
 
 import playerReducer from '@reducers/player';
 import { initialState } from '@store';
-import { computePlayersScores, getStateForHistory, getStateForStorage, newPlayer } from '@core';
+import {
+  computePlayersScores,
+  getStateForHistory,
+  getStateForStorage,
+  newPlayer,
+  ATTACK_POSITION,
+} from '@core';
 import type { CatanAction, CatanState, Player } from '@flow';
 
 const softActions = [
@@ -23,7 +29,6 @@ const softActions = [
 ];
 
 const enablingShortcutsActions = [
-  'BARBARIANS::ATTACK',
   'BARBARIANS::PROGRESS',
   'DICES::REVEAL',
   'GAME::LOAD',
@@ -132,9 +137,6 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
       const { turnKeys } = state.gameHistory;
       const visualizedTurnIndex = turnKeys.indexOf(turnKey);
 
-      console.log('trying to figure the prev and next turn keys out');
-      console.log('turnKey : ', turnKey);
-
       let nextTurnKey, previousTurnKey;
       if (!turnKey) {
         nextTurnKey = undefined;
@@ -166,23 +168,16 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
       };
       break;
 
-    case 'BARBARIANS::ATTACK':
+    case 'BARBARIANS::PROGRESS': {
+      const currentPosition = state.barbarians.position;
       newState = {
         ...state,
         barbarians: {
-          position: 0,
+          position: currentPosition === ATTACK_POSITION ? 1 : state.barbarians.position + 1,
         },
       };
       break;
-
-    case 'BARBARIANS::PROGRESS':
-      newState = {
-        ...state,
-        barbarians: {
-          position: state.barbarians.position + 1,
-        },
-      };
-      break;
+    }
 
     case 'DICES::DEFINE::VALUES': {
       newState = {

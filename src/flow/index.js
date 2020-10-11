@@ -125,7 +125,6 @@ export type CatanAction =
       turn: TurnState,
       turnKey?: string,
     }
-  | { type: 'BARBARIANS::ATTACK' }
   | { type: 'BARBARIANS::PROGRESS' }
   | { type: 'DICES::DEFINE::VALUES', values: DicesValues }
   | { type: 'DICES::FLIP' }
