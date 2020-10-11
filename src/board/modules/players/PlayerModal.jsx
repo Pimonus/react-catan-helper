@@ -54,10 +54,22 @@ const PlayerModal = (props: OwnProps) => {
         return (
           <>
             <p onClick={() => props.addColony(player.uuid)}>Ajouter une colonie</p>
-            <p onClick={() => props.addCity(player.uuid)}>Transformer une colonie en ville</p>
-            {player.colonies > 1 && (
-              <p onClick={() => props.destroyColony(player.uuid)}>Détruire une colonie</p>
-            )}
+            <p
+              className={cn({ disabled: player.colonies < 1 })}
+              onClick={() => {
+                if (player.colonies > 0) props.addCity(player.uuid);
+              }}
+            >
+              Transformer une colonie en ville
+            </p>
+            <p
+              className={cn({ disabled: player.colonies < 1 })}
+              onClick={() => {
+                if (player.colonies > 0) props.destroyColony(player.uuid);
+              }}
+            >
+              Détruire une colonie
+            </p>
           </>
         );
       case CITIES_ACTIONS:
@@ -81,11 +93,14 @@ const PlayerModal = (props: OwnProps) => {
         return (
           <>
             <p onClick={() => props.addVictoryPoint(player.uuid)}>Ajouter un point de victoire</p>
-            {player.victoryPoints > 0 && (
-              <p onClick={() => props.removeVictoryPoint(player.uuid)}>
-                Retirer un point de victoire
-              </p>
-            )}
+            <p
+              className={cn({ disabled: player.victoryPoints < 1 })}
+              onClick={() => {
+                if (player.victoryPoints > 0) props.removeVictoryPoint(player.uuid);
+              }}
+            >
+              Retirer un point de victoire
+            </p>
           </>
         );
       default:
