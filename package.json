@@ -4,9 +4,11 @@
   "homepage": ".",
   "scripts": {
     "deploy": "now && now alias",
-    "start": "craco start",
+    "start": "npm run build-css & craco start & npm run watch-css",
     "now-start": "serve -s ./build",
     "build": "craco build",
+    "build-css": "less-watch-compiler --less-args relative-urls --source-map --run-once src src",
+    "watch-css": "less-watch-compiler --less-args relative-urls --source-map src src",
     "test": "craco test --env=jsdom",
     "eject": "react-scripts eject",
     "precommit": "pretty-quick --staged",
@@ -17,6 +19,7 @@
     "@babel/core": "^7.6.4",
     "@babel/preset-flow": "^7.0.0",
     "flow-bin": "^0.115.0",
+    "less-watch-compiler": "^1.14.6",
     "prettier": "1.18.2",
     "react-scripts": "2.1.8"
   },
