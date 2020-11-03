@@ -6,6 +6,10 @@ A simple tool that allows my friends and me to play Catan: Cities & Knights. It 
 
 ## Instructions
 
+#### Note:
+
+I am using [flow](https://flow.org) as a type checker so, I advise you to add a flow extension in your editor (I am personaly using [this one](https://marketplace.visualstudio.com/items?itemName=flowtype.flow-for-vscode) with Visual Studio Code).
+
 #### Example:
 
 Installation:
@@ -19,3 +23,5 @@ To start the app:
 To visit the running app:
 
 `localhost:3000`
+
+To roll the dice, press the space bar 😉
