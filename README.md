@@ -1,20 +1,21 @@
-<p align="center"><a href="https://medium.com/@notrab/getting-started-with-create-react-app-redux-react-router-redux-thunk-d6a19259f71f"><img src="https://i.imgur.com/PATsTx2.png" title="View tutorial" alt="React, React Router, Redux and Redux Thunk" width="900"></a></p>
+## React Catan helper
 
-* Tutorial: [Getting started with create-react-app, Redux, React Router & Redux Thunk](https://medium.com/@notrab/getting-started-with-create-react-app-redux-react-router-redux-thunk-d6a19259f71f)
-* [Demo](https://create-react-app-redux.now.sh) 🙌
+#### Purpose:
 
-## Installation
+A simple tool that allows my friends and me to play Catan: Cities & Knights. It manages dices, players, thief and barbarians states.
 
-```bash
-git clone https://github.com/notrab/create-react-app-redux.git
-cd create-react-app-redux
-yarn
-```
+## Instructions
 
-## Get started
+#### Example:
 
-```bash
-yarn start
-```
+Installation:
 
-This boilerplate is built using [create-react-app](https://github.com/facebook/create-react-app) so you will want to read the User Guide for more goodies.
+`npm install` or `yarn install`
+
+To start the app:
+
+`npm start` or `yarn start`
+
+To visit the running app:
+
+`localhost:3000`
