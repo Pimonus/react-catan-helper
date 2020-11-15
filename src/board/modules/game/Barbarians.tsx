@@ -1,15 +1,14 @@
-/** @flow */
-
 import React from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import { ATTACK_POSITION } from '@core';
+import { ATTACK_POSITION } from '@core/index';
+import { CatanState } from '@core/types';
 import './Barbarians.css';
 
 const BarbariansContainer = () => {
   // use history value if history mode is enabled
-  const position = useSelector(state => {
+  const position = useSelector((state: CatanState) => {
     const { enabled: isHistoryEnabled } = state.gameHistory;
     const { visualizedTurnState } = state.gameHistory;
 

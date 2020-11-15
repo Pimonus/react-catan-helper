@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import 'sanitize.css/sanitize.css';
 
-import Board from '@board/Board.jsx';
+import Board from '@board/Board';
 import store from './store';
 
 import './index.css';
