@@ -1,17 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 // actions
-// import { moveBarbariansForward } from '@actions/barbarians';
-import { disableShortcuts/*, enableThief, saveGame*/ } from '@actions/game';
-import { dismissSwal, fireSwal } from '@actions/swal';
+import { moveBarbariansForward } from '@actions/barbarians';
+import { disableShortcuts, enableThief, saveGame } from '@actions/game';
+import { fireSwal } from '@actions/swal';
 // components
 import BarbariansSwal from '@modules/swals/BarbariansSwal';
 import ThiefSwal from '@modules/swals/ThiefSwal';
 // helpers
-// import { didBarbariansProgress, didBarbariansReachCoast, getDicesScore, THIEF_SCORE } from '@/core';
+import {
+  didBarbariansProgress,
+  didBarbariansReachCoast,
+  getDicesScore,
+  THIEF_SCORE,
+} from '@core/index';
 // types
 import { CatanState } from '@core/types';
 
@@ -23,14 +28,15 @@ const swalTimmer = 5000;
 
 interface SwalWithCallback {
   swal: {
-    timer: number,
-    showConfirmButton: boolean,
-    html: any,
+    timer: number;
+    showConfirmButton: boolean;
+    html: any;
   };
   callback: () => any;
-};
+}
 
-const dicesHaveBeenRevealed = (flipped: boolean, stillFlipped: boolean) => flipped && !stillFlipped;
+const dicesHaveBeenRevealed = (flipped?: boolean, stillFlipped?: boolean) =>
+  flipped && !stillFlipped;
 
 const SwalManager = () => {
   const dispatch = useDispatch();
@@ -40,9 +46,52 @@ const SwalManager = () => {
   const dices = useSelector((state: CatanState) => state.dices);
   const game = useSelector((state: CatanState) => state.game);
 
-  useEffect(() => {
+  const usePrevious = (value: any) => {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  };
 
-  }, [_createdAt, barbarians, dices, game]);
+  const _prevCreatedAt = usePrevious(_createdAt);
+  const wasThiefEnabled = usePrevious(game.enabledThief);
+  const wereDicesFlipped = usePrevious(dices.flipped);
+
+  useEffect(() => {
+    const manageSwals = async () => {
+      if (_prevCreatedAt === _createdAt && dicesHaveBeenRevealed(wereDicesFlipped, dices.flipped)) {
+        const dicesScore = getDicesScore(dices.values);
+        const swalQueue: SwalWithCallback[] = [];
+
+        if (!wasThiefEnabled && dicesScore === THIEF_SCORE)
+          swalQueue.push({
+            swal: {
+              timer: swalTimmer,
+              showConfirmButton: false,
+              html: <ThiefSwal />,
+            },
+            callback: () => dispatch(enableThief()),
+          });
+
+        if (didBarbariansProgress(dices.values)) {
+          swalQueue.push({
+            swal: {
+              timer: swalTimmer,
+              showConfirmButton: false,
+              html: <BarbariansSwal attack={didBarbariansReachCoast(barbarians.position)} />,
+            },
+            callback: () => dispatch(moveBarbariansForward()),
+          });
+        }
+
+        if (swalQueue.length > 0) await processSwalQueue(swalQueue);
+        dispatch(saveGame());
+      }
+    };
+
+    manageSwals();
+  }, [_createdAt, barbarians, dices, game.enabledThief]);
 
   const processSwalQueue = async (swalQueue: SwalWithCallback[]) => {
     dispatch(disableShortcuts());
@@ -53,49 +102,9 @@ const SwalManager = () => {
       await swal.fire(item.swal);
       item.callback();
     }, Promise.resolve());
-  }
-
-  // async componentDidUpdate(prevProps: Props) {
-  //   const { dices: prevDices, game } = prevProps;
-  //   const { barbarians, dices } = this.props;
-  //   const thiefWasNotEnabled = !game.enabledThief;
-
-  //   if (
-  //     prevProps._createdAt === this.props._createdAt &&
-  //     dicesHaveBeenRevealed(prevDices.flipped, dices.flipped)
-  //   ) {
-  //     const dicesScore = getDicesScore(dices.values);
-  //     const swalQueue: SwalWithCallback[] = [];
-
-  //     // Enabled thief swal
-  //     if (thiefWasNotEnabled && dicesScore === THIEF_SCORE)
-  //       swalQueue.push({
-  //         swal: {
-  //           timer: swalTimmer,
-  //           showConfirmButton: false,
-  //           html: <ThiefSwal />,
-  //         },
-  //         callback: () => dispatch(enableThief()),
-  //       });
-
-  //     // Barbarians progress swal
-  //     if (didBarbariansProgress(dices.values)) {
-  //       swalQueue.push({
-  //         swal: {
-  //           timer: swalTimmer,
-  //           showConfirmButton: false,
-  //           html: <BarbariansSwal attack={didBarbariansReachCoast(barbarians.position)} />,
-  //         },
-  //         callback: () => dispatch(moveBarbariansForward()),
-  //       });
-  //     }
-
-  //     if (swalQueue.length > 0) await processSwalQueue(swalQueue);
-  //     dispatch(saveGame());
-  //   }
-  // }
+  };
 
   return null;
-}
+};
 
 export default SwalManager;
