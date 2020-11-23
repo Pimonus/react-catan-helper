@@ -1,13 +1,11 @@
-/** @flow */
-
 import React from 'react';
 
 import barbarians from '@images/barbarians.png';
 
 import './BarbariansSwal.css';
 
-type Props = {
-  +attack?: boolean,
+interface Props {
+  attack?: boolean,
 };
 
 const BarbariansSwal = ({ attack }: Props) => {

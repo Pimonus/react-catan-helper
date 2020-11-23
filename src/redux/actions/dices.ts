@@ -1,7 +1,5 @@
-/** @flow */
-
-import { getClassicDiceValue, getSpecialDiceValue } from '@core';
-import type { Dispatch, ThunkAction } from '@flow';
+import { getClassicDiceValue, getSpecialDiceValue } from '@core/index';
+import { Dispatch, ThunkAction } from '@core/types';
 
 export const rollDices = (): ThunkAction => {
   return (dispatch: Dispatch) => {

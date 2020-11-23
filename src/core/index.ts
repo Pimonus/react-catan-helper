@@ -1,22 +1,24 @@
-/** @flow */
+import { uuid } from 'uuidv4';
 
-import uuidv1 from 'uuid/v1';
+import { CatanState, ClassicDiceValue, DicesValues, Player, SpecialDiceValue } from '@core/types';
 
-import type { CatanState, ClassicDiceValue, DicesValues, Player, SpecialDiceValue } from '@flow';
+const classicDiceValues = [
+  ClassicDiceValue.one,
+  ClassicDiceValue.two,
+  ClassicDiceValue.three,
+  ClassicDiceValue.four,
+  ClassicDiceValue.five,
+  ClassicDiceValue.six,
+];
 
-export const ONE = 'one';
-export const TWO = 'two';
-export const THREE = 'three';
-export const FOUR = 'four';
-export const FIVE = 'five';
-export const SIX = 'six';
-export const BARBARIANS = 'barbarians';
-export const YELLOW = 'yellow';
-export const BLUE = 'blue';
-export const GREEN = 'green';
-
-const classicDiceValues = [ONE, TWO, THREE, FOUR, FIVE, SIX];
-const specialDiceValues = [BARBARIANS, BARBARIANS, BARBARIANS, YELLOW, GREEN, BLUE];
+const specialDiceValues = [
+  SpecialDiceValue.barbarians,
+  SpecialDiceValue.barbarians,
+  SpecialDiceValue.barbarians,
+  SpecialDiceValue.yellow,
+  SpecialDiceValue.green,
+  SpecialDiceValue.blue,
+];
 
 export const diceValueMatching = {
   one: 1,
@@ -58,7 +60,7 @@ export const getStateForStorage = (state: CatanState): string =>
 
 export const newPlayer = (nickname: string): Player => ({
   nickname,
-  uuid: uuidv1(),
+  uuid: uuid(),
   cities: 1,
   colonies: 1,
   hasLongestRoad: false,
@@ -75,7 +77,7 @@ export const getPlayerScore = (player: Player): number =>
   2 * player.cities +
   player.colonies;
 
-export const computePlayersScores = (state: $ReadOnlyArray<Player>): $ReadOnlyArray<Player> => {
+export const computePlayersScores = (state: ReadonlyArray<Player>): ReadonlyArray<Player> => {
   let topScore = 0;
   let newState: Array<Player> = state.map(player => {
     const score = getPlayerScore(player);
@@ -92,27 +94,27 @@ export const computePlayersScores = (state: $ReadOnlyArray<Player>): $ReadOnlyAr
 };
 
 export const computePlayersState = (
-  state: $ReadOnlyArray<Player>,
+  state: ReadonlyArray<Player>,
   data: {
-    newArmyHolder?: string,
-    newRoadHolder?: string,
-    newVictoryPoint?: string,
-    newColony?: string,
-    newCity?: string,
-    destroyCity?: string,
+    newArmyHolder?: string;
+    newRoadHolder?: string;
+    newVictoryPoint?: string;
+    newColony?: string;
+    newCity?: string;
+    destroyCity?: string;
     newNickname?: {
-      uuid: string,
-      nickname: string,
-    },
-    removeVictoryPoint?: string,
+      uuid: string;
+      nickname: string;
+    };
+    removeVictoryPoint?: string;
   }
-): $ReadOnlyArray<Player> => {
+): ReadonlyArray<Player> => {
   if (Object.keys(data).length !== 1)
     throw new Error(
       'Payload on players state change should only contain one value (newArmyHolder | newRoadHolder | newVictoryPoint)'
     );
 
-  let newState: $ReadOnlyArray<Player> = state;
+  let newState: ReadonlyArray<Player> = state;
   if (data.newArmyHolder) {
     newState = state.map<Player>((player: Player) => ({
       ...player,
@@ -182,6 +184,7 @@ export const getSpecialDiceValue = (): SpecialDiceValue => {
 export const getDicesScore = (values: DicesValues): number =>
   diceValueMatching[values.redValue] + diceValueMatching[values.whiteValue];
 
-export const didBarbariansProgress = (values: DicesValues) => values.specialValue === BARBARIANS;
+export const didBarbariansProgress = (values: DicesValues) =>
+  values.specialValue === SpecialDiceValue.barbarians;
 
 export const didBarbariansReachCoast = (advance: number) => advance === ATTACK_POSITION - 1;

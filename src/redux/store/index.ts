@@ -1,7 +1,4 @@
-/** @flow */
-
-import { SIX, BARBARIANS } from '@core';
-import type { CatanState } from '@flow';
+import { CatanState, ClassicDiceValue, SpecialDiceValue } from '@core/types';
 
 export const initialState: CatanState = {
   _createdAt: new Date(),
@@ -16,9 +13,9 @@ export const initialState: CatanState = {
     rolling: false,
     spinning: false,
     values: {
-      whiteValue: SIX,
-      redValue: SIX,
-      specialValue: BARBARIANS,
+      whiteValue: ClassicDiceValue.six,
+      redValue: ClassicDiceValue.six,
+      specialValue: SpecialDiceValue.barbarians,
     },
   },
   game: {
