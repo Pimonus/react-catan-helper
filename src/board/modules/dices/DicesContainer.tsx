@@ -1,18 +1,17 @@
-/** @flow */
-
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import Dice from '@modules/dices/Dice.jsx';
+import Dice from '@modules/dices/Dice';
+import { CatanState } from '@core/types';
 
 import './DicesContainer.css';
 
 const DicesContainer = () => {
-  const flipped = useSelector(state => state.dices.flipped);
-  const spinning = useSelector(state => state.dices.spinning);
+  const flipped = useSelector((state: CatanState) => state.dices.flipped);
+  const spinning = useSelector((state: CatanState) => state.dices.spinning);
 
   // use history values if history mode is enabled
-  const { whiteValue, redValue, specialValue } = useSelector(state => {
+  const { whiteValue, redValue, specialValue } = useSelector((state: CatanState) => {
     const { enabled: isHistoryEnabled } = state.gameHistory;
     const { visualizedTurnState } = state.gameHistory;
 

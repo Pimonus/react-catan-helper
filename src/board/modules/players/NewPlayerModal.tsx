@@ -1,21 +1,19 @@
-/** @flow */
-
 import React, { useState } from 'react';
 
 import './NewPlayerModal.css';
 
-type OwnProps = {
-  +cancel: () => any,
-  +submitAndClose: (nickname: string) => any,
+interface Props {
+  cancel: () => any;
+  submitAndClose: (nickname: string) => any;
 };
 
-const NewPlayerModal = (props: OwnProps) => {
+const NewPlayerModal = ({ cancel, submitAndClose }: Props) => {
   const [nickname, setNickname] = useState('');
 
   return (
     <div className="new-player modal">
       <form className="container">
-        <div className="cancel-cross" onClick={props.cancel}></div>
+        <div className="cancel-cross" onClick={cancel}></div>
         <h1>Comment s'appelle votre nouveau joueur ?</h1>
         <input
           autoFocus
@@ -26,7 +24,7 @@ const NewPlayerModal = (props: OwnProps) => {
         <button
           type="submit"
           disabled={nickname === ''}
-          onClick={() => props.submitAndClose(nickname)}
+          onClick={() => submitAndClose(nickname)}
         >
           Enregistrer
         </button>

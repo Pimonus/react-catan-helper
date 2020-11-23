@@ -1,6 +1,4 @@
-/** @flow */
-
-import type { Dispatch, ThunkAction } from '@flow';
+import { Dispatch, ThunkAction } from '@core/types';
 
 export const moveBarbariansForward = (): ThunkAction => {
   return (dispatch: Dispatch) => {

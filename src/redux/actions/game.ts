@@ -1,11 +1,7 @@
-/** @flow */
+import { Dispatch, ThunkAction } from '@core/types';
 
-import type { Dispatch, ThunkAction } from '@flow';
-
-export const disableShortcuts = (): ThunkAction => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: 'SHORTCUTS::DISABLE' });
-  };
+export const disableShortcuts = (): ThunkAction => (dispatch: Dispatch) => {
+  dispatch({ type: 'SHORTCUTS::DISABLE' });
 };
 
 export const getExistingGame = (): ThunkAction => {
@@ -16,14 +12,12 @@ export const getExistingGame = (): ThunkAction => {
   };
 };
 
-export const newGame = (): ThunkAction => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: 'GAME::NEW' });
-    localStorage.removeItem('gameHistory');
-    setTimeout(() => {
-      dispatch({ type: 'GAME::CREATED' });
-    }, 2000);
-  };
+export const newGame = (): ThunkAction => (dispatch: Dispatch) => {
+  dispatch({ type: 'GAME::NEW' });
+  localStorage.removeItem('gameHistory');
+  setTimeout(() => {
+    dispatch({ type: 'GAME::CREATED' });
+  }, 2000);
 };
 
 export const pauseGame = (): ThunkAction => {

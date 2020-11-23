@@ -1,18 +1,16 @@
-/** @flow */
-
 import React from 'react';
 import cn from 'classnames';
 
-import type { ClassicDiceValue, SpecialDiceValue } from '@flow';
+import { ClassicDiceValue, SpecialDiceValue } from '@core/types';
 
 import './Dice.css';
 
-type Props = {
-  +flipped: boolean,
-  +spinning: boolean,
-  +red?: boolean,
-  +special?: boolean,
-  +value: ClassicDiceValue | SpecialDiceValue,
+interface Props {
+  flipped: boolean,
+  spinning: boolean,
+  red?: boolean,
+  special?: boolean,
+  value: ClassicDiceValue | SpecialDiceValue,
 };
 
 const Dice = (props: Props) => {

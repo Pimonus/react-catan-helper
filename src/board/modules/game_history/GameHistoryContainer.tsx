@@ -1,5 +1,3 @@
-/** @flow */
-
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Tooltip from 'react-tooltip';
@@ -7,6 +5,8 @@ import cn from 'classnames';
 
 // actions
 import { disableHistoryMode, enableHistoryMode, fetchTurn } from '@actions/gameHistory';
+// types
+import { CatanState } from '@core/types';
 // images
 import backwardSign from '@images/backward_sign.png';
 import forwardSign from '@images/forward_sign.png';
@@ -17,14 +17,18 @@ import './GameHistoryContainer.css';
 
 const GameHistoryContainer = () => {
   const dispatch = useDispatch();
-  const historyModeEnabled = useSelector(state => state.gameHistory.enabled);
-  const nextTurnKey = useSelector(state => state.gameHistory.nextTurnKey);
-  const previousTurnKey = useSelector(state => state.gameHistory.previousTurnKey);
-  const visualizedTurnIndex = useSelector(state => state.gameHistory.visualizedTurnIndex);
+
+  const historyModeEnabled = useSelector((state: CatanState) => state.gameHistory.enabled);
+  const nextTurnKey = useSelector((state: CatanState) => state.gameHistory.nextTurnKey);
+  const previousTurnKey = useSelector((state: CatanState) => state.gameHistory.previousTurnKey);
+  const visualizedTurnIndex = useSelector(
+    (state: CatanState) => state.gameHistory.visualizedTurnIndex
+  );
 
   const renderTurn = (): string => {
     if (!nextTurnKey) return 'Dernier tour';
-    return `Tour ${visualizedTurnIndex + 1}`;
+    if (visualizedTurnIndex !== undefined) return `Tour ${visualizedTurnIndex + 1}`;
+    return '';
   };
 
   return (

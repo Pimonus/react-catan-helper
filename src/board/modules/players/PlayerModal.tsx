@@ -1,29 +1,27 @@
-/** @flow */
-
 import React, { useState } from 'react';
 import cn from 'classnames';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-import type { Player } from '@flow';
+import { Player } from '@core/types';
 
 import './PlayerModal.css';
 
 const swal = withReactContent(Swal);
 
-type OwnProps = {
-  +player: Player,
-  +addCity: (playerUuid: string) => any,
-  +addColony: (playerUuid: string) => any,
-  +addVictoryPoint: (playerUuid: string) => any,
-  +attributeLongestRoad: (playerUuid: string) => any,
-  +attributeStrongestArmy: (playerUuid: string) => any,
-  +deletePlayer: (playerUuid: string) => any,
-  +deselect: () => any,
-  +destroyCity: (playerUuid: string) => any,
-  +destroyColony: (playerUuid: string) => any,
-  +removeVictoryPoint: (playerUuid: string) => any,
-  +savePlayerNickname: (playerUuid: string, nickname: string) => any,
+interface Props {
+  player: Player;
+  addCity: (playerUuid: string) => any;
+  addColony: (playerUuid: string) => any;
+  addVictoryPoint: (playerUuid: string) => any;
+  attributeLongestRoad: (playerUuid: string) => any;
+  attributeStrongestArmy: (playerUuid: string) => any;
+  deletePlayer: (playerUuid: string) => any;
+  deselect: () => any;
+  destroyCity: (playerUuid: string) => any;
+  destroyColony: (playerUuid: string) => any;
+  removeVictoryPoint: (playerUuid: string) => any;
+  savePlayerNickname: (playerUuid: string, nickname: string) => any;
 };
 
 const NO_ACTION = 0;
@@ -32,8 +30,22 @@ const CITIES_ACTIONS = 2;
 const VICTORY_POINTS_ACTIONS = 3;
 type ACTION_TYPE = 0 | 1 | 2 | 3;
 
-const PlayerModal = (props: OwnProps) => {
-  const { player } = props;
+const PlayerModal = ({
+  // data
+  player,
+  //functions
+  addCity,
+  addColony,
+  addVictoryPoint,
+  attributeLongestRoad,
+  attributeStrongestArmy,
+  deletePlayer,
+  deselect,
+  destroyCity,
+  destroyColony,
+  removeVictoryPoint,
+  savePlayerNickname,
+}: Props) => {
   const { cities, colonies, uuid, victoryPoints } = player;
 
   // const [showActionsPanel, toggleActionPanel] = useState(NO_ACTION);
@@ -53,11 +65,11 @@ const PlayerModal = (props: OwnProps) => {
       case COLONIES_ACTIONS:
         return (
           <>
-            <p onClick={() => props.addColony(player.uuid)}>Ajouter une colonie</p>
+            <p onClick={() => addColony(player.uuid)}>Ajouter une colonie</p>
             <p
               className={cn({ disabled: player.colonies < 1 })}
               onClick={() => {
-                if (player.colonies > 0) props.addCity(player.uuid);
+                if (player.colonies > 0) addCity(player.uuid);
               }}
             >
               Transformer une colonie en ville
@@ -65,7 +77,7 @@ const PlayerModal = (props: OwnProps) => {
             <p
               className={cn({ disabled: player.colonies < 1 })}
               onClick={() => {
-                if (player.colonies > 0) props.destroyColony(player.uuid);
+                if (player.colonies > 0) destroyColony(player.uuid);
               }}
             >
               Détruire une colonie
@@ -78,9 +90,9 @@ const PlayerModal = (props: OwnProps) => {
             <p
               onClick={() => {
                 if (player.cities > 1) {
-                  props.destroyCity(player.uuid);
+                  destroyCity(player.uuid);
                 } else if (player.cities === 1) {
-                  props.destroyCity(player.uuid);
+                  destroyCity(player.uuid);
                   setActionType(NO_ACTION);
                 }
               }}
@@ -92,11 +104,11 @@ const PlayerModal = (props: OwnProps) => {
       case VICTORY_POINTS_ACTIONS:
         return (
           <>
-            <p onClick={() => props.addVictoryPoint(player.uuid)}>Ajouter un point de victoire</p>
+            <p onClick={() => addVictoryPoint(player.uuid)}>Ajouter un point de victoire</p>
             <p
               className={cn({ disabled: player.victoryPoints < 1 })}
               onClick={() => {
-                if (player.victoryPoints > 0) props.removeVictoryPoint(player.uuid);
+                if (player.victoryPoints > 0) removeVictoryPoint(player.uuid);
               }}
             >
               Retirer un point de victoire
@@ -111,7 +123,7 @@ const PlayerModal = (props: OwnProps) => {
   return (
     <div className="player modal">
       <div className="container">
-        <div className="cancel-cross" onClick={props.deselect}></div>
+        <div className="cancel-cross" onClick={deselect}></div>
         <div
           className="trash-bin"
           onClick={() => {
@@ -130,7 +142,7 @@ const PlayerModal = (props: OwnProps) => {
                     <button
                       className="danger"
                       onClick={() => {
-                        props.deletePlayer(player.uuid);
+                        deletePlayer(player.uuid);
                         swal.close();
                       }}
                     >
@@ -157,9 +169,11 @@ const PlayerModal = (props: OwnProps) => {
               }}
               onFocus={event => event.target.select()}
               onKeyUp={event => {
-                if (event.key === 'Escape' || event.key === 'Enter') toggleNicknameEdition(false);
-                if (event.key === 'Enter')
-                  props.savePlayerNickname(player.uuid, event.target.value);
+                if (event.key === 'Escape') {
+                  toggleNicknameEdition(false);
+                } else if (event.key === 'Enter') {
+                  savePlayerNickname(player.uuid, nickname);
+                }
               }}
             />
           ) : (
@@ -204,11 +218,11 @@ const PlayerModal = (props: OwnProps) => {
             getActionDOM()
           ) : (
             <>
-              <div className="action road" onClick={() => props.attributeLongestRoad(uuid)}>
+              <div className="action road" onClick={() => attributeLongestRoad(uuid)}>
                 <div className="img">{player.hasLongestRoad && <div className="checked" />}</div>
                 <p>Route la plus longue</p>
               </div>
-              <div className="action army" onClick={() => props.attributeStrongestArmy(uuid)}>
+              <div className="action army" onClick={() => attributeStrongestArmy(uuid)}>
                 <div className="img">{player.hasStrongestArmy && <div className="checked" />}</div>
                 <p>Armée la plus puissante</p>
               </div>

@@ -8,7 +8,7 @@ module.exports = {
       '@board': path.resolve(__dirname, 'src/board'),
       '@modules': path.resolve(__dirname, 'src/board/modules'),
       '@core': path.resolve(__dirname, 'src/core'),
-      '@flow': path.resolve(__dirname, 'src/flow'),
+      '@types': path.resolve(__dirname, 'src/types'),
       '@redux': path.resolve(__dirname, 'src/redux'),
       '@actions': path.resolve(__dirname, 'src/redux/actions'),
       '@reducers': path.resolve(__dirname, 'src/redux/reducers'),
