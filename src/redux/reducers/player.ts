@@ -1,13 +1,11 @@
-/** @flow */
-
-import { computePlayersScores } from '@core';
-import type { Player, PlayerAction } from '@flow';
+import { computePlayersScores } from '@core/index';
+import { Player, PlayerAction } from '@core/types';
 
 const reducer = (
-  state: $ReadOnlyArray<Player> = [],
+  state: ReadonlyArray<Player> = [],
   action: PlayerAction
-): $ReadOnlyArray<Player> => {
-  let newState: $ReadOnlyArray<Player>;
+): ReadonlyArray<Player> => {
+  let newState: ReadonlyArray<Player>;
 
   switch (action.type) {
     case 'PLAYER::ADD::COLONY': {

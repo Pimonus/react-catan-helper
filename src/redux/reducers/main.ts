@@ -1,17 +1,15 @@
-/** @flow */
-
 import randomstring from 'randomstring';
 
 import playerReducer from '@reducers/player';
-import { initialState } from '@store';
+import { initialState } from '@store/index';
 import {
   computePlayersScores,
   getStateForHistory,
   getStateForStorage,
   newPlayer,
   ATTACK_POSITION,
-} from '@core';
-import type { CatanAction, CatanState, Player } from '@flow';
+} from '@core/index';
+import { CatanAction, CatanState, Player } from '@core/types';
 
 const softActions = [
   '@@INIT',
@@ -273,7 +271,7 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
 
     case 'PLAYER::DELETE': {
       const { playerUuid } = action;
-      const newPlayers: $ReadOnlyArray<Player> = state.players.filter(
+      const newPlayers: ReadonlyArray<Player> = state.players.filter(
         player => player.uuid !== playerUuid
       );
       newState = {

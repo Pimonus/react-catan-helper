@@ -1,11 +1,9 @@
-/** @flow */
-
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
 
-import PlayerModal from '@modules/players/PlayerModal.jsx';
-import NewPlayerModal from '@modules/players/NewPlayerModal.jsx';
+import PlayerModal from '@modules/players/PlayerModal';
+import NewPlayerModal from '@modules/players/NewPlayerModal';
 import {
   addCity,
   addColony,
@@ -21,6 +19,7 @@ import {
   savePlayerNickname,
   selectPlayer,
 } from '@actions/players';
+import { CatanState } from '@core/types';
 
 import armyIcon from '@images/army_icon.png';
 import medalIcon from '@images/medal_icon.png';
@@ -31,9 +30,9 @@ import './PlayerContainer.css';
 const PlayerContainer = () => {
   const [showNewPlayerModal, toggleNewPlayerModal] = useState(false);
 
-  const selectedPlayerUuid = useSelector(state => state.selectedPlayerUuid);
+  const selectedPlayerUuid = useSelector((state: CatanState) => state.selectedPlayerUuid);
   // use history values if history mode is enabled
-  const players = useSelector(state => {
+  const players = useSelector((state: CatanState) => {
     const { enabled: isHistoryEnabled } = state.gameHistory;
     const { visualizedTurnState } = state.gameHistory;
 
