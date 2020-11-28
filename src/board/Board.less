@@ -1,15 +1,21 @@
-.catan-game {
+@import './variables.less';
+
+.board {
   position: relative;
-  width: 100%;
   height: 100%;
   background: black url(../assets/images/catan.jpg);
   background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
   h1 {
     font-weight: normal;
+  }
+
+  .ant-layout,
+  .ant-layout-header,
+  .ant-layout-footer,
+  .ant-layout-sider,
+  .ant-layout-content {
+    background-color: transparent;
   }
 
   .modal {

@@ -33,6 +33,8 @@
     "@types/react-dom": "^16.9.9",
     "@types/react-redux": "^7.1.11",
     "@types/react-router-dom": "^5.1.6",
+    "@types/uuid": "^8.3.0",
+    "antd": "^4.8.5",
     "babel-eslint": "^9.0.0",
     "classnames": "^2.2.6",
     "connected-react-router": "4.5.0",
@@ -53,7 +55,7 @@
     "sweetalert2": "^9.4.0",
     "sweetalert2-react-content": "^2.0.2",
     "typescript": "^4.0.5",
-    "uuidv4": "^6.2.5"
+    "uuid": "^8.3.1"
   },
   "browserslist": [
     ">0.2%",

@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4';
+import { v1 as uuidv1 } from 'uuid';
 
 import { CatanState, ClassicDiceValue, DicesValues, Player, SpecialDiceValue } from '@core/types';
 
@@ -60,7 +60,7 @@ export const getStateForStorage = (state: CatanState): string =>
 
 export const newPlayer = (nickname: string): Player => ({
   nickname,
-  uuid: uuid(),
+  uuid: uuidv1(),
   cities: 1,
   colonies: 1,
   hasLongestRoad: false,
