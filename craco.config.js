@@ -2,6 +2,9 @@ const path = require('path');
 
 module.exports = {
   webpack: {
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js'],
+    },
     alias: {
       '@': path.resolve(__dirname, 'src'),
       '@images': path.resolve(__dirname, 'src/assets/images'),

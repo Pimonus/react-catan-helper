@@ -29,7 +29,7 @@ const Board = () => {
   const { loading, paused } = game;
 
   useEffect(() => {
-    dispatch(getExistingGame())
+    dispatch(getExistingGame());
   }, []);
 
   return (
@@ -48,13 +48,10 @@ const Board = () => {
             <PlayerContainer />
           </Sider>
           <Layout>
-            <Header></Header>
-            <Content>
+            <Content className="main-content">
               <DicesContainer />
-            </Content>
-            <Footer>
               <GameHistoryContainer />
-            </Footer>
+            </Content>
           </Layout>
           <Sider width="20vw">
             <Game />

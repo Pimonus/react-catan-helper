@@ -1,10 +1,12 @@
-.dices-container {
-  position: absolute;
-  width: fit-content;
-  display: flex;
-  flex-direction: column;
+@import '../../../assets/style/theme.less';
 
-  .top-dices, .bottom-dices {
+.dices-container {
+  .fill-parent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .dices-row {
     display: flex;
     justify-content: space-evenly;
   }
