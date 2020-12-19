@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Tooltip from 'react-tooltip';
+import { Tooltip } from 'antd';
 import cn from 'classnames';
 
 // actions
@@ -44,35 +44,23 @@ const GameHistoryContainer = () => {
           }}
         />
         {!historyModeEnabled ? (
-          <>
+          <Tooltip placement="top" className="tooltip" title="Revoir les tours précédents">
             <img
               alt="enable history mode"
               className="toggle"
               src={enableHistoryIcon}
               onClick={() => dispatch(enableHistoryMode())}
-              // tooltip
-              data-tip
-              data-for="historyMode"
             />
-            <Tooltip id="historyMode" className="tooltip">
-              Revoir les tours précédents
-            </Tooltip>
-          </>
+          </Tooltip>
         ) : (
-          <>
+          <Tooltip placement="top" className="tooltip" title="Revenir à la partie">
             <img
               alt="disable history mode"
               className="toggle"
               src={disableHistoryIcon}
               onClick={() => dispatch(disableHistoryMode())}
-              // tooltip
-              data-tip
-              data-for="historyMode"
             />
-            <Tooltip id="historyMode" className="tooltip">
-              Revenir à la partie
-            </Tooltip>
-          </>
+          </Tooltip>
         )}
         <img
           alt="next turn"
