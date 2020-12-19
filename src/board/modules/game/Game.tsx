@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Tooltip from 'react-tooltip';
+import { Tooltip } from 'antd';
 
 import Barbarians from '@modules/game/Barbarians';
 import { CatanState } from '@core/types';
@@ -22,12 +22,9 @@ const GameMenu = () => {
   return (
     <div className="game-container">
       {enabledThief && (
-        <>
-          <img className="thief-icon" src={thiefIcon} data-tip="React-tooltip" alt="Bad thief!" />
-          <Tooltip className="tooltip" place="left" type="dark" effect="solid">
-            Le Voleur est activé (héhé)
-          </Tooltip>
-        </>
+        <Tooltip placement="left" title="Le voleur est activé (héhé)">
+          <img className="thief-icon" src={thiefIcon} alt="Bad thief!" />
+        </Tooltip>
       )}
       <Barbarians />
     </div>

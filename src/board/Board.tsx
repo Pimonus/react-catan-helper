@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Layout } from 'antd';
 
 // actions
 import { rollDices } from '@actions/dices';
@@ -17,38 +18,48 @@ import { CatanState } from '@core/types';
 
 import './Board.css';
 
+const { Header, Footer, Sider, Content } = Layout;
+
 const Board = () => {
   const dispatch = useDispatch();
 
   const game = useSelector((state: CatanState) => state.game);
   const listenToShortcuts = useSelector((state: CatanState) => state.listenToShortcuts);
-  
+
   const { loading, paused } = game;
 
   useEffect(() => {
-    dispatch(getExistingGame())
+    dispatch(getExistingGame());
   }, []);
 
   return (
-    <div
-      className="catan-game"
+    <Layout
+      className="board"
       onKeyUp={e => {
         if (listenToShortcuts && e.keyCode === 32) dispatch(rollDices());
       }}
       tabIndex={0}
     >
-      <HomePage />
+      {paused && <HomePage />}
       {loading && <Loader />}
       {!paused && !loading && (
         <>
+          <Sider width="20vw">
+            <PlayerContainer />
+          </Sider>
+          <Layout>
+            <Content className="main-content">
+              <DicesContainer />
+              <GameHistoryContainer />
+            </Content>
+          </Layout>
+          <Sider width="20vw">
+            <Game />
+          </Sider>
           <SwalManager />
-          <Game />
-          <GameHistoryContainer />
-          <PlayerContainer />
-          <DicesContainer />
         </>
       )}
-    </div>
+    </Layout>
   );
 };
 
