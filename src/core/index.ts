@@ -58,9 +58,10 @@ export const getStateForStorage = (state: CatanState): string =>
     },
   });
 
-export const newPlayer = (nickname: string): Player => ({
+export const newPlayer = (nickname: string, avatar: number): Player => ({
   nickname,
   uuid: uuidv1(),
+  avatar,
   cities: 1,
   colonies: 1,
   hasLongestRoad: false,

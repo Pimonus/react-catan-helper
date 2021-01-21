@@ -51,13 +51,13 @@ const PlayerContainer = () => {
   return (
     <div className="player-container">
       {players.map((player, index) => (
-        <div key={`player_${index}`}>
+        <div key={player.uuid}>
           <div
             className={cn('player', { leader: player.isLeader })}
             data-bg={index % playerCount}
             onClick={() => dispatch(selectPlayer(player.uuid))}
           >
-            <div className="avatar" data-avatar={index % playerCount}></div>
+            <div className="avatar" data-avatar={player.avatar}></div>
             <p className="nickname">{player.nickname}</p>
           </div>
           <p className="score">

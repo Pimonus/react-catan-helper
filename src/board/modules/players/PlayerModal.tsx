@@ -22,7 +22,7 @@ interface Props {
   destroyColony: (playerUuid: string) => any;
   removeVictoryPoint: (playerUuid: string) => any;
   savePlayerNickname: (playerUuid: string, nickname: string) => any;
-};
+}
 
 const NO_ACTION = 0;
 const COLONIES_ACTIONS = 1;
@@ -162,6 +162,7 @@ const PlayerModal = ({
           {nicknameEdition ? (
             <input
               autoFocus
+              placeholder="Nom du joueur"
               type="text"
               value={nickname}
               onChange={event => {

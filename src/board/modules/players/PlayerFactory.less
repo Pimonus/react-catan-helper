@@ -1,0 +1,62 @@
+.modal.player-factory {
+  cursor: url(../../../assets/images/cursor.png), auto !important;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .form {
+      width: 50%;
+      display: flex;
+
+      input {
+        flex: 1;
+        height: 4rem;
+        margin-right: 2rem;
+        padding: 0 1rem;
+        font-size: 2rem;
+        outline: none;
+        background: rgba(255, 255, 255, 0.6);
+        border: none;
+      }
+    }
+
+    .divider {
+      min-width: unset;
+      width: 50%;
+      margin: 2rem auto;
+      border-top: 2px solid rgba(0, 0, 0, 0.3);
+    }
+
+    .list {
+      height: 8rem;
+      display: flex;
+
+      .player {
+        width: 8rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &:not(:first-of-type) {
+          margin-left: 2rem;
+        }
+
+        .player-avatar {
+          width: 5rem;
+          height: 5rem;
+        }
+      }
+      
+      .hint {
+        height: fit-content;
+        margin: auto;
+      }
+    }
+
+    .start {
+      margin-top: 2rem;
+    }
+  }
+}

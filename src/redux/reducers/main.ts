@@ -30,7 +30,6 @@ const enablingShortcutsActions = [
   'BARBARIANS::PROGRESS',
   'DICES::REVEAL',
   'GAME::LOAD',
-  'GAME::CREATED',
   'GAME::HISTORY::DISABLE',
   'GAME::SAVE',
   'GAME::THIEF::ENABLE',
@@ -80,10 +79,25 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
       };
       break;
 
-    case 'GAME::CREATED':
+    case 'GAME::START':
       newState = {
         ...initialState,
-        game: { ...state.game, loading: false, paused: false },
+        game: {
+          ...state.game,
+          started: true,
+        },
+        players: computePlayersScores(action.payload.players),
+      };
+      break;
+
+    case 'GAME::INITIALIZED':
+      newState = {
+        ...initialState,
+        game: {
+          ...state.game,
+          loading: false,
+          paused: false,
+        },
       };
       break;
 
@@ -232,7 +246,7 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
       break;
 
     case 'PLAYER::ADD':
-      const newPlayers = [...state.players, newPlayer(action.nickname)];
+      const newPlayers = [...state.players, newPlayer(action.nickname, 0)];
       newState = {
         ...state,
         players: computePlayersScores(newPlayers),

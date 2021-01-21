@@ -12,13 +12,14 @@ import Game from '@modules/game/Game';
 import GameHistoryContainer from '@modules/game_history/GameHistoryContainer';
 import HomePage from '@modules/home_page/HomePage';
 import PlayerContainer from '@modules/players/PlayerContainer';
+import PlayerFactory from '@modules/players/PlayerFactory';
 import SwalManager from '@modules/swals/SwalManager';
 // types
 import { CatanState } from '@core/types';
 
 import './Board.css';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 
 const Board = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const Board = () => {
   const game = useSelector((state: CatanState) => state.game);
   const listenToShortcuts = useSelector((state: CatanState) => state.listenToShortcuts);
 
-  const { loading, paused } = game;
+  const { loading, paused, started } = game;
 
   useEffect(() => {
     dispatch(getExistingGame());
@@ -44,19 +45,25 @@ const Board = () => {
       {loading && <Loader />}
       {!paused && !loading && (
         <>
-          <Sider width="20vw">
-            <PlayerContainer />
-          </Sider>
-          <Layout>
-            <Content className="main-content">
-              <DicesContainer />
-              <GameHistoryContainer />
-            </Content>
-          </Layout>
-          <Sider width="20vw">
-            <Game />
-          </Sider>
-          <SwalManager />
+          {started ? (
+            <>
+              <Sider width="20vw">
+                <PlayerContainer />
+              </Sider>
+              <Layout>
+                <Content className="main-content">
+                  <DicesContainer />
+                  <GameHistoryContainer />
+                </Content>
+              </Layout>
+              <Sider width="20vw">
+                <Game />
+              </Sider>
+              <SwalManager />
+            </>
+          ) : (
+            <PlayerFactory />
+          )}
         </>
       )}
     </Layout>
