@@ -38,6 +38,10 @@ const PlayerFactory = ({  }: Props) => {
     }
   };
 
+  const onDeletePlayer = (uuid: string) => {
+    setPlayers(players.filter(player => player.uuid !== uuid));
+  };
+
   const onStartGame = () => {
     if (players.length > 2) {
       dispatch(startGame(players));
@@ -62,7 +66,17 @@ const PlayerFactory = ({  }: Props) => {
     if (players.length)
       return players.map(player => (
         <div key={player.uuid} className="player" onClick={() => onSelectPlayer(player.uuid)}>
-          <div className="player-avatar" data-avatar={player.avatar} />
+          <div className="player-avatar" data-avatar={player.avatar}>
+            {!selectedPlayer && (
+              <div
+                className="delete-cross"
+                onClick={e => {
+                  e.stopPropagation();
+                  onDeletePlayer(player.uuid);
+                }}
+              />
+            )}
+          </div>
           <p>{player.nickname}</p>
         </div>
       ));

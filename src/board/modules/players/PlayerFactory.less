@@ -44,11 +44,26 @@
         }
 
         .player-avatar {
+          position: relative;
           width: 5rem;
           height: 5rem;
+
+          .delete-cross {
+            cursor: url('../../../assets/images/pointer.png'), auto !important;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 25px;
+            height: 25px;
+            border-radius: 100%;
+            background: white url(../../../assets/images/close.png);
+            background-size: 15px;
+            background-position: center;
+            background-repeat: no-repeat;
+          }
         }
       }
-      
+
       .hint {
         height: fit-content;
         margin: auto;
