@@ -33,7 +33,6 @@ const enablingShortcutsActions = [
   'GAME::HISTORY::DISABLE',
   'GAME::SAVE',
   'GAME::THIEF::ENABLE',
-  'PLAYER::ADD',
   'PLAYER::DESELECT',
   'SWAL::DISMISS',
 ];
@@ -242,14 +241,6 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
           ...state.dices,
           spinning: false,
         },
-      };
-      break;
-
-    case 'PLAYER::ADD':
-      const newPlayers = [...state.players, newPlayer(action.nickname, 0)];
-      newState = {
-        ...state,
-        players: computePlayersScores(newPlayers),
       };
       break;
 

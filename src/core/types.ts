@@ -95,10 +95,6 @@ export interface ReduxAction {
   type: '@@INIT';
 }
 
-interface PlayerAction_Add {
-  type: 'PLAYER::ADD';
-  nickname: string;
-}
 interface PlayerAction_Delete {
   type: 'PLAYER::DELETE';
   playerUuid: string;
@@ -149,7 +145,6 @@ interface PlayerAction_SaveNickname {
 }
 
 export type PlayerAction =
-  | PlayerAction_Add
   | PlayerAction_Delete
   | PlayerAction_Select
   | PlayerAction_Deselect
