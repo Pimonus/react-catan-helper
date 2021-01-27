@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Divider } from 'antd';
 import cn from 'classnames';
@@ -17,6 +17,11 @@ const PlayerFactory = ({  }: Props) => {
   const [nickname, setNickname] = useState<string>('');
   const [players, setPlayers] = useState<Player[]>([]);
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
+  const nicknameInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (selectedPlayer && nicknameInputRef.current) nicknameInputRef.current.select();
+  }, [selectedPlayer]);
 
   const onSubmitPlayer = () => {
     setNickname('');
@@ -89,6 +94,7 @@ const PlayerFactory = ({  }: Props) => {
         <h1>Création des joueurs</h1>
         <div className="form">
           <input
+            ref={nicknameInputRef}
             placeholder="Nom du joueur"
             value={nickname}
             onChange={e => setNickname(e.target.value)}

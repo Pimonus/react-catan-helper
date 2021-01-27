@@ -6,7 +6,6 @@ import {
   computePlayersScores,
   getStateForHistory,
   getStateForStorage,
-  newPlayer,
   ATTACK_POSITION,
 } from '@core/index';
 import { CatanAction, CatanState, Player } from '@core/types';
