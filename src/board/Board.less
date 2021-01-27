@@ -1,13 +1,9 @@
-@import '../assets/style/theme.less';
+@import '../theme.less';
 
 .board {
   height: 100%;
   background: black url(../assets/images/catan.jpg);
   background-size: cover;
-
-  h1 {
-    font-weight: normal;
-  }
 
   .ant-layout,
   .ant-layout-header,
@@ -53,27 +49,13 @@
         width: 100%;
       }
 
-      :first-child {
-        margin-top: 0;
-      }
-
-      :last-child {
-        margin-bottom: 0;
-      }
-
-      h1,
       p {
         text-align: center;
       }
 
-      h1 {
-        margin-top: 0;
-        font-size: 4rem;
-      }
-
       p {
+        .regular-text;
         margin: 0;
-        font-size: 1.5rem;
       }
     }
 

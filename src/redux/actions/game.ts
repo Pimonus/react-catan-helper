@@ -1,4 +1,4 @@
-import { Dispatch, ThunkAction } from '@core/types';
+import { Dispatch, Player, ThunkAction } from '@core/types';
 
 export const disableShortcuts = (): ThunkAction => (dispatch: Dispatch) => {
   dispatch({ type: 'SHORTCUTS::DISABLE' });
@@ -16,7 +16,7 @@ export const newGame = (): ThunkAction => (dispatch: Dispatch) => {
   dispatch({ type: 'GAME::NEW' });
   localStorage.removeItem('gameHistory');
   setTimeout(() => {
-    dispatch({ type: 'GAME::CREATED' });
+    dispatch({ type: 'GAME::INITIALIZED' });
   }, 2000);
 };
 
@@ -45,3 +45,10 @@ export const saveGame = (): ThunkAction => (dispatch: Dispatch) => {
 
 export const enableThief = (): ThunkAction => (dispatch: Dispatch) =>
   dispatch({ type: 'GAME::THIEF::ENABLE' });
+
+export const startGame = (players: ReadonlyArray<Player>) => ({
+  type: 'GAME::START',
+  payload: {
+    players,
+  },
+});

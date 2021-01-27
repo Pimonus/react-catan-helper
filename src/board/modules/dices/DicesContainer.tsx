@@ -22,9 +22,9 @@ const DicesContainer = () => {
 
   return (
     <div className="dices-container">
-        <Dice flipped={flipped} spinning={spinning} value={specialValue} special />
-        <Dice flipped={flipped} spinning={spinning} value={redValue} red />
-        <Dice flipped={flipped} spinning={spinning} value={whiteValue} />
+      <Dice flipped={flipped} spinning={spinning} value={specialValue} special />
+      <Dice flipped={flipped} spinning={spinning} value={redValue} red />
+      <Dice flipped={flipped} spinning={spinning} value={whiteValue} />
     </div>
   );
 };
