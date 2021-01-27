@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
 
 import PlayerModal from '@modules/players/PlayerModal';
-import NewPlayerModal from '@modules/players/NewPlayerModal';
 import {
   addCity,
   addColony,
-  addNewPlayer,
   addVictoryPoint,
   attributeLongestRoad,
   attributeStrongestArmy,
@@ -28,8 +26,6 @@ import roadIcon from '@images/road_icon.png';
 import './PlayerContainer.css';
 
 const PlayerContainer = () => {
-  const [showNewPlayerModal, toggleNewPlayerModal] = useState(false);
-
   const selectedPlayerUuid = useSelector((state: CatanState) => state.selectedPlayerUuid);
   // use history values if history mode is enabled
   const players = useSelector((state: CatanState) => {
@@ -43,21 +39,16 @@ const PlayerContainer = () => {
 
   const dispatch = useDispatch();
 
-  const submitNewPlayer = (nickname: string) => {
-    toggleNewPlayerModal(false);
-    dispatch(addNewPlayer(nickname));
-  };
-
   return (
     <div className="player-container">
       {players.map((player, index) => (
-        <div key={`player_${index}`}>
+        <div key={player.uuid}>
           <div
             className={cn('player', { leader: player.isLeader })}
             data-bg={index % playerCount}
             onClick={() => dispatch(selectPlayer(player.uuid))}
           >
-            <div className="avatar" data-avatar={index % playerCount}></div>
+            <div className="avatar" data-avatar={player.avatar}></div>
             <p className="nickname">{player.nickname}</p>
           </div>
           <p className="score">
@@ -80,15 +71,6 @@ const PlayerContainer = () => {
           </p>
         </div>
       ))}
-      <button className="new-player" onClick={() => toggleNewPlayerModal(!showNewPlayerModal)}>
-        + Nouveau Joueur
-      </button>
-      {showNewPlayerModal && (
-        <NewPlayerModal
-          cancel={() => toggleNewPlayerModal(false)}
-          submitAndClose={nickname => submitNewPlayer(nickname)}
-        />
-      )}
       {selectedPlayer && (
         <PlayerModal
           // data

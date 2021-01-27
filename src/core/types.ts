@@ -11,6 +11,7 @@ export interface GameStorableState {
 export interface GameState extends GameStorableState {
   loading: boolean;
   paused: boolean;
+  started: boolean;
 }
 
 export enum ClassicDiceValue {
@@ -49,6 +50,7 @@ export interface Player {
   // id
   uuid: string;
   nickname: string;
+  avatar: number;
   // game
   cities: number;
   colonies: number;
@@ -93,10 +95,6 @@ export interface ReduxAction {
   type: '@@INIT';
 }
 
-interface PlayerAction_Add {
-  type: 'PLAYER::ADD';
-  nickname: string;
-}
 interface PlayerAction_Delete {
   type: 'PLAYER::DELETE';
   playerUuid: string;
@@ -147,7 +145,6 @@ interface PlayerAction_SaveNickname {
 }
 
 export type PlayerAction =
-  | PlayerAction_Add
   | PlayerAction_Delete
   | PlayerAction_Select
   | PlayerAction_Deselect
@@ -181,8 +178,14 @@ interface GameAction_LoadError {
 interface GameAction_New {
   type: 'GAME::NEW';
 }
-interface GameAction_Created {
-  type: 'GAME::CREATED';
+interface GameAction_Start {
+  type: 'GAME::START';
+  payload: {
+    players: ReadonlyArray<Player>;
+  };
+}
+interface GameAction_Initialized {
+  type: 'GAME::INITIALIZED';
 }
 interface GameAction_Pause {
   type: 'GAME::PAUSE';
@@ -223,7 +226,8 @@ type GameAction =
   | GameAction_Load
   | GameAction_LoadError
   | GameAction_New
-  | GameAction_Created
+  | GameAction_Initialized
+  | GameAction_Start
   | GameAction_Pause
   | GameAction_Resume
   | GameAction_Save

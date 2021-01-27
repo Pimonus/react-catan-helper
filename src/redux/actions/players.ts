@@ -1,12 +1,5 @@
 import { Dispatch, ThunkAction } from '@core/types';
 
-export const addNewPlayer = (nickname: string): ThunkAction => (dispatch: Dispatch) => {
-  dispatch({
-    type: 'PLAYER::ADD',
-    nickname: nickname,
-  });
-};
-
 export const selectPlayer = (playerUuid: string): ThunkAction => (dispatch: Dispatch) => {
   dispatch({
     type: 'PLAYER::SELECT',
