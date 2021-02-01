@@ -71,7 +71,7 @@ const SwalManager = () => {
               showConfirmButton: false,
               html: <ThiefSwal />,
             },
-            callback: () => dispatch(enableThief()),
+            callback: () => dispatch(enableThief),
           });
 
         if (didBarbariansProgress(dices.values)) {
@@ -81,12 +81,12 @@ const SwalManager = () => {
               showConfirmButton: false,
               html: <BarbariansSwal attack={didBarbariansReachCoast(barbarians.position)} />,
             },
-            callback: () => dispatch(moveBarbariansForward()),
+            callback: () => dispatch(moveBarbariansForward),
           });
         }
 
         if (swalQueue.length > 0) await processSwalQueue(swalQueue);
-        dispatch(saveGame());
+        dispatch(saveGame);
       }
     };
 
@@ -94,7 +94,7 @@ const SwalManager = () => {
   }, [_createdAt, barbarians, dices, game.enabledThief]);
 
   const processSwalQueue = async (swalQueue: SwalWithCallback[]) => {
-    dispatch(disableShortcuts());
+    dispatch(disableShortcuts);
     await new Promise(r => setTimeout(r, swalDelay));
     dispatch(fireSwal());
     await swalQueue.reduce(async (previous, item) => {

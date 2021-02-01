@@ -50,7 +50,7 @@ const PlayerModal = ({
 
   // const [showActionsPanel, toggleActionPanel] = useState(NO_ACTION);
   const [actionType, setActionType] = useState(NO_ACTION);
-  const [nickname, editNickname] = useState(player.nickname);
+  const [nickname, setNickname] = useState(player.nickname);
   const [nicknameEdition, toggleNicknameEdition] = useState(false);
 
   const handleActionTypeChange = (type: ACTION_TYPE) => {
@@ -166,7 +166,7 @@ const PlayerModal = ({
               type="text"
               value={nickname}
               onChange={event => {
-                if (event.target.value.length < 20) editNickname(event.target.value);
+                if (event.target.value.length < 20) setNickname(event.target.value);
               }}
               onFocus={event => event.target.select()}
               onKeyUp={event => {
@@ -174,6 +174,7 @@ const PlayerModal = ({
                   toggleNicknameEdition(false);
                 } else if (event.key === 'Enter') {
                   savePlayerNickname(player.uuid, nickname);
+                  toggleNicknameEdition(false);
                 }
               }}
             />

@@ -97,51 +97,73 @@ export interface ReduxAction {
 
 interface PlayerAction_Delete {
   type: 'PLAYER::DELETE';
-  playerUuid: string;
+  payload: {
+    playerUuid: string;
+  };
 }
 interface PlayerAction_Select {
   type: 'PLAYER::SELECT';
-  playerUuid: string;
+  payload: {
+    playerUuid: string;
+  };
 }
 interface PlayerAction_Deselect {
   type: 'PLAYER::DESELECT';
 }
 interface PlayerAction_AddColony {
   type: 'PLAYER::ADD::COLONY';
-  playerUuid: string;
+  payload: {
+    playerUuid: string;
+  };
 }
 interface PlayerAction_DestroyColony {
   type: 'PLAYER::DESTROY::COLONY';
-  playerUuid: string;
+  payload: {
+    playerUuid: string;
+  };
 }
 interface PlayerAction_AddCity {
   type: 'PLAYER::ADD::CITY';
-  playerUuid: string;
+  payload: {
+    playerUuid: string;
+  };
 }
 interface PlayerAction_DestroyCity {
   type: 'PLAYER::DESTROY::CITY';
-  playerUuid: string;
+  payload: {
+    playerUuid: string;
+  };
 }
 interface PlayerAction_AddPoint {
   type: 'PLAYER::ADD::POINT';
-  playerUuid: string;
+  payload: {
+    playerUuid: string;
+  };
 }
 interface PlayerAction_RemovePoint {
   type: 'PLAYER::REMOVE::POINT';
-  playerUuid: string;
+  payload: {
+    playerUuid: string;
+  };
 }
 interface PlayerAction_AttributeRoad {
   type: 'PLAYER::ATTRIBUTE::ROAD';
-  playerUuid: string;
+  payload: {
+    playerUuid: string;
+  };
 }
 interface PlayerAction_AttributeArmy {
   type: 'PLAYER::ATTRIBUTE::ARMY';
-  playerUuid: string;
+  payload: {
+    playerUuid: string;
+  };
 }
 interface PlayerAction_SaveNickname {
   type: 'PLAYER::SAVE::NICKNAME';
-  playerUuid: string;
-  nickname: string;
+  payload: {
+    playerUuid: string;
+    nickname: string;
+  };
 }
 
 export type PlayerAction =
@@ -187,9 +209,6 @@ interface GameAction_Start {
 interface GameAction_Initialized {
   type: 'GAME::INITIALIZED';
 }
-interface GameAction_Pause {
-  type: 'GAME::PAUSE';
-}
 interface GameAction_Resume {
   type: 'GAME::RESUME';
 }
@@ -228,7 +247,6 @@ type GameAction =
   | GameAction_New
   | GameAction_Initialized
   | GameAction_Start
-  | GameAction_Pause
   | GameAction_Resume
   | GameAction_Save
   | GameAction_EnableThief
@@ -246,7 +264,9 @@ type BarbarianAction = BarbarianAction_Progress;
 
 interface DiceAction_DefineValue {
   type: 'DICES::DEFINE::VALUES';
-  values: DicesValues;
+  payload: {
+    values: DicesValues;
+  };
 }
 interface DiceAction_Flip {
   type: 'DICES::FLIP';

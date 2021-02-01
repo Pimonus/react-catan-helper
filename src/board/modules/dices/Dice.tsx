@@ -6,12 +6,12 @@ import { ClassicDiceValue, SpecialDiceValue } from '@core/types';
 import './Dice.css';
 
 interface Props {
-  flipped: boolean,
-  spinning: boolean,
-  red?: boolean,
-  special?: boolean,
-  value: ClassicDiceValue | SpecialDiceValue,
-};
+  flipped: boolean;
+  spinning: boolean;
+  red?: boolean;
+  special?: boolean;
+  value: ClassicDiceValue | SpecialDiceValue;
+}
 
 const Dice = (props: Props) => {
   const { flipped, red, special, spinning, value } = props;

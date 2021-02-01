@@ -76,7 +76,7 @@ const PlayerContainer = () => {
           // data
           player={selectedPlayer}
           // functions
-          deselect={() => dispatch(deselectPlayer())}
+          deselect={() => dispatch(deselectPlayer)}
           addCity={uuid => dispatch(addCity(uuid))}
           addColony={uuid => dispatch(addColony(uuid))}
           addVictoryPoint={uuid => dispatch(addVictoryPoint(uuid))}

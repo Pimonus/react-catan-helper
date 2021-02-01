@@ -1,8 +1,6 @@
 import { Dispatch, Player, ThunkAction } from '@core/types';
 
-export const disableShortcuts = (): ThunkAction => (dispatch: Dispatch) => {
-  dispatch({ type: 'SHORTCUTS::DISABLE' });
-};
+export const disableShortcuts = { type: 'SHORTCUTS::DISABLE' };
 
 export const getExistingGame = (): ThunkAction => {
   return (dispatch: Dispatch) => {
@@ -20,12 +18,6 @@ export const newGame = (): ThunkAction => (dispatch: Dispatch) => {
   }, 2000);
 };
 
-export const pauseGame = (): ThunkAction => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: 'GAME::PAUSE' });
-  };
-};
-
 export const resumeGame = (): ThunkAction => (dispatch: Dispatch) => {
   try {
     dispatch({ type: 'GAME::RESUME' });
@@ -39,12 +31,9 @@ export const resumeGame = (): ThunkAction => (dispatch: Dispatch) => {
   }
 };
 
-export const saveGame = (): ThunkAction => (dispatch: Dispatch) => {
-  dispatch({ type: 'GAME::SAVE' });
-};
+export const saveGame = { type: 'GAME::SAVE' };
 
-export const enableThief = (): ThunkAction => (dispatch: Dispatch) =>
-  dispatch({ type: 'GAME::THIEF::ENABLE' });
+export const enableThief = { type: 'GAME::THIEF::ENABLE' };
 
 export const startGame = (players: ReadonlyArray<Player>) => ({
   type: 'GAME::START',

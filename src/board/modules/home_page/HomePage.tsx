@@ -17,7 +17,9 @@ const HomePage = () => {
   return (
     <div className={cn('homepage', { visible: game.paused })}>
       <img src={catanLogo} alt="Catan" />
-      {availableGame && <h1 onClick={() => dispatch(resumeGame())}>Reprendre la dernière partie</h1>}
+      {availableGame && (
+        <h1 onClick={() => dispatch(resumeGame())}>Reprendre la dernière partie</h1>
+      )}
       <h1 onClick={() => dispatch(newGame())}>Nouvelle partie</h1>
     </div>
   );

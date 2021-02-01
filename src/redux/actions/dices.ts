@@ -7,10 +7,12 @@ export const rollDices = (): ThunkAction => {
 
     dispatch({
       type: 'DICES::DEFINE::VALUES',
-      values: {
-        whiteValue: getClassicDiceValue(),
-        redValue: getClassicDiceValue(),
-        specialValue: getSpecialDiceValue(),
+      payload: {
+        values: {
+          whiteValue: getClassicDiceValue(),
+          redValue: getClassicDiceValue(),
+          specialValue: getSpecialDiceValue(),
+        },
       },
     });
 

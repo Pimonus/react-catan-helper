@@ -49,7 +49,7 @@ const GameHistoryContainer = () => {
               alt="enable history mode"
               className="toggle"
               src={enableHistoryIcon}
-              onClick={() => dispatch(enableHistoryMode())}
+              onClick={() => dispatch(enableHistoryMode)}
             />
           </Tooltip>
         ) : (
@@ -58,7 +58,7 @@ const GameHistoryContainer = () => {
               alt="disable history mode"
               className="toggle"
               src={disableHistoryIcon}
-              onClick={() => dispatch(disableHistoryMode())}
+              onClick={() => dispatch(disableHistoryMode)}
             />
           </Tooltip>
         )}

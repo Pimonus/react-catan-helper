@@ -31,6 +31,7 @@ const enablingShortcutsActions = [
   'GAME::LOAD',
   'GAME::HISTORY::DISABLE',
   'GAME::SAVE',
+  'GAME::START',
   'GAME::THIEF::ENABLE',
   'PLAYER::DESELECT',
   'SWAL::DISMISS',
@@ -96,13 +97,6 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
           loading: false,
           paused: false,
         },
-      };
-      break;
-
-    case 'GAME::PAUSE':
-      newState = {
-        ...state,
-        game: { ...state.game, paused: true },
       };
       break;
 
@@ -194,7 +188,7 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
         ...state,
         dices: {
           ...state.dices,
-          values: action.values,
+          values: action.payload.values,
         },
       };
       break;
@@ -246,7 +240,7 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
     case 'PLAYER::SELECT':
       newState = {
         ...state,
-        selectedPlayerUuid: action.playerUuid,
+        selectedPlayerUuid: action.payload.playerUuid,
       };
       break;
 
@@ -274,7 +268,7 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
     }
 
     case 'PLAYER::DELETE': {
-      const { playerUuid } = action;
+      const { playerUuid } = action.payload;
       const newPlayers: ReadonlyArray<Player> = state.players.filter(
         player => player.uuid !== playerUuid
       );
