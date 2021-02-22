@@ -10,9 +10,10 @@ import {
 } from '@core/index';
 import { CatanAction, CatanState, Player } from '@core/types';
 
+const middlewareActions = ['GAME::SCAN', 'GAME::NEW'];
+
 const softActions = [
   '@@INIT',
-  'GAME::CHECK',
   'GAME::FOUND',
   'GAME::NOT_FOUND',
   'GAME::RESUME',
@@ -37,7 +38,7 @@ const enablingShortcutsActions = [
   'SWAL::DISMISS',
 ];
 
-export const reducer = (state: CatanState = initialState, action: CatanAction) => {
+export const reducer = (state: CatanState = initialState, action: CatanAction): CatanState => {
   let newState: CatanState;
   switch (action.type) {
     case 'GAME::FOUND': {
@@ -46,24 +47,20 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
     }
 
     case 'GAME::LOAD': {
-      newState =
-        // FIXME action.state === null is impossible
-        action.state === null || action.state === undefined
-          ? initialState
-          : {
-              ...action.state,
-              _resumedAt: new Date(),
-              game: {
-                ...action.state.game,
-                loading: false,
-                paused: false,
-              },
-              gameHistory: {
-                enabled: false,
-                turnKeys: action.state.gameHistory.turnKeys,
-              },
-              selectedPlayerUuid: undefined,
-            };
+      newState = {
+        ...action.state,
+        _resumedAt: new Date(),
+        game: {
+          ...action.state.game,
+          loading: false,
+          paused: false,
+        },
+        gameHistory: {
+          enabled: false,
+          turnKeys: action.state.gameHistory.turnKeys,
+        },
+        selectedPlayerUuid: undefined,
+      };
       break;
     }
 
@@ -194,7 +191,7 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
       break;
     }
 
-    case 'DICES::FLIP':
+    case 'DICES::ROLL':
       newState = {
         ...state,
         dices: {
@@ -312,7 +309,11 @@ export const reducer = (state: CatanState = initialState, action: CatanAction) =
     };
   }
 
-  if (newState && !action.type.startsWith('@@redux') && !softActions.includes(action.type)) {
+  if (
+    newState &&
+    !action.type.startsWith('@@redux') &&
+    ![...softActions, ...middlewareActions].includes(action.type)
+  ) {
     localStorage.setItem('currentGame', getStateForStorage(newState));
   }
 

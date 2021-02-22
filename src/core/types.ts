@@ -180,8 +180,14 @@ export type PlayerAction =
   | PlayerAction_AttributeArmy
   | PlayerAction_SaveNickname;
 
-interface GameAction_Check {
-  type: 'GAME::CHECK';
+interface GameMiddlwareAction_Scan {
+  type: 'GAME::SCAN';
+}
+interface GameMiddlwareAction_New {
+  type: 'GAME::NEW';
+}
+interface GameMiddlwareAction_Resume {
+  type: 'GAME::RESUME';
 }
 interface GameAction_Found {
   type: 'GAME::FOUND';
@@ -191,7 +197,7 @@ interface GameAction_NotFound {
 }
 interface GameAction_Load {
   type: 'GAME::LOAD';
-  state: CatanState | null;
+  state: CatanState;
 }
 interface GameAction_LoadError {
   type: 'GAME::LOAD!!ERROR';
@@ -208,9 +214,6 @@ interface GameAction_Start {
 }
 interface GameAction_Initialized {
   type: 'GAME::INITIALIZED';
-}
-interface GameAction_Resume {
-  type: 'GAME::RESUME';
 }
 interface GameAction_Save {
   type: 'GAME::SAVE';
@@ -238,8 +241,12 @@ interface GameAction_VisualizeTurn {
   turnKey: string;
 }
 
+type GameMiddlewareAction =
+  | GameMiddlwareAction_Scan
+  | GameMiddlwareAction_New
+  | GameMiddlwareAction_Resume;
+
 type GameAction =
-  | GameAction_Check
   | GameAction_Found
   | GameAction_NotFound
   | GameAction_Load
@@ -247,7 +254,6 @@ type GameAction =
   | GameAction_New
   | GameAction_Initialized
   | GameAction_Start
-  | GameAction_Resume
   | GameAction_Save
   | GameAction_EnableThief
   | GameAction_EnableHistory
@@ -259,7 +265,6 @@ type GameAction =
 interface BarbarianAction_Progress {
   type: 'BARBARIANS::PROGRESS';
 }
-
 type BarbarianAction = BarbarianAction_Progress;
 
 interface DiceAction_DefineValue {
@@ -267,9 +272,6 @@ interface DiceAction_DefineValue {
   payload: {
     values: DicesValues;
   };
-}
-interface DiceAction_Flip {
-  type: 'DICES::FLIP';
 }
 interface DiceAction_Reveal {
   type: 'DICES::REVEAL';
@@ -280,13 +282,12 @@ interface DiceAction_Spin {
 interface DiceAction_Stop {
   type: 'DICES::STOP';
 }
+type DiceAction = DiceAction_DefineValue | DiceAction_Reveal | DiceAction_Spin | DiceAction_Stop;
 
-type DiceAction =
-  | DiceAction_DefineValue
-  | DiceAction_Flip
-  | DiceAction_Reveal
-  | DiceAction_Spin
-  | DiceAction_Stop;
+interface DiceMiddlewareAction_Roll {
+  type: 'DICES::ROLL';
+}
+type DiceMiddlewareAction = DiceMiddlewareAction_Roll;
 
 interface SwalAction_Fire {
   type: 'SWAL::FIRE';
@@ -297,7 +298,10 @@ interface SwalAction_Dismiss {
 
 type SwalAction = SwalAction_Fire | SwalAction_Dismiss;
 
+export type MiddlewareAction = GameMiddlewareAction | DiceMiddlewareAction;
+
 export type CatanAction =
+  | MiddlewareAction
   | ReduxAction
   | PlayerAction
   | GameAction

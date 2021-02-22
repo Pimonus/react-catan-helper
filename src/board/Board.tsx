@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Layout } from 'antd';
 
+// hooks
+import useMount from '@hooks/useMount';
 // actions
 import { rollDices } from '@actions/dices';
-import { getExistingGame } from '@actions/game';
+import gameActions from '@actions/game';
 // components
 import Loader from '@board/Loader';
 import DicesContainer from '@modules/dices/DicesContainer';
@@ -29,15 +31,13 @@ const Board = () => {
 
   const { loading, paused, started } = game;
 
-  useEffect(() => {
-    dispatch(getExistingGame());
-  }, []);
+  useMount(() => dispatch(gameActions.scanExistingGame));
 
   return (
     <Layout
       className="board"
       onKeyUp={e => {
-        if (listenToShortcuts && e.keyCode === 32) dispatch(rollDices());
+        if (listenToShortcuts && e.keyCode === 32) dispatch(rollDices);
       }}
       tabIndex={0}
     >

@@ -7,7 +7,7 @@ import { newPlayer } from '@core/index';
 import { Player } from '@core/types';
 
 import './PlayerFactory.css';
-import { startGame } from '@actions/game';
+import gameActions from '@actions/game';
 
 interface Props {}
 
@@ -49,7 +49,7 @@ const PlayerFactory = ({  }: Props) => {
 
   const onStartGame = () => {
     if (players.length > 2) {
-      dispatch(startGame(players));
+      dispatch(gameActions.startGameWithPlayers(players));
     }
   };
 

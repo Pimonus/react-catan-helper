@@ -5,8 +5,8 @@ import withReactContent from 'sweetalert2-react-content';
 
 // actions
 import { moveBarbariansForward } from '@actions/barbarians';
-import { disableShortcuts, enableThief, saveGame } from '@actions/game';
-import { fireSwal } from '@actions/swal';
+import gameActions from '@actions/game';
+import swalActions from '@actions/swal';
 // components
 import BarbariansSwal from '@modules/swals/BarbariansSwal';
 import ThiefSwal from '@modules/swals/ThiefSwal';
@@ -71,7 +71,7 @@ const SwalManager = () => {
               showConfirmButton: false,
               html: <ThiefSwal />,
             },
-            callback: () => dispatch(enableThief),
+            callback: () => dispatch(gameActions.enableThief),
           });
 
         if (didBarbariansProgress(dices.values)) {
@@ -86,7 +86,7 @@ const SwalManager = () => {
         }
 
         if (swalQueue.length > 0) await processSwalQueue(swalQueue);
-        dispatch(saveGame);
+        dispatch(gameActions.saveGame);
       }
     };
 
@@ -94,9 +94,9 @@ const SwalManager = () => {
   }, [_createdAt, barbarians, dices, game.enabledThief]);
 
   const processSwalQueue = async (swalQueue: SwalWithCallback[]) => {
-    dispatch(disableShortcuts);
+    dispatch(gameActions.disableShortcuts);
     await new Promise(r => setTimeout(r, swalDelay));
-    dispatch(fireSwal());
+    dispatch(swalActions.fire);
     await swalQueue.reduce(async (previous, item) => {
       await previous;
       await swal.fire(item.swal);
