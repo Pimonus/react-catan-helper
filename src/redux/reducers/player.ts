@@ -1,5 +1,5 @@
 import { computePlayersScores } from '@core/index';
-import { Player, PlayerAction } from '@core/types';
+import { Player, PlayerAction } from '@redux/types/players';
 
 const reducer = (
   state: ReadonlyArray<Player> = [],
@@ -11,7 +11,7 @@ const reducer = (
     case 'PLAYER::ADD::COLONY': {
       newState = state.map<Player>((player: Player) => ({
         ...player,
-        colonies: player.uuid === action.playerUuid ? player.colonies + 1 : player.colonies,
+        colonies: player.uuid === action.payload.playerUuid ? player.colonies + 1 : player.colonies,
       }));
       break;
     }
@@ -19,7 +19,7 @@ const reducer = (
     case 'PLAYER::DESTROY::COLONY': {
       newState = state.map<Player>((player: Player) => ({
         ...player,
-        colonies: player.uuid === action.playerUuid ? player.colonies - 1 : player.colonies,
+        colonies: player.uuid === action.payload.playerUuid ? player.colonies - 1 : player.colonies,
       }));
       break;
     }
@@ -27,8 +27,8 @@ const reducer = (
     case 'PLAYER::ADD::CITY': {
       newState = state.map<Player>((player: Player) => ({
         ...player,
-        colonies: player.uuid === action.playerUuid ? player.colonies - 1 : player.colonies,
-        cities: player.uuid === action.playerUuid ? player.cities + 1 : player.cities,
+        colonies: player.uuid === action.payload.playerUuid ? player.colonies - 1 : player.colonies,
+        cities: player.uuid === action.payload.playerUuid ? player.cities + 1 : player.cities,
       }));
       break;
     }
@@ -36,8 +36,8 @@ const reducer = (
     case 'PLAYER::DESTROY::CITY': {
       newState = state.map<Player>((player: Player) => ({
         ...player,
-        colonies: player.uuid === action.playerUuid ? player.colonies + 1 : player.colonies,
-        cities: player.uuid === action.playerUuid ? player.cities - 1 : player.cities,
+        colonies: player.uuid === action.payload.playerUuid ? player.colonies + 1 : player.colonies,
+        cities: player.uuid === action.payload.playerUuid ? player.cities - 1 : player.cities,
       }));
       break;
     }
@@ -46,7 +46,9 @@ const reducer = (
       newState = state.map<Player>((player: Player) => ({
         ...player,
         victoryPoints:
-          player.uuid === action.playerUuid ? player.victoryPoints + 1 : player.victoryPoints,
+          player.uuid === action.payload.playerUuid
+            ? player.victoryPoints + 1
+            : player.victoryPoints,
       }));
       break;
     }
@@ -55,7 +57,9 @@ const reducer = (
       newState = state.map<Player>((player: Player) => ({
         ...player,
         victoryPoints:
-          player.uuid === action.playerUuid ? player.victoryPoints - 1 : player.victoryPoints,
+          player.uuid === action.payload.playerUuid
+            ? player.victoryPoints - 1
+            : player.victoryPoints,
       }));
       break;
     }
@@ -63,7 +67,7 @@ const reducer = (
     case 'PLAYER::ATTRIBUTE::ROAD': {
       newState = state.map<Player>((player: Player) => ({
         ...player,
-        hasLongestRoad: player.uuid === action.playerUuid,
+        hasLongestRoad: player.uuid === action.payload.playerUuid,
       }));
       break;
     }
@@ -71,16 +75,16 @@ const reducer = (
     case 'PLAYER::ATTRIBUTE::ARMY': {
       newState = state.map<Player>((player: Player) => ({
         ...player,
-        hasStrongestArmy: player.uuid === action.playerUuid,
+        hasStrongestArmy: player.uuid === action.payload.playerUuid,
       }));
       break;
     }
 
     case 'PLAYER::SAVE::NICKNAME': {
-      const { playerUuid: uuid, nickname } = action;
+      const { playerUuid, nickname } = action.payload;
       newState = state.map<Player>((player: Player) => ({
         ...player,
-        nickname: player.uuid === uuid ? nickname : player.nickname,
+        nickname: player.uuid === playerUuid ? nickname : player.nickname,
       }));
       break;
     }

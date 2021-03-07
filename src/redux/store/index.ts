@@ -1,4 +1,4 @@
-import { CatanState, ClassicDiceValue, SpecialDiceValue } from '@core/types';
+import { CatanState } from '@core/types';
 
 export const initialState: CatanState = {
   _createdAt: new Date(),
@@ -13,9 +13,9 @@ export const initialState: CatanState = {
     rolling: false,
     spinning: false,
     values: {
-      whiteValue: ClassicDiceValue.six,
-      redValue: ClassicDiceValue.six,
-      specialValue: SpecialDiceValue.barbarians,
+      whiteValue: 'six',
+      redValue: 'six',
+      specialValue: 'barbarians',
     },
   },
   game: {

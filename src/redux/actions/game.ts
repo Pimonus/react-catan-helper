@@ -1,54 +1,30 @@
-import { Dispatch, Player, ThunkAction } from '@core/types';
+import { Player } from '@redux/types/players';
 
-export const disableShortcuts = (): ThunkAction => (dispatch: Dispatch) => {
-  dispatch({ type: 'SHORTCUTS::DISABLE' });
-};
+const disableShortcuts = { type: 'SHORTCUTS::DISABLE' };
 
-export const getExistingGame = (): ThunkAction => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: 'GAME::CHECK' });
-    if (localStorage.getItem('currentGame') === null) dispatch({ type: 'GAME::NOT_FOUND' });
-    else dispatch({ type: 'GAME::FOUND' });
-  };
-};
+const scanExistingGame = { type: 'GAME::SCAN' };
 
-export const newGame = (): ThunkAction => (dispatch: Dispatch) => {
-  dispatch({ type: 'GAME::NEW' });
-  localStorage.removeItem('gameHistory');
-  setTimeout(() => {
-    dispatch({ type: 'GAME::INITIALIZED' });
-  }, 2000);
-};
+const newGame = { type: 'GAME::NEW' };
 
-export const pauseGame = (): ThunkAction => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: 'GAME::PAUSE' });
-  };
-};
+const resumeGame = { type: 'GAME::RESUME' };
 
-export const resumeGame = (): ThunkAction => (dispatch: Dispatch) => {
-  try {
-    dispatch({ type: 'GAME::RESUME' });
-    const state = JSON.parse(localStorage.getItem('currentGame') || '');
-    // simulate a 2sec loading, in reality it is instantaneous
-    setTimeout(() => {
-      dispatch({ type: 'GAME::LOAD', state });
-    }, 2000);
-  } catch (error) {
-    dispatch({ type: 'GAME::LOAD!!ERROR', error });
-  }
-};
+const saveGame = { type: 'GAME::SAVE' };
 
-export const saveGame = (): ThunkAction => (dispatch: Dispatch) => {
-  dispatch({ type: 'GAME::SAVE' });
-};
+const enableThief = { type: 'GAME::THIEF::ENABLE' };
 
-export const enableThief = (): ThunkAction => (dispatch: Dispatch) =>
-  dispatch({ type: 'GAME::THIEF::ENABLE' });
-
-export const startGame = (players: ReadonlyArray<Player>) => ({
+const startGameWithPlayers = (players: ReadonlyArray<Player>) => ({
   type: 'GAME::START',
   payload: {
     players,
   },
 });
+
+export default {
+  disableShortcuts,
+  enableThief,
+  scanExistingGame,
+  newGame,
+  resumeGame,
+  saveGame,
+  startGameWithPlayers,
+};
