@@ -1,9 +1,4 @@
-import { Dispatch, ThunkAction } from '@core/types';
+const dismiss = { type: 'SWAL::DISMISS' };
+const fire = { type: 'SWAL::FIRE' };
 
-export const fireSwal = (): ThunkAction => (dispatch: Dispatch) => {
-  dispatch({ type: 'SWAL::FIRE' });
-};
-
-export const dismissSwal = (): ThunkAction => (dispatch: Dispatch) => {
-  dispatch({ type: 'SWAL::DISMISS' });
-};
+export default { dismiss, fire };

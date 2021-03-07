@@ -3,9 +3,8 @@ import cn from 'classnames';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-import { Player } from '@core/types';
-
 import './PlayerModal.css';
+import { Player } from '@redux/types/players';
 
 const swal = withReactContent(Swal);
 
@@ -50,12 +49,32 @@ const PlayerModal = ({
 
   // const [showActionsPanel, toggleActionPanel] = useState(NO_ACTION);
   const [actionType, setActionType] = useState(NO_ACTION);
-  const [nickname, editNickname] = useState(player.nickname);
+  const [nickname, setNickname] = useState(player.nickname);
   const [nicknameEdition, toggleNicknameEdition] = useState(false);
 
   const handleActionTypeChange = (type: ACTION_TYPE) => {
     if (type !== NO_ACTION && type === actionType) setActionType(NO_ACTION);
     else setActionType(type);
+  };
+
+  const onAddCity = () => {
+    if (player.colonies > 0) addCity(player.uuid);
+  };
+  const onAddColony = () => addColony(player.uuid);
+  const onAddVictoryPoint = () => addVictoryPoint(player.uuid);
+  const onDestroyCity = () => {
+    if (player.cities > 1) {
+      destroyCity(player.uuid);
+    } else if (player.cities === 1) {
+      destroyCity(player.uuid);
+      setActionType(NO_ACTION);
+    }
+  };
+  const onDestroyColony = () => {
+    if (player.colonies > 0) destroyColony(player.uuid);
+  };
+  const onRemoveVictoryPoint = () => {
+    if (player.victoryPoints > 0) removeVictoryPoint(player.uuid);
   };
 
   const getActionDOM = () => {
@@ -65,51 +84,24 @@ const PlayerModal = ({
       case COLONIES_ACTIONS:
         return (
           <>
-            <p onClick={() => addColony(player.uuid)}>Ajouter une colonie</p>
-            <p
-              className={cn({ disabled: player.colonies < 1 })}
-              onClick={() => {
-                if (player.colonies > 0) addCity(player.uuid);
-              }}
-            >
+            <p onClick={onAddColony}>Ajouter une colonie</p>
+            <p className={cn({ disabled: player.colonies < 1 })} onClick={onAddCity}>
               Transformer une colonie en ville
             </p>
-            <p
-              className={cn({ disabled: player.colonies < 1 })}
-              onClick={() => {
-                if (player.colonies > 0) destroyColony(player.uuid);
-              }}
-            >
+            <p className={cn({ disabled: player.colonies < 1 })} onClick={onDestroyColony}>
               Détruire une colonie
             </p>
           </>
         );
       case CITIES_ACTIONS:
-        return (
-          <>
-            <p
-              onClick={() => {
-                if (player.cities > 1) {
-                  destroyCity(player.uuid);
-                } else if (player.cities === 1) {
-                  destroyCity(player.uuid);
-                  setActionType(NO_ACTION);
-                }
-              }}
-            >
-              Détruire une ville
-            </p>
-          </>
-        );
+        return <p onClick={onDestroyCity}>Détruire une ville</p>;
       case VICTORY_POINTS_ACTIONS:
         return (
           <>
-            <p onClick={() => addVictoryPoint(player.uuid)}>Ajouter un point de victoire</p>
+            <p onClick={onAddVictoryPoint}>Ajouter un point de victoire</p>
             <p
               className={cn({ disabled: player.victoryPoints < 1 })}
-              onClick={() => {
-                if (player.victoryPoints > 0) removeVictoryPoint(player.uuid);
-              }}
+              onClick={onRemoveVictoryPoint}
             >
               Retirer un point de victoire
             </p>
@@ -166,7 +158,7 @@ const PlayerModal = ({
               type="text"
               value={nickname}
               onChange={event => {
-                if (event.target.value.length < 20) editNickname(event.target.value);
+                if (event.target.value.length < 20) setNickname(event.target.value);
               }}
               onFocus={event => event.target.select()}
               onKeyUp={event => {
@@ -174,6 +166,7 @@ const PlayerModal = ({
                   toggleNicknameEdition(false);
                 } else if (event.key === 'Enter') {
                   savePlayerNickname(player.uuid, nickname);
+                  toggleNicknameEdition(false);
                 }
               }}
             />

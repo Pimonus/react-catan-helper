@@ -2,12 +2,6 @@
     "compilerOptions": {
         "baseUrl": "src",
         "paths": {
-            "@core/*": [
-                "core/*"
-            ],
-            "@types/*": [
-                "types/*"
-            ],
             "@assets/*": [
                 "assets/*"
             ],
@@ -20,14 +14,29 @@
             "@modules/*": [
                 "board/modules/*"
             ],
+            "@core/*": [
+                "core/*"
+            ],
+            "@hooks/*": [
+                "hooks/*"
+            ],
+            "@redux/*": [
+                "redux/*"
+            ],
             "@actions/*": [
                 "redux/actions/*"
+            ],
+            "@middlewares/*": [
+                "redux/middlewares/*"
             ],
             "@reducers/*": [
                 "redux/reducers/*"
             ],
             "@store/*": [
                 "redux/store/*"
+            ],
+            "@types/*": [
+                "types/*"
             ]
         }
     }

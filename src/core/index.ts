@@ -1,35 +1,16 @@
 import { v1 as uuidv1 } from 'uuid';
 
-import { CatanState, ClassicDiceValue, DicesValues, Player, SpecialDiceValue } from '@core/types';
+import { CatanState } from '@core/types';
+import {
+  ClassicDiceValue,
+  ClassicDiceValues,
+  DicesValues,
+  diceValueMatching,
+  SpecialDiceValue,
+  SpecialDiceValues,
+} from '@redux/types/dices';
+import { Player } from '@redux/types/players';
 
-const classicDiceValues = [
-  ClassicDiceValue.one,
-  ClassicDiceValue.two,
-  ClassicDiceValue.three,
-  ClassicDiceValue.four,
-  ClassicDiceValue.five,
-  ClassicDiceValue.six,
-];
-
-const specialDiceValues = [
-  SpecialDiceValue.barbarians,
-  SpecialDiceValue.barbarians,
-  SpecialDiceValue.barbarians,
-  SpecialDiceValue.yellow,
-  SpecialDiceValue.green,
-  SpecialDiceValue.blue,
-];
-
-export const diceValueMatching = {
-  one: 1,
-  two: 2,
-  three: 3,
-  four: 4,
-  five: 5,
-  six: 6,
-};
-
-export const THIEF_SCORE = 7;
 export const ATTACK_POSITION = 7;
 
 export const getStateForHistory = (state: CatanState): string =>
@@ -173,19 +154,18 @@ export const computePlayersState = (
 };
 
 export const getClassicDiceValue = (): ClassicDiceValue => {
-  const i = Math.floor(Math.random() * Math.floor(classicDiceValues.length));
-  return classicDiceValues[i];
+  const i = Math.floor(Math.random() * Math.floor(ClassicDiceValues.length));
+  return ClassicDiceValues[i];
 };
 
 export const getSpecialDiceValue = (): SpecialDiceValue => {
-  const i = Math.floor(Math.random() * Math.floor(specialDiceValues.length));
-  return specialDiceValues[i];
+  const i = Math.floor(Math.random() * Math.floor(SpecialDiceValues.length));
+  return SpecialDiceValues[i];
 };
 
 export const getDicesScore = (values: DicesValues): number =>
   diceValueMatching[values.redValue] + diceValueMatching[values.whiteValue];
 
-export const didBarbariansProgress = (values: DicesValues) =>
-  values.specialValue === SpecialDiceValue.barbarians;
+export const didBarbariansProgress = (values: DicesValues) => values.specialValue === 'barbarians';
 
 export const didBarbariansReachCoast = (advance: number) => advance === ATTACK_POSITION - 1;

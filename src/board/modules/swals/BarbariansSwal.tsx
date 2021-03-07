@@ -5,8 +5,8 @@ import barbarians from '@images/barbarians.png';
 import './BarbariansSwal.css';
 
 interface Props {
-  attack?: boolean,
-};
+  attack?: boolean;
+}
 
 const BarbariansSwal = ({ attack }: Props) => {
   return (
