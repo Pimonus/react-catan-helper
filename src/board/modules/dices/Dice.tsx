@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
-import { ClassicDiceValue, SpecialDiceValue } from '@core/types';
+import { ClassicDiceValue, SpecialDiceValue } from '@redux/types/dices';
 
 import './Dice.css';
 

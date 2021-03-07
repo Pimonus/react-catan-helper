@@ -1,4 +1,4 @@
-import { Player } from '@core/types';
+import { Player } from '@redux/types/players';
 
 const disableShortcuts = { type: 'SHORTCUTS::DISABLE' };
 

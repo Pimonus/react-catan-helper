@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { Divider } from 'antd';
 import cn from 'classnames';
 
+import gameActions from '@actions/game';
 import { newPlayer } from '@core/index';
-import { Player } from '@core/types';
+import { Player } from '@redux/types/players';
 
 import './PlayerFactory.css';
-import gameActions from '@actions/game';
 
 interface Props {}
 

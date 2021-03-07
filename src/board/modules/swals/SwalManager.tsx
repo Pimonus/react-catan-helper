@@ -11,14 +11,10 @@ import swalActions from '@actions/swal';
 import BarbariansSwal from '@modules/swals/BarbariansSwal';
 import ThiefSwal from '@modules/swals/ThiefSwal';
 // helpers
-import {
-  didBarbariansProgress,
-  didBarbariansReachCoast,
-  getDicesScore,
-  THIEF_SCORE,
-} from '@core/index';
+import { didBarbariansProgress, didBarbariansReachCoast, getDicesScore } from '@core/index';
 // types
 import { CatanState } from '@core/types';
+import { THIEF_SCORE } from '@redux/types/dices';
 
 import './SwalManager.css';
 

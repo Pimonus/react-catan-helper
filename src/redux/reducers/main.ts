@@ -8,7 +8,8 @@ import {
   getStateForStorage,
   ATTACK_POSITION,
 } from '@core/index';
-import { CatanAction, CatanState, Player } from '@core/types';
+import { CatanAction, CatanState } from '@core/types';
+import { Player } from '@redux/types/players';
 
 const middlewareActions = ['GAME::SCAN', 'GAME::NEW'];
 

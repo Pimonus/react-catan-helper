@@ -1,5 +1,5 @@
 import { computePlayersScores } from '@core/index';
-import { Player, PlayerAction } from '@core/types';
+import { Player, PlayerAction } from '@redux/types/players';
 
 const reducer = (
   state: ReadonlyArray<Player> = [],
