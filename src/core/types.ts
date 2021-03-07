@@ -244,7 +244,9 @@ interface GameAction_VisualizeTurn {
 type GameMiddlewareAction =
   | GameMiddlwareAction_Scan
   | GameMiddlwareAction_New
-  | GameMiddlwareAction_Resume;
+  | GameMiddlwareAction_Resume
+  | GameAction_FetchTurn
+  | GameAction_FetchTurnError;
 
 type GameAction =
   | GameAction_Found
@@ -258,8 +260,6 @@ type GameAction =
   | GameAction_EnableThief
   | GameAction_EnableHistory
   | GameAction_DisableHistory
-  | GameAction_FetchTurn
-  | GameAction_FetchTurnError
   | GameAction_VisualizeTurn;
 
 interface BarbarianAction_Progress {
@@ -310,12 +310,6 @@ export type CatanAction =
   | SwalAction
   | { type: 'SHORTCUTS::DISABLE' };
 
-export interface Dispatch {
-  (action: CatanAction | ThunkAction): any;
-}
 export interface GetState {
   (): CatanState;
-}
-export interface ThunkAction {
-  (dispatch: Dispatch, getState: GetState): any;
 }

@@ -16,14 +16,15 @@ export const middleware: Middleware<
       return;
     }
 
-    case 'GAME::NEW':
+    case 'GAME::NEW': {
       localStorage.removeItem('gameHistory');
       setTimeout(() => {
         next({ type: 'GAME::INITIALIZED' });
       }, 2000);
       return;
+    }
 
-    case 'GAME::RESUME':
+    case 'GAME::RESUME': {
       try {
         const state = JSON.parse(localStorage.getItem('currentGame') || '');
         // simulate a 2sec loading, in reality it is instantaneous
@@ -34,8 +35,9 @@ export const middleware: Middleware<
         next({ type: 'GAME::LOAD!!ERROR', error });
       }
       return;
+    }
 
-    case 'DICES::ROLL':
+    case 'DICES::ROLL': {
       next({
         type: 'DICES::DEFINE::VALUES',
         payload: {
@@ -46,7 +48,6 @@ export const middleware: Middleware<
           },
         },
       });
-
       setTimeout(() => {
         next({ type: 'DICES::SPIN' });
       }, 400);
@@ -59,6 +60,22 @@ export const middleware: Middleware<
         next({ type: 'DICES::REVEAL' });
       }, 2500);
       break;
+    }
+
+    case 'GAME::HISTORY::TURN::FETCH': {
+      const { turnKey } = action;
+      const history = JSON.parse(localStorage.getItem('gameHistory') || '');
+      if (!history || (turnKey && !history[turnKey])) {
+        next({ type: 'GAME::HISTORY::TURN::FETCH!!ERROR' });
+      } else if (turnKey) {
+        next({
+          type: 'GAME::HISTORY::TURN::VISUALIZE',
+          turn: JSON.parse(history[turnKey] || ''),
+          turnKey,
+        });
+      }
+      break;
+    }
 
     default:
       return;
