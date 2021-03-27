@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Divider } from 'antd';
 import cn from 'classnames';
 
 import gameActions from '@actions/game';
+import Divider from '@components/Divider';
 import { newPlayer } from '@core/index';
 import { Player } from '@redux/types/players';
 
@@ -110,7 +110,7 @@ const PlayerFactory = ({  }: Props) => {
             {selectedPlayer ? 'Modifier' : 'Ajouter'}
           </button>
         </div>
-        <Divider className="divider" />
+        <Divider width="50%" />
         <div className="list">{renderPlayers()}</div>
         <button className={cn('start', { disabled: players.length < 3 })} onClick={onStartGame}>
           Commencer la partie !

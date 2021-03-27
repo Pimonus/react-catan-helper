@@ -1,5 +1,5 @@
 /.vscode
-killflow.bat
+yarn-error.log
 
 # Dependency directories
 node_modules/
