@@ -1,0 +1,58 @@
+@menu-base: 60px;
+
+.soft-background-mixin {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+}
+
+.svg-mixin {
+  width: 30px;
+  height: 30px;
+}
+
+.menu {
+  .soft-background-mixin();
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  z-index: 1;
+  height: @menu-base;
+  width: @menu-base;
+  display: flex;
+  cursor: pointer;
+
+  > svg {
+    .svg-mixin();
+    margin: auto;
+  }
+
+  > .opened-menu {
+    .soft-background-mixin();
+    position: absolute;
+    left: ~'calc(@{menu-base} + 10px)';
+    top: 0;
+    z-index: 2;
+
+    > .entry {
+      width: 250px;
+      height: @menu-base;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 15px;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      > svg {
+        .svg-mixin();
+      }
+
+      > p {
+        margin: auto 0 auto 15px;
+        font-size: 1.5rem;
+      }
+    }
+  }
+}

@@ -4,13 +4,12 @@ import { Tooltip } from 'antd';
 import cn from 'classnames';
 
 // actions
-import { disableHistoryMode, enableHistoryMode, fetchTurn } from '@actions/gameHistory';
+import { disableHistoryMode, fetchTurn } from '@actions/gameHistory';
 // types
 import { CatanState } from '@core/types';
 // images
 import backwardSign from '@images/backward_sign.png';
 import forwardSign from '@images/forward_sign.png';
-import enableHistoryIcon from '@images/enable_history_icon.png';
 import disableHistoryIcon from '@images/disable_history_icon.png';
 
 import './GameHistoryContainer.css';
@@ -43,16 +42,7 @@ const GameHistoryContainer = () => {
             if (previousTurnKey) dispatch(fetchTurn(previousTurnKey));
           }}
         />
-        {!historyModeEnabled ? (
-          <Tooltip placement="top" className="tooltip" title="Revoir les tours précédents">
-            <img
-              alt="enable history mode"
-              className="toggle"
-              src={enableHistoryIcon}
-              onClick={() => dispatch(enableHistoryMode)}
-            />
-          </Tooltip>
-        ) : (
+        {historyModeEnabled && (
           <Tooltip placement="top" className="tooltip" title="Revenir à la partie">
             <img
               alt="disable history mode"

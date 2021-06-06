@@ -22,6 +22,7 @@ const softActions = [
   'GAME::HISTORY::ENABLE',
   'GAME::HISTORY::DISABLE',
   'GAME::HISTORY::TURN::VISUALIZE',
+  'GAME::STATS::DISPLAY',
   'SHORTCUTS::DISABLE',
   'SWAL::FIRE',
   'SWAL::DISMISS',
@@ -167,6 +168,13 @@ export const reducer = (state: CatanState = initialState, action: CatanAction): 
       newState = {
         ...state,
         game: { ...state.game, enabledThief: true },
+      };
+      break;
+
+    case 'GAME::STATS::DISPLAY':
+      newState = {
+        ...state,
+        game: { ...state.game, showStats: true },
       };
       break;
 
