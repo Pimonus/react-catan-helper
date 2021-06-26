@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import cn from 'classnames';
 
 // actions
 import gameActions from '@actions/game';
@@ -8,6 +9,8 @@ import { enableHistoryMode } from '@actions/gameHistory';
 import { ReactComponent as BurgerMenuIcon } from './icons/menu.svg';
 import { ReactComponent as HistoryIcon } from './icons/history.svg';
 import { ReactComponent as StatsIcon } from './icons/stats.svg';
+// types
+import { CatanState } from '@core/types';
 
 import './Menu.css';
 
@@ -15,6 +18,8 @@ const Menu = () => {
   const dispatch = useDispatch();
 
   const [showMenu, setShowMenu] = useState(false);
+
+  const availableHistory = useSelector((state: CatanState) => state.gameHistory.turnKeys.length);
 
   const dispatchMenuAction = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -30,11 +35,19 @@ const Menu = () => {
       <BurgerMenuIcon />
       {showMenu && (
         <div className="opened-menu">
-          <div className="entry" onClick={e => dispatchMenuAction(e, enableHistoryMode)}>
+          <div
+            className={cn('entry', { disabled: !availableHistory })}
+            onClick={availableHistory ? e => dispatchMenuAction(e, enableHistoryMode) : undefined}
+          >
             <HistoryIcon />
             <p>Historique de la partie</p>
           </div>
-          <div className="entry" onClick={e => dispatchMenuAction(e, gameActions.showStats)}>
+          <div
+            className={cn('entry', { disabled: !availableHistory })}
+            onClick={
+              availableHistory ? e => dispatchMenuAction(e, gameActions.showStats) : undefined
+            }
+          >
             <StatsIcon />
             <p>Statistiques</p>
           </div>
