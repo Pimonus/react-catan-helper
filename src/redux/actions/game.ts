@@ -12,6 +12,10 @@ const saveGame = { type: 'GAME::SAVE' };
 
 const enableThief = { type: 'GAME::THIEF::ENABLE' };
 
+const showStats = { type: 'GAME::STATS::SHOW' };
+
+const closeStats = { type: 'GAME::STATS::CLOSE' };
+
 const startGameWithPlayers = (players: ReadonlyArray<Player>) => ({
   type: 'GAME::START',
   payload: {
@@ -26,5 +30,7 @@ export default {
   newGame,
   resumeGame,
   saveGame,
+  showStats,
+  closeStats,
   startGameWithPlayers,
 };

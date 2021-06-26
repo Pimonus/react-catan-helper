@@ -8,6 +8,7 @@ export interface GameStorableState {
 export interface GameState extends GameStorableState {
   loading: boolean;
   paused: boolean;
+  showStats: boolean;
   started: boolean;
 }
 
@@ -64,6 +65,14 @@ interface GameAction_EnableThief {
   type: 'GAME::THIEF::ENABLE';
 }
 
+interface GameAction_ShowStats {
+  type: 'GAME::STATS::SHOW';
+}
+
+interface GameAction_CloseStats {
+  type: 'GAME::STATS::CLOSE';
+}
+
 export type GameMiddlewareAction =
   | GameMiddlwareAction_Scan
   | GameMiddlwareAction_New
@@ -78,4 +87,6 @@ export type GameAction =
   | GameAction_Initialized
   | GameAction_Start
   | GameAction_Save
-  | GameAction_EnableThief;
+  | GameAction_EnableThief
+  | GameAction_ShowStats
+  | GameAction_CloseStats;

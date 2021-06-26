@@ -22,6 +22,7 @@ export const initialState: CatanState = {
     enabledThief: false,
     loading: false,
     paused: true,
+    showStats: false,
     started: false,
   },
   gameHistory: {
