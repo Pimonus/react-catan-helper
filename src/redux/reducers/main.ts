@@ -15,6 +15,7 @@ const middlewareActions = ['GAME::SCAN', 'GAME::NEW'];
 
 const softActions = [
   '@@INIT',
+  'GAME::SCAN',
   'GAME::FOUND',
   'GAME::NOT_FOUND',
   'GAME::RESUME',
@@ -22,6 +23,8 @@ const softActions = [
   'GAME::HISTORY::ENABLE',
   'GAME::HISTORY::DISABLE',
   'GAME::HISTORY::TURN::VISUALIZE',
+  'GAME::STATS::SHOW',
+  'GAME::STATS::CLOSE',
   'SHORTCUTS::DISABLE',
   'SWAL::FIRE',
   'SWAL::DISMISS',
@@ -34,6 +37,7 @@ const enablingShortcutsActions = [
   'GAME::HISTORY::DISABLE',
   'GAME::SAVE',
   'GAME::START',
+  'GAME::STATS::CLOSE',
   'GAME::THIEF::ENABLE',
   'PLAYER::DESELECT',
   'SWAL::DISMISS',
@@ -167,6 +171,20 @@ export const reducer = (state: CatanState = initialState, action: CatanAction): 
       newState = {
         ...state,
         game: { ...state.game, enabledThief: true },
+      };
+      break;
+
+    case 'GAME::STATS::SHOW':
+      newState = {
+        ...state,
+        game: { ...state.game, showStats: true },
+      };
+      break;
+
+    case 'GAME::STATS::CLOSE':
+      newState = {
+        ...state,
+        game: { ...state.game, showStats: false },
       };
       break;
 

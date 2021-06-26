@@ -5,6 +5,7 @@
         "react"
     ],
     "rules": {
+        "no-console": ["warn", { "allow": ["warn"] }],
         "function-paren-newline": "off",
         "import/prefer-default-export": "off",
         "react/require-default-props": "off",
@@ -15,13 +16,13 @@
             }
         ],
         "react/jsx-key": "error",
-        "react/no-array-index-key": "off",
+        "react/no-array-index-key": "error",
         "react/no-unescaped-entities": "off",
         "react/no-did-update-set-state": "off",
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
         "no-unused-vars": "error",
         "no-fallthrough": "error",
-        "default-case": "error",
+        "default-case": "error"
     }
 }

@@ -169,3 +169,24 @@ export const getDicesScore = (values: DicesValues): number =>
 export const didBarbariansProgress = (values: DicesValues) => values.specialValue === 'barbarians';
 
 export const didBarbariansReachCoast = (advance: number) => advance === ATTACK_POSITION - 1;
+
+export interface GameStatistics {
+  total: number;
+  distribution: { score: string; total: number }[];
+}
+
+export const computeGameStatistics = (turns: DicesValues[]): GameStatistics => {
+  const distribution: { score: string; total: number }[] = [];
+  for (let i = 2; i <= 12; i++) {
+    distribution.push({ score: i.toString(), total: 0 });
+  }
+  turns.forEach(turn => {
+    const sum = getDicesScore(turn);
+    let i = distribution.findIndex(dis => dis.score === sum.toString());
+    distribution[i] = { ...distribution[i], total: distribution[i].total + 1 };
+  });
+  return {
+    total: turns.length,
+    distribution,
+  };
+};

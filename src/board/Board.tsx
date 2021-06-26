@@ -12,6 +12,7 @@ import Loader from '@board/Loader';
 import DicesContainer from '@modules/dices/DicesContainer';
 import Game from '@modules/game/Game';
 import GameHistoryContainer from '@modules/game_history/GameHistoryContainer';
+import GameStatsContainer from '@modules/game_stats/GameStatsContainer';
 import HomePage from '@modules/home_page/HomePage';
 import PlayerContainer from '@modules/players/PlayerContainer';
 import PlayerFactory from '@modules/players/PlayerFactory';
@@ -20,6 +21,7 @@ import SwalManager from '@modules/swals/SwalManager';
 import { CatanState } from '@core/types';
 
 import './Board.css';
+import Menu from './modules/menu/Menu';
 
 const { Sider, Content } = Layout;
 
@@ -29,7 +31,7 @@ const Board = () => {
   const game = useSelector((state: CatanState) => state.game);
   const listenToShortcuts = useSelector((state: CatanState) => state.listenToShortcuts);
 
-  const { loading, paused, started } = game;
+  const { loading, paused, showStats, started } = game;
 
   useMount(() => dispatch(gameActions.scanExistingGame));
 
@@ -43,10 +45,12 @@ const Board = () => {
     >
       {paused && <HomePage />}
       {loading && <Loader />}
-      {!paused && !loading && (
+      {showStats && <GameStatsContainer />}
+      {!paused && !loading && !showStats && (
         <>
           {started ? (
             <>
+              <Menu />
               <Sider width="20vw">
                 <PlayerContainer />
               </Sider>
