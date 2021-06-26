@@ -39,18 +39,21 @@ export const getStateForStorage = (state: CatanState): string =>
     },
   });
 
-export const newPlayer = (nickname: string, avatar: number): Player => ({
-  nickname,
-  uuid: uuidv1(),
-  avatar,
-  cities: 1,
-  colonies: 1,
-  hasLongestRoad: false,
-  hasStrongestArmy: false,
-  isLeader: false,
-  score: 0,
-  victoryPoints: 0,
-});
+export const newPlayer = (nickname: string, avatar: number): Player => {
+  const uuid = uuidv1();
+  return {
+    nickname,
+    uuid,
+    avatar,
+    cities: 1,
+    colonies: 1,
+    hasLongestRoad: false,
+    hasStrongestArmy: false,
+    isLeader: false,
+    score: 0,
+    victoryPoints: 0,
+  };
+};
 
 export const getPlayerScore = (player: Player): number =>
   player.victoryPoints +
