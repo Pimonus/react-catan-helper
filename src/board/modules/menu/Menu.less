@@ -41,7 +41,12 @@
       justify-content: flex-start;
       padding: 0 15px;
 
-      &:hover {
+      &.disabled {
+        color: dimgrey;
+        cursor: not-allowed;
+      }
+
+      &:not(.disabled):hover {
         background: rgba(255, 255, 255, 0.2);
       }
 
