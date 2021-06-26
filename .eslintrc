@@ -5,6 +5,7 @@
         "react"
     ],
     "rules": {
+        "no-console": ["warn", { "allow": ["warn"] }],
         "function-paren-newline": "off",
         "import/prefer-default-export": "off",
         "react/require-default-props": "off",

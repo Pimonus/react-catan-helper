@@ -12,7 +12,9 @@ const saveGame = { type: 'GAME::SAVE' };
 
 const enableThief = { type: 'GAME::THIEF::ENABLE' };
 
-const displayStats = { type: 'GAME::STATS::DISPLAY' };
+const showStats = { type: 'GAME::STATS::SHOW' };
+
+const closeStats = { type: 'GAME::STATS::CLOSE' };
 
 const startGameWithPlayers = (players: ReadonlyArray<Player>) => ({
   type: 'GAME::START',
@@ -23,11 +25,12 @@ const startGameWithPlayers = (players: ReadonlyArray<Player>) => ({
 
 export default {
   disableShortcuts,
-  displayStats,
   enableThief,
   scanExistingGame,
   newGame,
   resumeGame,
   saveGame,
+  showStats,
+  closeStats,
   startGameWithPlayers,
 };

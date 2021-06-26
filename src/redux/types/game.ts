@@ -66,7 +66,11 @@ interface GameAction_EnableThief {
 }
 
 interface GameAction_ShowStats {
-  type: 'GAME::STATS::DISPLAY';
+  type: 'GAME::STATS::SHOW';
+}
+
+interface GameAction_CloseStats {
+  type: 'GAME::STATS::CLOSE';
 }
 
 export type GameMiddlewareAction =
@@ -84,4 +88,5 @@ export type GameAction =
   | GameAction_Start
   | GameAction_Save
   | GameAction_EnableThief
-  | GameAction_ShowStats;
+  | GameAction_ShowStats
+  | GameAction_CloseStats;

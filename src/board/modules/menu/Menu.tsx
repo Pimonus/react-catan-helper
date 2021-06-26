@@ -34,7 +34,7 @@ const Menu = () => {
             <HistoryIcon />
             <p>Historique de la partie</p>
           </div>
-          <div className="entry" onClick={e => dispatchMenuAction(e, gameActions.displayStats)}>
+          <div className="entry" onClick={e => dispatchMenuAction(e, gameActions.showStats)}>
             <StatsIcon />
             <p>Statistiques</p>
           </div>
