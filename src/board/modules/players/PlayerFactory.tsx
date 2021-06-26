@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Divider } from 'antd';
 import cn from 'classnames';
@@ -23,8 +23,7 @@ const PlayerFactory = ({  }: Props) => {
     if (selectedPlayer && nicknameInputRef.current) nicknameInputRef.current.select();
   }, [selectedPlayer]);
 
-  const onSubmitPlayer = () => {
-    setNickname('');
+  const onSubmitPlayer = useCallback(() => {
     if (selectedPlayer) {
       setPlayers(
         players.map(player => {
@@ -39,9 +38,10 @@ const PlayerFactory = ({  }: Props) => {
       setSelectedPlayer(null);
     } else {
       setPlayers([...players, newPlayer(nickname, avatar)]);
-      setAvatar(avatar => (avatar + 1) % 7 || 1);
+      setAvatar((avatar + 1) % 7 || 1);
     }
-  };
+    setNickname('');
+  }, [avatar, nickname]);
 
   const onDeletePlayer = (uuid: string) => {
     setPlayers(players.filter(player => player.uuid !== uuid));
@@ -68,7 +68,7 @@ const PlayerFactory = ({  }: Props) => {
   const isNewPlayerButtonDisabled = !nickname || isNicknameAlreadyInUse(nickname);
 
   const renderPlayers = () => {
-    if (players.length)
+    if (players.length) {
       return players.map(player => (
         <div key={player.uuid} className="player" onClick={() => onSelectPlayer(player.uuid)}>
           <div className="player-avatar" data-avatar={player.avatar}>
@@ -85,7 +85,9 @@ const PlayerFactory = ({  }: Props) => {
           <p>{player.nickname}</p>
         </div>
       ));
-    else return <p className="hint">3 joueurs sont nécessaires pour démarrer la partie !</p>;
+    } else {
+      return <p className="hint">3 joueurs sont nécessaires pour démarrer la partie !</p>;
+    }
   };
 
   return (
