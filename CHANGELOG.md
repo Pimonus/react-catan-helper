@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.6.0 (2021-07-11)
+
+### Fixed
+- Dependencies and scripts cleaned
+
 ## 1.5.0 (2021-07-11)
 
 ### Added
