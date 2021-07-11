@@ -23,79 +23,79 @@ html {
     #root {
       width: 100%;
       height: 100%;
-    }
 
-    h1 {
-      margin: 0 0 2rem 0;
-      line-height: 4rem;
-      font-size: 4rem;
-      font-weight: normal;
-    }
-
-    button {
-      cursor: url(./assets/images/pointer.png), auto !important;
-      border: solid 7px hsla(0, 0%, 25%, 1);
-      background: transparent;
-      transition: all 0.5s ease;
-      color: #41403e;
-      font-size: 2rem;
-      outline: none;
-      box-shadow: 20px 38px 34px -26px hsla(0, 0%, 0%, 0.2);
-      border-top-left-radius: 255px 15px;
-      border-top-right-radius: 15px 225px;
-      border-bottom-right-radius: 225px 15px;
-      border-bottom-left-radius:15px 255px;
-
-      &:hover {
-        box-shadow: 2px 8px 4px -6px hsla(0, 0%, 0%, 0.3);
+      h1 {
+        margin: 0 0 2rem 0;
+        line-height: 4rem;
+        font-size: 4rem;
+        font-weight: normal;
       }
 
-      &:focus {
-        outline: 0;
+      button {
+        cursor: url(./assets/images/pointer.png), auto !important;
+        border: solid 7px hsla(0, 0%, 25%, 1);
+        background: transparent;
+        transition: all 0.5s ease;
+        color: #41403e;
+        font-size: 2rem;
+        outline: none;
+        box-shadow: 20px 38px 34px -26px hsla(0, 0%, 0%, 0.2);
+        border-top-left-radius: 255px 15px;
+        border-top-right-radius: 15px 225px;
+        border-bottom-right-radius: 225px 15px;
+        border-bottom-left-radius: 15px 255px;
+
+        &:hover {
+          box-shadow: 2px 8px 4px -6px hsla(0, 0%, 0%, 0.3);
+        }
+
+        &:focus {
+          outline: 0;
+        }
+
+        &.disabled {
+          cursor: url(./assets/images/forbidden.png), auto !important;
+          color: hsla(0, 0%, 25%, 0.6);
+          border: solid 7px hsla(0, 0%, 25%, 0.6);
+          box-shadow: none;
+        }
       }
 
-      &.disabled {
-        cursor: url(./assets/images/forbidden.png), auto !important;
-        color: hsla(0, 0%, 25%, 0.6);
-        border: solid 7px hsla(0, 0%, 25%, 0.6);
-        box-shadow: none;
+      .player-avatar {
+        width: 2.5rem;
+        height: 2.5rem;
+        background-size: contain;
+        background-position-y: center;
+        filter: drop-shadow(0 0 0.75rem grey);
       }
-    }
 
-    .player-avatar {
-      width: 2.5rem;
-      height: 2.5rem;
-      background-size: contain;
-      background-position-y: center;
-      filter: drop-shadow(0 0 0.75rem grey);
-    }
+      [data-avatar='1'] {
+        background-image: url(./assets/images/avatars/avatar_1.png);
+      }
 
-    [data-avatar='1'] {
-      background-image: url(./assets/images/avatars/avatar_1.png);
-    }
+      [data-avatar='2'] {
+        background-image: url(./assets/images/avatars/avatar_2.png);
+      }
 
-    [data-avatar='2'] {
-      background-image: url(./assets/images/avatars/avatar_2.png);
-    }
+      [data-avatar='3'] {
+        background-image: url(./assets/images/avatars/avatar_3.png);
+      }
 
-    [data-avatar='3'] {
-      background-image: url(./assets/images/avatars/avatar_3.png);
-    }
+      [data-avatar='4'] {
+        background-image: url(./assets/images/avatars/avatar_4.png);
+      }
 
-    [data-avatar='4'] {
-      background-image: url(./assets/images/avatars/avatar_4.png);
-    }
+      [data-avatar='5'] {
+        background-image: url(./assets/images/avatars/avatar_5.png);
+      }
 
-    [data-avatar='5'] {
-      background-image: url(./assets/images/avatars/avatar_5.png);
-    }
+      [data-avatar='6'] {
+        background-image: url(./assets/images/avatars/avatar_6.png);
+      }
 
-    [data-avatar='6'] {
-      background-image: url(./assets/images/avatars/avatar_6.png);
-    }
-
-    .ant-tooltip {
-      .large-text;
+      .tooltip {
+        .large-text;
+      }
     }
   }
 }
