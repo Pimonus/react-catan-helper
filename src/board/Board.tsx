@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Layout } from 'antd';
 
 // hooks
 import useMount from '@hooks/useMount';
@@ -14,16 +13,14 @@ import Game from '@modules/game/Game';
 import GameHistoryContainer from '@modules/game_history/GameHistoryContainer';
 import GameStatsContainer from '@modules/game_stats/GameStatsContainer';
 import HomePage from '@modules/home_page/HomePage';
+import Menu from '@modules/menu/Menu';
 import PlayerContainer from '@modules/players/PlayerContainer';
 import PlayerFactory from '@modules/players/PlayerFactory';
 import SwalManager from '@modules/swals/SwalManager';
 // types
 import { CatanState } from '@core/types';
 
-import './Board.css';
-import Menu from './modules/menu/Menu';
-
-const { Sider, Content } = Layout;
+import './Board.less';
 
 const Board = () => {
   const dispatch = useDispatch();
@@ -36,7 +33,7 @@ const Board = () => {
   useMount(() => dispatch(gameActions.scanExistingGame));
 
   return (
-    <Layout
+    <section
       className="board"
       onKeyUp={e => {
         if (listenToShortcuts && e.keyCode === 32) dispatch(rollDices);
@@ -51,26 +48,24 @@ const Board = () => {
           {started ? (
             <>
               <Menu />
-              <Sider width="20vw">
-                <PlayerContainer />
-              </Sider>
-              <Layout>
-                <Content className="main-content">
-                  <DicesContainer />
-                  <GameHistoryContainer />
-                </Content>
-              </Layout>
-              <Sider width="20vw">
-                <Game />
-              </Sider>
               <SwalManager />
+              <aside>
+                <PlayerContainer />
+              </aside>
+              <div className="main-content">
+                <DicesContainer />
+                <GameHistoryContainer />
+              </div>
+              <aside>
+                <Game />
+              </aside>
             </>
           ) : (
             <PlayerFactory />
           )}
         </>
       )}
-    </Layout>
+    </section>
   );
 };
 

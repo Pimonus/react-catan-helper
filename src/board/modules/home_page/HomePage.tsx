@@ -6,7 +6,7 @@ import gameActions from '@actions/game';
 import { CatanState } from '@core/types';
 import catanLogo from '@images/catan_logo.png';
 
-import './HomePage.css';
+import './HomePage.less';
 
 const HomePage = () => {
   const dispatch = useDispatch();

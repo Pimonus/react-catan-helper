@@ -3,8 +3,9 @@ import cn from 'classnames';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-import './PlayerModal.css';
 import { Player } from '@redux/types/players';
+
+import './PlayerModal.less';
 
 const swal = withReactContent(Swal);
 
