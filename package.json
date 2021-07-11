@@ -1,33 +1,25 @@
 {
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": true,
   "homepage": ".",
   "scripts": {
     "deploy": "now && now alias",
-    "start": "npm run build-css & craco start & npm run watch-css",
+    "start": "craco start",
     "now-start": "serve -s ./build",
     "build": "craco build",
-    "build-css": "less-watch-compiler --less-args relative-urls --source-map --run-once src src",
-    "watch-css": "less-watch-compiler --less-args relative-urls --source-map src src",
     "test": "craco test --env=jsdom",
     "eject": "react-scripts eject",
-    "precommit": "pretty-quick --staged",
-    "flow": "flow"
+    "precommit": "pretty-quick --staged"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.4",
     "@babel/core": "^7.6.4",
     "@babel/preset-flow": "^7.0.0",
-    "flow-bin": "^0.115.0",
-    "less-watch-compiler": "^1.14.6",
     "prettier": "1.18.2",
     "react-scripts": "2.1.8"
   },
   "dependencies": {
     "@craco/craco": "^5.6.4",
     "@types/classnames": "^2.2.11",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^14.14.7",
     "@types/randomstring": "^1.1.6",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
@@ -38,6 +30,7 @@
     "classnames": "^2.2.6",
     "connected-react-router": "4.5.0",
     "craco-less": "^1.18.0",
+    "depcheck": "^1.4.2",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
     "randomstring": "^1.1.5",
@@ -51,7 +44,6 @@
     "redux-thunk": "2.3.0",
     "sanitize.css": "7.0.3",
     "serve": "10.1.2",
-    "sweetalert": "^2.1.2",
     "sweetalert2": "^9.4.0",
     "sweetalert2-react-content": "^2.0.2",
     "typescript": "^4.0.5",
