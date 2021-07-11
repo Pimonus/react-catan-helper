@@ -20,7 +20,7 @@ import SwalManager from '@modules/swals/SwalManager';
 // types
 import { CatanState } from '@core/types';
 
-import './Board.css';
+import './Board.less';
 
 const Board = () => {
   const dispatch = useDispatch();

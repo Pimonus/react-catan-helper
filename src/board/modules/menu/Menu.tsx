@@ -12,7 +12,7 @@ import { ReactComponent as StatsIcon } from './icons/stats.svg';
 // types
 import { CatanState } from '@core/types';
 
-import './Menu.css';
+import './Menu.less';
 
 const Menu = () => {
   const dispatch = useDispatch();

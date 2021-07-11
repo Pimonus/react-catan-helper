@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Loader.css';
+import './Loader.less';
 
 const Loader = () => {
   return (

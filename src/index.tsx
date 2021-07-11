@@ -7,7 +7,7 @@ import 'sanitize.css/sanitize.css';
 import Board from '@board/Board';
 import store from './store';
 
-import './index.css';
+import './index.less';
 
 const target = document.querySelector('#root');
 

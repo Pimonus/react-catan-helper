@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Divider.css';
+import './Divider.less';
 
 interface Props {
   width?: any;

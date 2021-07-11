@@ -12,7 +12,7 @@ import backwardSign from '@images/backward_sign.png';
 import forwardSign from '@images/forward_sign.png';
 import disableHistoryIcon from '@images/disable_history_icon.png';
 
-import './GameHistoryContainer.css';
+import './GameHistoryContainer.less';
 
 const GameHistoryContainer = () => {
   const dispatch = useDispatch();

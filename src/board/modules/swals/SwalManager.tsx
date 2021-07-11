@@ -16,7 +16,7 @@ import { didBarbariansProgress, didBarbariansReachCoast, getDicesScore } from '@
 import { CatanState } from '@core/types';
 import { THIEF_SCORE } from '@redux/types/dices';
 
-import './SwalManager.css';
+import './SwalManager.less';
 
 const swal = withReactContent(Swal);
 const swalDelay = 2000;

@@ -7,7 +7,7 @@ import Divider from '@components/Divider';
 import { newPlayer } from '@core/index';
 import { Player } from '@redux/types/players';
 
-import './PlayerFactory.css';
+import './PlayerFactory.less';
 
 interface Props {}
 

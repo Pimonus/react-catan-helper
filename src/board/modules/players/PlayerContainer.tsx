@@ -23,7 +23,7 @@ import armyIcon from '@images/army_icon.png';
 import medalIcon from '@images/medal_icon.png';
 import roadIcon from '@images/road_icon.png';
 
-import './PlayerContainer.css';
+import './PlayerContainer.less';
 
 const PlayerContainer = () => {
   const selectedPlayerUuid = useSelector((state: CatanState) => state.selectedPlayerUuid);

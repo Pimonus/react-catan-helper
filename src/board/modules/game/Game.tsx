@@ -6,7 +6,7 @@ import Barbarians from '@modules/game/Barbarians';
 import { CatanState } from '@core/types';
 import thiefIcon from '@images/brigand.png';
 
-import './Game.css';
+import './Game.less';
 
 const GameMenu = () => {
   // use history value if history mode is enabled
