@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 1.5.0 (2021-07-11)
+
+### Added
+- Support for less imports with craco-less
+
+### Changed
+- Remove antd library
+
 ## 1.4.0 (2021-06-26)
 
 ### Added
