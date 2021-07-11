@@ -2,7 +2,7 @@ import React from 'react';
 
 import barbarians from '@images/barbarians.png';
 
-import './BarbariansSwal.css';
+import './BarbariansSwal.less';
 
 interface Props {
   attack?: boolean;

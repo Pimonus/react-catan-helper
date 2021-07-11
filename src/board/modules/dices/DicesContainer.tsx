@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Dice from '@modules/dices/Dice';
 import { CatanState } from '@core/types';
 
-import './DicesContainer.css';
+import './DicesContainer.less';
 
 const DicesContainer = () => {
   const flipped = useSelector((state: CatanState) => state.dices.flipped);

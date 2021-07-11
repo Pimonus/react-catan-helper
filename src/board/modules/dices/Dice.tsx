@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import { ClassicDiceValue, SpecialDiceValue } from '@redux/types/dices';
 
-import './Dice.css';
+import './Dice.less';
 
 interface Props {
   flipped: boolean;

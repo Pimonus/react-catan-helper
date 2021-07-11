@@ -4,7 +4,8 @@ import cn from 'classnames';
 
 import { ATTACK_POSITION } from '@core/index';
 import { CatanState } from '@core/types';
-import './Barbarians.css';
+
+import './Barbarians.less';
 
 const BarbariansContainer = () => {
   // use history value if history mode is enabled

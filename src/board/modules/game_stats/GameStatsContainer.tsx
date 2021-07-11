@@ -10,7 +10,7 @@ import gameActions from '@actions/game';
 // images
 import normalDistributionImage from '@images/normal_distribution.png';
 
-import './GameStatsContainer.css';
+import './GameStatsContainer.less';
 
 const GameStatsContainer = () => {
   const dispatch = useDispatch();

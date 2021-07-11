@@ -2,7 +2,7 @@ import React from 'react';
 
 import thief from '@images/brigand.png';
 
-import './ThiefSwall.css';
+import './ThiefSwall.less';
 
 const ThiefSwal = () => {
   return (
