@@ -11,7 +11,7 @@ import './PlayerFactory.less';
 
 interface Props {}
 
-const PlayerFactory = ({  }: Props) => {
+const PlayerFactory = ({}: Props) => {
   const dispatch = useDispatch();
   const [avatar, setAvatar] = useState<number>(1);
   const [nickname, setNickname] = useState<string>('');
@@ -26,7 +26,7 @@ const PlayerFactory = ({  }: Props) => {
   const onSubmitPlayer = useCallback(() => {
     if (selectedPlayer) {
       setPlayers(
-        players.map(player => {
+        players.map((player) => {
           if (player.uuid === selectedPlayer)
             return {
               ...player,
@@ -44,7 +44,7 @@ const PlayerFactory = ({  }: Props) => {
   }, [avatar, nickname]);
 
   const onDeletePlayer = (uuid: string) => {
-    setPlayers(players.filter(player => player.uuid !== uuid));
+    setPlayers(players.filter((player) => player.uuid !== uuid));
   };
 
   const onStartGame = () => {
@@ -55,27 +55,27 @@ const PlayerFactory = ({  }: Props) => {
 
   const onSelectPlayer = (uuid: string) => {
     setSelectedPlayer(uuid);
-    const selectedPlayer = players.find(player => player.uuid === uuid);
+    const selectedPlayer = players.find((player) => player.uuid === uuid);
     if (!selectedPlayer) return;
     setNickname(selectedPlayer.nickname);
   };
 
   const isNicknameAlreadyInUse = (nickname: string) =>
     selectedPlayer
-      ? players.some(player => player.nickname === nickname && player.uuid !== selectedPlayer)
-      : players.some(player => player.nickname === nickname);
+      ? players.some((player) => player.nickname === nickname && player.uuid !== selectedPlayer)
+      : players.some((player) => player.nickname === nickname);
 
   const isNewPlayerButtonDisabled = !nickname || isNicknameAlreadyInUse(nickname);
 
   const renderPlayers = () => {
     if (players.length) {
-      return players.map(player => (
+      return players.map((player) => (
         <div key={player.uuid} className="player" onClick={() => onSelectPlayer(player.uuid)}>
           <div className="player-avatar" data-avatar={player.avatar}>
             {!selectedPlayer && (
               <div
                 className="delete-cross"
-                onClick={e => {
+                onClick={(e) => {
                   e.stopPropagation();
                   onDeletePlayer(player.uuid);
                 }}
@@ -99,7 +99,7 @@ const PlayerFactory = ({  }: Props) => {
             ref={nicknameInputRef}
             placeholder="Nom du joueur"
             value={nickname}
-            onChange={e => setNickname(e.target.value)}
+            onChange={(e) => setNickname(e.target.value)}
           />
           <button
             className={cn({ disabled: isNewPlayerButtonDisabled })}

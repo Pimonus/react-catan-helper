@@ -286,7 +286,7 @@ export const reducer = (state: CatanState = initialState, action: CatanAction): 
     case 'PLAYER::DELETE': {
       const { playerUuid } = action.payload;
       const newPlayers: ReadonlyArray<Player> = state.players.filter(
-        player => player.uuid !== playerUuid
+        (player) => player.uuid !== playerUuid
       );
       newState = {
         ...state,
@@ -299,7 +299,7 @@ export const reducer = (state: CatanState = initialState, action: CatanAction): 
     default:
       if (
         !action.type.startsWith('@@redux') &&
-        !softActions.find(type => type === action.type) &&
+        !softActions.find((type) => type === action.type) &&
         process.env.NODE_ENV === 'development'
       ) {
         console.warn(

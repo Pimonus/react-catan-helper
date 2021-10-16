@@ -35,7 +35,7 @@ const Board = () => {
   return (
     <section
       className="board"
-      onKeyUp={e => {
+      onKeyUp={(e) => {
         if (listenToShortcuts && e.keyCode === 32) dispatch(rollDices);
       }}
       tabIndex={0}
