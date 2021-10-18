@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.7.0 (2021-10-18)
+
+### Changed
+- Dependencies upgraded
+
 ## 1.6.0 (2021-07-11)
 
 ### Fixed
