@@ -126,8 +126,8 @@ const PlayerModal = ({
                   <div className="text">
                     <div className="img" />
                     <p>
-                      Vous êtes sur le point de faire disparaitre
-                      <span>{player.nickname}</span> de la partie.
+                      Vous êtes sur le point de faire disparaitre <span>{player.nickname}</span> de
+                      la partie.
                     </p>
                     <p>Que dites-vous ?</p>
                   </div>
@@ -158,11 +158,11 @@ const PlayerModal = ({
               placeholder="Nom du joueur"
               type="text"
               value={nickname}
-              onChange={event => {
+              onChange={(event) => {
                 if (event.target.value.length < 20) setNickname(event.target.value);
               }}
-              onFocus={event => event.target.select()}
-              onKeyUp={event => {
+              onFocus={(event) => event.target.select()}
+              onKeyUp={(event) => {
                 if (event.key === 'Escape') {
                   toggleNicknameEdition(false);
                 } else if (event.key === 'Enter') {

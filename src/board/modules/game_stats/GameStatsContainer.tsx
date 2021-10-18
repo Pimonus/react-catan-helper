@@ -33,12 +33,12 @@ const GameStatsContainer = () => {
     if (!stats) return null;
     const { distribution } = stats;
     let maxScore: number;
-    distribution.forEach(score => {
+    distribution.forEach((score) => {
       if (!maxScore || score.total > maxScore) {
         maxScore = score.total;
       }
     });
-    const bars = distribution.map(score => {
+    const bars = distribution.map((score) => {
       const percentage = score.total / maxScore;
       return (
         <span

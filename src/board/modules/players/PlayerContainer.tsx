@@ -35,7 +35,7 @@ const PlayerContainer = () => {
     return isHistoryEnabled && visualizedTurnState ? visualizedTurnState.players : state.players;
   });
   const playerCount = players.length;
-  const selectedPlayer = players.find(player => player.uuid === selectedPlayerUuid);
+  const selectedPlayer = players.find((player) => player.uuid === selectedPlayerUuid);
 
   const dispatch = useDispatch();
 
@@ -77,15 +77,15 @@ const PlayerContainer = () => {
           player={selectedPlayer}
           // functions
           deselect={() => dispatch(deselectPlayer)}
-          addCity={uuid => dispatch(addCity(uuid))}
-          addColony={uuid => dispatch(addColony(uuid))}
-          addVictoryPoint={uuid => dispatch(addVictoryPoint(uuid))}
-          attributeLongestRoad={uuid => dispatch(attributeLongestRoad(uuid))}
-          attributeStrongestArmy={uuid => dispatch(attributeStrongestArmy(uuid))}
-          deletePlayer={uuid => dispatch(deletePlayer(uuid))}
-          destroyCity={uuid => dispatch(destroyCity(uuid))}
-          destroyColony={uuid => dispatch(destroyColony(uuid))}
-          removeVictoryPoint={uuid => dispatch(removeVictoryPoint(uuid))}
+          addCity={(uuid) => dispatch(addCity(uuid))}
+          addColony={(uuid) => dispatch(addColony(uuid))}
+          addVictoryPoint={(uuid) => dispatch(addVictoryPoint(uuid))}
+          attributeLongestRoad={(uuid) => dispatch(attributeLongestRoad(uuid))}
+          attributeStrongestArmy={(uuid) => dispatch(attributeStrongestArmy(uuid))}
+          deletePlayer={(uuid) => dispatch(deletePlayer(uuid))}
+          destroyCity={(uuid) => dispatch(destroyCity(uuid))}
+          destroyColony={(uuid) => dispatch(destroyColony(uuid))}
+          removeVictoryPoint={(uuid) => dispatch(removeVictoryPoint(uuid))}
           savePlayerNickname={(uuid, nickname) => dispatch(savePlayerNickname(uuid, nickname))}
         />
       )}

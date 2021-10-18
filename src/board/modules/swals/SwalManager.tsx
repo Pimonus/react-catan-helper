@@ -91,7 +91,7 @@ const SwalManager = () => {
 
   const processSwalQueue = async (swalQueue: SwalWithCallback[]) => {
     dispatch(gameActions.disableShortcuts);
-    await new Promise(r => setTimeout(r, swalDelay));
+    await new Promise((r) => setTimeout(r, swalDelay));
     dispatch(swalActions.fire);
     await swalQueue.reduce(async (previous, item) => {
       await previous;

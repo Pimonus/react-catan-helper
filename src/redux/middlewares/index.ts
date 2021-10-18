@@ -6,7 +6,7 @@ import { getClassicDiceValue, getSpecialDiceValue } from '@core/index';
 export const middleware: Middleware<
   {}, // legacy type parameter added to satisfy interface signature
   State
-> = () => next => (action: MiddlewareAction) => {
+> = () => (next) => (action: MiddlewareAction) => {
   next(action);
   switch (action.type) {
     case 'GAME::SCAN': {
