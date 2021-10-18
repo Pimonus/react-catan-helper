@@ -20,10 +20,7 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
-const composedEnhancers = compose(
-  applyMiddleware(...middlewares),
-  ...enhancers
-);
+const composedEnhancers = compose(applyMiddleware(...middlewares), ...enhancers);
 
 export default createStore(
   connectRouter(history)(

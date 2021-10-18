@@ -10,7 +10,7 @@ const useGameStats = (): { stats: GameStatistics | undefined } => {
   useEffect(() => {
     if (!stats) {
       const registeredTurns: string[] = Object.values(history);
-      const turns = registeredTurns.map(turn => JSON.parse(turn || '').dices.values);
+      const turns = registeredTurns.map((turn) => JSON.parse(turn || '').dices.values);
       setStats(computeGameStatistics(turns));
     }
   }, [history, stats]);

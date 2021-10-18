@@ -31,13 +31,13 @@ const Menu = () => {
   };
 
   return (
-    <div className="menu" onClick={() => setShowMenu(prev => !prev)}>
+    <div className="menu" onClick={() => setShowMenu((prev) => !prev)}>
       <BurgerMenuIcon />
       {showMenu && (
         <div className="opened-menu">
           <div
             className={cn('entry', { disabled: !availableHistory })}
-            onClick={availableHistory ? e => dispatchMenuAction(e, enableHistoryMode) : undefined}
+            onClick={availableHistory ? (e) => dispatchMenuAction(e, enableHistoryMode) : undefined}
           >
             <HistoryIcon />
             <p>Historique de la partie</p>
@@ -45,7 +45,7 @@ const Menu = () => {
           <div
             className={cn('entry', { disabled: !availableHistory })}
             onClick={
-              availableHistory ? e => dispatchMenuAction(e, gameActions.showStats) : undefined
+              availableHistory ? (e) => dispatchMenuAction(e, gameActions.showStats) : undefined
             }
           >
             <StatsIcon />

@@ -159,10 +159,10 @@
 .deletion-confirmation-swal {
   display: flex;
   flex-direction: column;
+  color: white;
 
   .text {
     position: relative;
-    width: 650px;
     height: 480px;
     display: flex;
     flex-direction: column;
@@ -193,7 +193,7 @@
 
   .buttons {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
 
     button {
       color: white;
@@ -202,6 +202,10 @@
       border: none;
       text-shadow: 1px 1px 20px white;
       cursor: url(../../../assets/images/pointer.png), auto;
+
+      &:first-child {
+        margin-right: 3rem;
+      }
 
       &.danger {
         color: brown;

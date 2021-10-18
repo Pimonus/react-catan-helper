@@ -64,7 +64,7 @@ export const getPlayerScore = (player: Player): number =>
 
 export const computePlayersScores = (state: ReadonlyArray<Player>): ReadonlyArray<Player> => {
   let topScore = 0;
-  let newState: Array<Player> = state.map(player => {
+  let newState: Array<Player> = state.map((player) => {
     const score = getPlayerScore(player);
     if (score > topScore) topScore = score;
     return {
@@ -72,7 +72,7 @@ export const computePlayersScores = (state: ReadonlyArray<Player>): ReadonlyArra
       score,
     };
   });
-  return newState.map(player => ({
+  return newState.map((player) => ({
     ...player,
     isLeader: player.score === topScore,
   }));
@@ -183,9 +183,9 @@ export const computeGameStatistics = (turns: DicesValues[]): GameStatistics => {
   for (let i = 2; i <= 12; i++) {
     distribution.push({ score: i.toString(), total: 0 });
   }
-  turns.forEach(turn => {
+  turns.forEach((turn) => {
     const sum = getDicesScore(turn);
-    let i = distribution.findIndex(dis => dis.score === sum.toString());
+    let i = distribution.findIndex((dis) => dis.score === sum.toString());
     distribution[i] = { ...distribution[i], total: distribution[i].total + 1 };
   });
   return {
